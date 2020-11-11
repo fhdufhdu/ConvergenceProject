@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - oracleTest",
+            "request": "launch",
+            "mainClass": "com.db.oracleTest",
+            "projectName": "ConvergenceProject_4e9cb715"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - testMain",
             "request": "launch",
             "mainClass": "com.db.testMain",
