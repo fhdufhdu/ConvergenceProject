@@ -6,17 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - oracleTest",
-            "request": "launch",
-            "mainClass": "com.db.oracleTest",
-            "projectName": "ConvergenceProject_4e9cb715"
-        },
-        {
-            "type": "java",
             "name": "CodeLens (Launch) - testMain",
             "request": "launch",
             "mainClass": "com.db.testMain",
-            "projectName": "ConvergenceProject_5d1b8e65",
+            "projectName": "ConvergenceProject_4e9cb715",
             "vmArgs": "--module-path ./lib --add-modules javafx.controls,javafx.fxml"
         },
         {
@@ -24,7 +17,7 @@
             "name": "CodeLens (Launch) - oracleTest",
             "request": "launch",
             "mainClass": "com.db.oracleTest",
-            "projectName": "ConvergenceProject_5d1b8e65",
+            "projectName": "ConvergenceProject_4e9cb715",
             "vmArgs": "--module-path ./lib --add-modules javafx.controls,javafx.fxml"
         },
         {
