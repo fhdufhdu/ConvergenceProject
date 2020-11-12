@@ -479,8 +479,6 @@ public class oracleTest
                                     System.out.print("영화관을 선택해주세요");
                                     TheaterDTO theaterElem = tlist.get(sc.nextInt());
                                     sc.nextLine();
-                                
-                                    sc.nextLine();
     
                                     TimeTableDAO ttDao = new TimeTableDAO();
                                     ArrayList<TimeTableDTO> ttlist = ttDao.getTimeTableList(insertCurTimeTable("%", "%", DTO.EMPTY_ID), theaterElem.getId());
@@ -506,7 +504,7 @@ public class oracleTest
                                     //현재 상영시간표의 id에 해당하는 모든 row, col 집합이 필요함
                                     
                                     ReservationDAO rDao = new ReservationDAO();
-                                    System.out.printf("[최대 열 = %d, 최대 행 = %d]\n", row, col);
+                                    System.out.printf("[최대 행 = %d, 최대 열 = %d]\n", row, col);
                                     displayCurrentRsvSeat(rDao.getRsvListFromTT(ttElem.getId()));
 
                                     ReservationDTO rsvInfo = insertInfoRsv(member.getId(), ttElem.getId());
@@ -640,6 +638,8 @@ public class oracleTest
             }
             catch(Exception e)
             {
+                sc.nextLine();
+                e.printStackTrace();
                 System.out.println(e.getMessage());
             }
         }
@@ -702,7 +702,7 @@ public class oracleTest
         String title = sc.nextLine();
         System.out.print("영화 개봉일(YYYY-MM-DD) : ");
         String release_date = sc.nextLine();
-        System.out.print("상영 여부(상영종료 : -1, 현재상영 : 0, 상영예정 : 1) : ");
+        System.out.print("상영 여부(상영종료 : 0, 현재상영 : 1, 상영예정 : 2) : ");
         String is_current = sc.nextLine();
         System.out.print("줄거리 : ");
         String plot = sc.nextLine();
@@ -863,7 +863,6 @@ public class oracleTest
         empty.setStar(sc.nextInt());
         sc.nextLine();
         System.out.print("리뷰 내용을 입력해주세요 : ");
-        sc.nextLine();
         empty.setText(sc.nextLine());
 
         return empty;
@@ -895,7 +894,7 @@ public class oracleTest
         mem.setPhoneNumber(sc.nextLine());
         System.out.print("생일 : ");
         mem.setBirth(sc.nextLine());
-        System.out.print("성별 : ");
+        System.out.print("성별(남자:1, 여자:0) : ");
         mem.setGender(sc.nextLine());
 
         return mem;
