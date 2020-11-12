@@ -16,9 +16,9 @@ public class oracleTest
     {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         DAO.connectDB();
-        try
+        while(true)
         {
-            while(true)
+            try
             {
                 System.out.print("1. 관리자 모드 \n2. 일반사용자 모드\n3. 종료\n입력 : ");
                 int mode = sc.nextInt();
@@ -425,7 +425,7 @@ public class oracleTest
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
                                 displayScreen(slist);
-                                 
+                                
                                 break;
                             }
                             case 2 :    //현재 상영작 정보 조회 
@@ -636,11 +636,12 @@ public class oracleTest
                         return;
                     }
                 }
+            
             }
-        }
-        catch(DAOException e)
-        {
-            System.out.println(e.getMessage());
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
