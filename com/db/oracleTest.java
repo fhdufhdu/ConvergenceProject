@@ -14,6 +14,7 @@ public class oracleTest
     static Scanner sc = new Scanner(System.in);
     public static void main(String args[]) throws Exception
     {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         DAO.connectDB();
         try
         {
