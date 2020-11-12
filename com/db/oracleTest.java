@@ -22,7 +22,8 @@ public class oracleTest
             {
                 System.out.print("1. 관리자 모드 \n2. 일반사용자 모드\n3. 종료\n입력 : ");
                 int mode = sc.nextInt();
-
+                sc.nextLine();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                 switch(mode)
                 {
                     case 1:
@@ -46,8 +47,13 @@ public class oracleTest
                         System.out.println("17. 통계정보 열람");
                         System.out.println("18. 수입 계좌 관리");
                         System.out.println("19. 관리자 계정 등록");
+                        System.out.println("20. 타입별 가격 수정");
+                        System.out.println("21. 돌아가기");
                         System.out.print("입력 : ");
                         int menu = sc.nextInt();
+                        sc.nextLine();
+                        
+                        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
                         switch(menu)
                         {
@@ -66,6 +72,7 @@ public class oracleTest
                                 displayTheater(list);
                                 System.out.print("수정할 영화관을 선택해주세요");
                                 TheaterDTO temp = list.get(sc.nextInt());
+                                sc.nextLine();
 
                                 tDao.changeTheater(insertInfoTheater(temp.getId()));
 
@@ -79,6 +86,7 @@ public class oracleTest
                                 displayTheater(list);
                                 System.out.print("삭제할 영화관을 선택해주세요");
                                 TheaterDTO temp = list.get(sc.nextInt());
+                                sc.nextLine();
 
                                 tDao.removeTheater(temp);
                                 
@@ -99,6 +107,7 @@ public class oracleTest
                                 displayTheater(list);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = list.get(sc.nextInt());
+                                sc.nextLine();
                                 System.out.println("선택한 영화관 : " + theaterElem.getName());
                                 
                                 ScreenDAO sDao = new ScreenDAO();
@@ -113,6 +122,7 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
                                 
 
                                 ScreenDAO sDao = new ScreenDAO();
@@ -120,6 +130,7 @@ public class oracleTest
                                 displayScreen(slist);
                                 System.out.print("상영관을 선택해주세요");
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 System.out.println("선택한 영화관 : " + theaterElem.getName());
                                 System.out.println("선택한 상영관 : " + screenElem.getName());
@@ -135,12 +146,14 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
                                 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
                                 displayScreen(slist);
                                 System.out.print("상영관을 선택해주세요");
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 sDao.removeScreen(screenElem);
                                 
@@ -153,6 +166,7 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> list = sDao.getScreenList(theaterElem.getId());
@@ -174,6 +188,7 @@ public class oracleTest
                                 displayMovie(mList);
                                 System.out.print("영화를 선택해주세요");
                                 MovieDTO movieElem = mList.get(sc.nextInt());
+                                sc.nextLine();
 
                                 mDao.changeMovie(insertInfoMovie(movieElem.getId()));
                                 
@@ -186,6 +201,7 @@ public class oracleTest
                                 displayMovie(mList);
                                 System.out.print("영화를 선택해주세요");
                                 MovieDTO movieElem = mList.get(sc.nextInt());
+                                sc.nextLine();
 
                                 mDao.removeMovie(movieElem);
 
@@ -206,19 +222,20 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
                                 displayScreen(slist);
                                 System.out.print("상영관을 선택해주세요");
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 MovieDAO mDao = new MovieDAO();
                                 ArrayList<MovieDTO> mList = mDao.getMovieList(insertConditionMovie());
                                 displayMovie(mList);
                                 System.out.print("영화를 선택해주세요");
                                 MovieDTO movieElem = mList.get(sc.nextInt());
-                                
                                 sc.nextLine();
 
                                 TimeTableDAO ttDao = new TimeTableDAO();
@@ -233,19 +250,20 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
                                 displayScreen(slist);
                                 System.out.print("상영관을 선택해주세요");
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 MovieDAO mDao = new MovieDAO();
                                 ArrayList<MovieDTO> mList = mDao.getMovieList(insertConditionMovie());
                                 displayMovie(mList);
                                 System.out.print("영화를 선택해주세요");
                                 MovieDTO movieElem = mList.get(sc.nextInt());
-                                
                                 sc.nextLine();
 
                                 TimeTableDAO ttDao = new TimeTableDAO();
@@ -267,19 +285,20 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
                                 displayScreen(slist);
                                 System.out.print("상영관을 선택해주세요");
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 MovieDAO mDao = new MovieDAO();
                                 ArrayList<MovieDTO> mList = mDao.getMovieList(insertConditionMovie());
                                 displayMovie(mList);
                                 System.out.print("영화를 선택해주세요");
                                 MovieDTO movieElem = mList.get(sc.nextInt());
-                                
                                 sc.nextLine();
 
                                 TimeTableDAO ttDao = new TimeTableDAO();
@@ -287,6 +306,7 @@ public class oracleTest
                                 displayTimeTable(ttlist);
                                 System.out.print("상영시간표를 선택해주세요");
                                 TimeTableDTO ttElem = ttlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ttDao.removeTimeTable(ttElem);
 
@@ -299,12 +319,14 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
                                 displayScreen(slist);
                                 System.out.print("상영관을 선택해주세요");
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 MovieDAO mDao = new MovieDAO();
                                 ArrayList<MovieDTO> mList = mDao.getMovieList(insertConditionMovie());
@@ -332,7 +354,7 @@ public class oracleTest
                                 }
                                 System.out.printf("현재 관리자 계좌 : %s\n", member.getAccount());
                                 System.out.print("수정 할 관리자 계좌 : ");
-                                member.setAccount(sc.next());
+                                member.setAccount(sc.nextLine());
                                 mDAO.changeMemberInfo(member);
                                 break;
                             }
@@ -340,7 +362,31 @@ public class oracleTest
                             {
                                 System.out.println("[관리자 계정 등록]");
                                 MemberDAO mDAO = new MemberDAO();
-                                mDAO.addMember(insertInfoMem("1"));
+                                mDAO.addMember(insertInfoAdmin("1"));
+                                break;
+                            }
+                            case 20:
+                            {
+                                ChargeDAO cDao = new ChargeDAO();
+                                ArrayList<ChargeDTO> cList = cDao.getChargeList();
+                                for(int i = 0; i < cList.size(); i++)
+                                {
+                                    ChargeDTO temp = cList.get(i);
+                                    System.out.printf("[%d] %s | %d \n", i, temp.getType(), temp.getPrice());
+                                }
+                                System.out.print("수정할 타입을 선택해주세요 : ");
+                                ChargeDTO cDto = cList.get(sc.nextInt());
+                                sc.nextLine();
+
+                                System.out.print("수정할 가격을 입력해주세요 : ");
+                                cDto.setPrice(sc.nextInt());
+                                sc.nextLine();
+
+                                cDao.changeCharge(cDto);
+                                break;
+                            }
+                            case 21:
+                            {
                                 break;
                             }
                         }
@@ -348,6 +394,7 @@ public class oracleTest
                     }
                     case 2 :
                     {
+                        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                         System.out.println("1. 영화관 조회");
                         System.out.println("2. 현재 상영작 정보 조회");
                         System.out.println("3. 상영 예정작 정보 조회");
@@ -359,9 +406,11 @@ public class oracleTest
                         System.out.println("9. 평점 및 리뷰 수정");
                         System.out.println("10. 사용자 등록");
                         System.out.println("11. 사용자 수정");
+                        System.out.println("12. 돌아가기");
                         System.out.print("입력 : ");
                         int menu = sc.nextInt();
-
+                        sc.nextLine();
+                        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                         switch(menu)
                         {
                             case 1 :    //영화관 조회 
@@ -371,6 +420,7 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ScreenDAO sDao = new ScreenDAO();
                                 ArrayList<ScreenDTO> slist = sDao.getScreenList(theaterElem.getId());
@@ -401,6 +451,7 @@ public class oracleTest
                                 displayTheater(tlist);
                                 System.out.print("영화관을 선택해주세요");
                                 TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                sc.nextLine();
                                 
                                 sc.nextLine();
 
@@ -427,6 +478,7 @@ public class oracleTest
                                     displayTheater(tlist);
                                     System.out.print("영화관을 선택해주세요");
                                     TheaterDTO theaterElem = tlist.get(sc.nextInt());
+                                    sc.nextLine();
                                 
                                     sc.nextLine();
     
@@ -435,6 +487,7 @@ public class oracleTest
                                     userDisTimeTable(ttlist);
                                     System.out.print("상영 시간표를 선택해주세요");
                                     TimeTableDTO ttElem = ttlist.get(sc.nextInt());
+                                    sc.nextLine();
                                     int current_rsv = ttElem.getCurrentRsv();
     
                                     //ttElem의 id로 상영관 id를 얻어서 최대 행, 최대 열, 총 수용 가능 인원을 받아와야 함.
@@ -459,7 +512,7 @@ public class oracleTest
                                     ReservationDTO rsvInfo = insertInfoRsv(member.getId(), ttElem.getId());
 
                                     System.out.println("계좌 비밀번호를 입력해주세요 : ");
-                                    String account_passwd = sc.next();
+                                    String account_passwd = sc.nextLine();
     
                                     rDao.addReservation(rsvInfo, account_passwd);
                                     
@@ -492,6 +545,7 @@ public class oracleTest
                                     displayCurrentRsv(rsvList);
                                     System.out.print("예약 내역을 선택해주세요 : ");
                                     ReservationDTO rsvElem = rsvList.get(sc.nextInt());
+                                    sc.nextLine();
                                     rDao.cancelRsv(rsvElem.getId());
                                     
                                     conn.commit();
@@ -525,6 +579,7 @@ public class oracleTest
                                 displayMovie(movList);
                                 System.out.print("리뷰를 쓸 영화를 선택해주세요 : ");
                                 MovieDTO movElem = movList.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ReviewDAO rDao = new ReviewDAO();
                                 rDao.addReview(insertInfoReview(DTO.EMPTY_ID, member.getId(), movElem.getId()));
@@ -540,12 +595,14 @@ public class oracleTest
                                 displayMovie(movList);
                                 System.out.print("리뷰를 쓴 영화를 선택해주세요 : ");
                                 MovieDTO movElem = movList.get(sc.nextInt());
+                                sc.nextLine();
 
                                 ReviewDAO rDao = new ReviewDAO();
                                 ArrayList<ReviewDTO> rvList = rDao.getRvList(member.getId(), movElem.getId());
                                 displayReview(rvList);
                                 System.out.print("리뷰를 선택해주세요 : ");
                                 ReviewDTO rvElem = rvList.get(sc.nextInt());
+                                sc.nextLine();
 
                                 rDao.changeReview(insertInfoReview(rvElem.getId(), rvElem.getMemberId(), rvElem.getMovieId()));
 
@@ -563,6 +620,10 @@ public class oracleTest
                                 System.out.println("[정보 수정]");
                                 MemberDAO mDAO = new MemberDAO();
                                 mDAO.changeMemberInfo(insertInfoMem("2"));
+                                break;
+                            }
+                            case 12:
+                            {
                                 break;
                             }
                         }
@@ -586,13 +647,15 @@ public class oracleTest
     public static TheaterDTO insertInfoTheater(String id)
     {
         System.out.print("영화관 이름 : ");
-        String name = sc.next();
+        String name = sc.nextLine();
         System.out.print("영화관 주소 : ");
-        String address = sc.next();
+        String address = sc.nextLine();
         System.out.print("총 상영관 수 : ");
         int screen = sc.nextInt();
+        sc.nextLine();
         System.out.print("총 좌석 수 : ");
         int seat = sc.nextInt();
+        sc.nextLine();
 
         return new TheaterDTO(id, name, address, screen, seat);
     }
@@ -609,13 +672,16 @@ public class oracleTest
     public static ScreenDTO insertInfoScreen(String id, String theater_id)
     {
         System.out.print("상영관 이름 : ");
-        String name = sc.next();
+        String name = sc.nextLine();
         System.out.print("상영관 좌석 수 : ");
         int capacity = sc.nextInt();
+        sc.nextLine();
         System.out.print("상영관 행 : ");
         int row = sc.nextInt();
+        sc.nextLine();
         System.out.print("상영관 열 : ");
         int col = sc.nextInt();
+        sc.nextLine();
 
         return new ScreenDTO(id, theater_id, name, capacity, row, col);
     }
@@ -632,25 +698,26 @@ public class oracleTest
     public static MovieDTO insertInfoMovie(String id)
     {
         System.out.print("영화 타이틀 : ");
-        String title = sc.next();
+        String title = sc.nextLine();
         System.out.print("영화 개봉일(YYYY-MM-DD) : ");
-        String release_date = sc.next();
+        String release_date = sc.nextLine();
         System.out.print("상영 여부(상영종료 : -1, 현재상영 : 0, 상영예정 : 1) : ");
-        String is_current = sc.next();
+        String is_current = sc.nextLine();
         System.out.print("줄거리 : ");
-        String plot = sc.next();
+        String plot = sc.nextLine();
         System.out.print("포스터 경로 : ");
-        String poster = sc.next();
+        String poster = sc.nextLine();
         System.out.print("스틸컷 경로 : ");
-        String stillcut = sc.next();
+        String stillcut = sc.nextLine();
         System.out.print("트레일러 경로 : ");
-        String trailer = sc.next();
+        String trailer = sc.nextLine();
         System.out.print("감독 : ");
-        String director = sc.next();
+        String director = sc.nextLine();
         System.out.print("배우 : ");
-        String actor = sc.next();
+        String actor = sc.nextLine();
         System.out.print("상영 시간 :");
         int min = sc.nextInt();
+        sc.nextLine();
 
         return new MovieDTO(id, title, release_date, is_current, plot, poster, stillcut, trailer, director, actor, min);
     }
@@ -660,17 +727,17 @@ public class oracleTest
         HashMap<String, String> info = new HashMap<String, String>();
 
         System.out.print("영화 타이틀(모를 땐 % 입력) : ");
-        info.put("title", sc.next());
+        info.put("title", sc.nextLine());
         System.out.print("시작 날짜(YYYY-MM-DD) : ");
-        info.put("start_date", sc.next());
+        info.put("start_date", sc.nextLine());
         System.out.print("마지막 날짜(YYYY-MM-DD) : ");
-        info.put("end_date", sc.next());
+        info.put("end_date", sc.nextLine());
         System.out.print("상영 여부 선택(상영종료 : 0, 현재상영 : 1, 상영예정 : 2) : ");
-        info.put("is_current", sc.next());
+        info.put("is_current", sc.nextLine());
         System.out.print("감독(모를 땐 % 입력) : ");
-        info.put("director", sc.next());
+        info.put("director", sc.nextLine());
         System.out.print("배우(모를 땐 % 입력) : ");
-        info.put("actor", sc.next());
+        info.put("actor", sc.nextLine());
 
         return info;
     }
@@ -740,9 +807,9 @@ public class oracleTest
     {
         MemberDAO mDao = new MemberDAO();
         System.out.print("아이디를 입력해주세요 : ");
-        String id = sc.next();
+        String id = sc.nextLine();
         System.out.print("패스워드를 입력해주세요 : ");
-        String passwd = sc.next();
+        String passwd = sc.nextLine();
         return mDao.getMember(id, passwd);
     }
 
@@ -774,8 +841,10 @@ public class oracleTest
         empty.setId("-1");
         System.out.print("행을 선택해주세요 : ");
         empty.setScreenRow(sc.nextInt());
+        sc.nextLine();
         System.out.print("열을 선택해주세요 : ");
         empty.setScreenCol(sc.nextInt());
+        sc.nextLine();
         empty.setMemberId(member_id);
         empty.setTimeTableId(tt_id);
         empty.setCancel("0");
@@ -791,6 +860,7 @@ public class oracleTest
         empty.setMovieId(mov_id);
         System.out.print("별점을 입력해주세요(0~10) : ");
         empty.setStar(sc.nextInt());
+        sc.nextLine();
         System.out.print("리뷰 내용을 입력해주세요 : ");
         sc.nextLine();
         empty.setText(sc.nextLine());
@@ -812,20 +882,35 @@ public class oracleTest
         MemberDTO mem = new MemberDTO();
                                 
         System.out.print("아이디 : ");
-        mem.setid(sc.next());
+        mem.setid(sc.nextLine());
         mem.setRole(role);
         System.out.print("패스워드 : ");
-        mem.setPassword(sc.next());
+        mem.setPassword(sc.nextLine());
         System.out.print("계좌 : ");
-        mem.setAccount(sc.next());
+        mem.setAccount(sc.nextLine());
         System.out.print("이름 : ");
-        mem.setName(sc.next());
+        mem.setName(sc.nextLine());
         System.out.print("휴대폰 번호 : ");
-        mem.setPhoneNumber(sc.next());
+        mem.setPhoneNumber(sc.nextLine());
         System.out.print("생일 : ");
-        mem.setBirth(sc.next());
+        mem.setBirth(sc.nextLine());
         System.out.print("성별 : ");
-        mem.setGender(sc.next());
+        mem.setGender(sc.nextLine());
+
+        return mem;
+    }
+
+    public static MemberDTO insertInfoAdmin(String role)
+    {
+        MemberDTO mem = new MemberDTO();
+                                
+        System.out.print("아이디 : ");
+        mem.setid(sc.nextLine());
+        mem.setRole(role);
+        System.out.print("패스워드 : ");
+        mem.setPassword(sc.nextLine());
+        System.out.print("계좌 : ");
+        mem.setAccount(sc.nextLine());
 
         return mem;
     }

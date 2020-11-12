@@ -1,6 +1,7 @@
 package com.db.model;
 
 import java.sql.*;
+import java.util.*;
 
 public class ChargeDAO extends DAO
 {
@@ -30,5 +31,26 @@ public class ChargeDAO extends DAO
         System.out.println("변경된 row : " + r);
 
         ps.close();
+    }
+
+    //타입별 가격 출력
+    public ArrayList<ChargeDTO> getChargeList() throws Exception
+    {
+        ArrayList<ChargeDTO> temp_list = new ArrayList<ChargeDTO>();
+        String insert_sql = "select * from charges";
+        ps = conn.prepareStatement(insert_sql);
+        
+        rs = ps.executeQuery();
+        while(rs.next())
+        {        	
+            String type = rs.getString("type");
+            int price = rs.getInt("price");             	
+            temp_list.add(new ChargeDTO(type, price));
+        }
+        
+        rs.close();
+        ps.close();
+
+        return temp_list;
     }
 }
