@@ -16,7 +16,7 @@ public class AccountDAO extends DAO
         rs = getRs();
     }
 
-    //계좌 추가
+    /*//계좌 추가
     public void addAccount(AccountDTO ac) throws Exception
     {
         String insert_sql = "insert into accounts(account, money) values(?, ?)";
@@ -110,7 +110,7 @@ public class AccountDAO extends DAO
         int r = ps.executeUpdate();
         System.out.println("변경된 row : " + r);
 
-        ps.close();*/
+        ps.close();
     }
 
     public int getMoney(String account) throws Exception
@@ -126,6 +126,6 @@ public class AccountDAO extends DAO
         rs.close();
         ps.close();
         return money;
-    }
+    }*/
 
 }

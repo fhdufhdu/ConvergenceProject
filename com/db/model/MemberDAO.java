@@ -77,6 +77,10 @@ public class MemberDAO extends DAO
         String role = rs.getString("role");
         String password = rs.getString("password");
         String account = rs.getString("account");
+        if(role.equals("1"))
+        {
+            return new MemberDTO(id, role, password, account);
+        }
         String name = rs.getString("name");
         String phone_number = rs.getString("phone_number");
         Date birth = rs.getDate("birth");

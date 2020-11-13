@@ -62,7 +62,7 @@ public class Login {
                 path = "../xml/admin_main.fxml";
             else
                 path = "../xml/user_main.fxml";
-            Parent root = FXMLLoader.load(getClass().getResource(path));
+            Parent root = FXMLLoader.load(Login.class.getResource(path));
             Scene scene = new Scene(root, 1000, 666);
             Stage primaryStage = (Stage) login.getScene().getWindow();
             primaryStage.setTitle("관리자 모드");

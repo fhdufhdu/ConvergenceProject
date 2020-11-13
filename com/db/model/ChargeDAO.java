@@ -17,7 +17,7 @@ public class ChargeDAO extends DAO
         rs = getRs();
     }
 
-    //멤버 정보 수정
+    //가격 정보 수정
     public void changeCharge(ChargeDTO charge) throws Exception
     {
         String insert_sql = "update charges set price = ? where type = ?";
@@ -33,7 +33,7 @@ public class ChargeDAO extends DAO
         ps.close();
     }
 
-    //타입별 가격 출력
+    //타입별 가격 리스트반환
     public ArrayList<ChargeDTO> getChargeList() throws Exception
     {
         ArrayList<ChargeDTO> temp_list = new ArrayList<ChargeDTO>();

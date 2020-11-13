@@ -456,6 +456,7 @@ public class oracleTest
                                 sc.nextLine();
 
                                 TimeTableDAO ttDao = new TimeTableDAO();
+                                //영화관에 해당하는 현재 시간 이후 상영시간표 조회
                                 ArrayList<TimeTableDTO> ttlist = ttDao.getTimeTableList(insertCurTimeTable("%", "%", DTO.EMPTY_ID), theaterElem.getId());
                                 userDisTimeTable(ttlist);   //모든 영화, 영화 아이디 입력 가능
                                 break;
