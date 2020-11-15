@@ -1,4 +1,4 @@
-package com.db.view;
+package com.view;
 
 import javafx.event.*;
 import javafx.fxml.*;

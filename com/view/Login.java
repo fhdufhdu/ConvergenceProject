@@ -1,4 +1,4 @@
-package com.db.view;
+package com.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
