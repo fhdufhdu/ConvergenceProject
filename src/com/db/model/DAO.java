@@ -22,7 +22,7 @@ public class DAO
         {
 			String user = "MT";
             String passwd = "1234";
-            String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+            String url = "jdbc:oracle:thin:@192.168.224.250:1521:xe";
 
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(url, user, passwd);
