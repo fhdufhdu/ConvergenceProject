@@ -1,5 +1,7 @@
 package com.main;
 
+import com.db.model.DAO;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +11,9 @@ import javafx.stage.Stage;
 public class testMain  extends Application{
     public static void main(String args[]) throws Exception
     {
+        DAO.connectDB();
         launch();
+        DAO.closeDB();
     }
 
     @Override

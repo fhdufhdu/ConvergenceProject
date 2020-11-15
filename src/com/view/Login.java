@@ -51,22 +51,31 @@ public class Login {
     {
         try 
         {
+            //gui에서 값 가져옴
             String id = enter_id.getText();
             String passwd = enter_passwd.getText();
             
-            DAO.connectDB();
             MemberDAO mDao = new MemberDAO();
             MemberDTO mem = mDao.getMember(id, passwd);
 
+            //사용자, 관리자 구분해서 실행할 xml파일 선택
             String path;
+            String title;
             if(mem.getRole().equals("1"))
+            {
                 path = "./xml/admin_main.fxml";
+                title = "관리자 모드";
+            }
             else
+            {
                 path = "./xml/user_main.fxml";
+                title = "시네마";
+            }
+            
             Parent root = FXMLLoader.load(Login.class.getResource(path));
             Scene scene = new Scene(root, 1000, 666);
             Stage primaryStage = (Stage) login.getScene().getWindow();
-            primaryStage.setTitle("관리자 모드");
+            primaryStage.setTitle(title);
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -76,10 +85,6 @@ public class Login {
             e.printStackTrace();
             status.setText("");
             status.setText("로그인 실패!");
-        }
-        finally
-        {
-            DAO.closeDB();
         }
     }
 
