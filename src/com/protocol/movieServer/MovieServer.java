@@ -6,7 +6,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
-import com.protocol.movieTransaction.DBTransaction;;
+import com.protocol.movieTransaction.DBTransaction;
+import com.protocol.*;
 
 public class MovieServer extends Thread {
 	Socket socket;
@@ -24,12 +25,12 @@ public class MovieServer extends Thread {
 		admit = false;
 		movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
 
-		System.out.println("���� ����� �� :" + ++currUser);
+		System.out.println("현재 사용자 수 :" + ++currUser);
 	}
 
 	@Override
 	public void run() {
-		// ����Ʈ �迭�� ������ ���̹Ƿ� ���� ��Ʈ�� ���� Input/OutputStream�� ����ص� ��
+		// 바이트 배열로 전송할 것이므로 필터 스트림 없이 Input/OutputStream만 사용해도 됨
 		OutputStream os = null;
 		InputStream is = null;
 
@@ -43,22 +44,22 @@ public class MovieServer extends Thread {
 			boolean program_stop = false;
 
 			while (true) {
-				protocol = new Protocol(); // �� Protocol ��ü ����
-				byte[] buf = protocol.getPacket(); // �⺻ �����ڷ� ������ ������ ����Ʈ �迭�� ���̰� 1000����Ʈ�� ������
-				is.read(buf); // Ŭ���̾�Ʈ�κ��� �α������� (ID, PWD) ����
-				int packetType = buf[0]; // ���� �����Ϳ��� ��Ŷ Ÿ�� ����
-				protocol.setPacket(packetType, buf); // ��Ŷ Ÿ���� Protocol ��ü�� packet ��������� buf�� ����
+				protocol = new Protocol(); // 새 Protocol 객체 생성
+				byte[] buf = protocol.getPacket(); // 기본 생성자로 생성할 때에는 바이트 배열의 길이가 1000바이트로 지정됨
+				is.read(buf); // 클라이언트로부터 로그인정보 (ID, PWD) 수신
+				int packetType = buf[0]; // 수신 데이터에서 패킷 타입 얻음
+				protocol.setPacket(packetType, buf); // 패킷 타입을 Protocol 객체의 packet 멤버변수에 buf를 복사
 
 				switch (packetType) {
-				case Protocol.PT_EXIT: // ���α׷� ���� ����
+				case Protocol.PT_EXIT: // 프로그램 종료 수신
 					protocol = new Protocol(Protocol.PT_EXIT);
 					os.write(protocol.getPacket());
 					program_stop = true;
-					System.out.println("��������");
+					System.out.println("서버종료");
 					break;
 
-				case Protocol.CS_REQ_LOGIN: // �α��� ���� ����
-					System.out.println("Ŭ���̾�Ʈ��  �α��� ������ ���½��ϴ�");
+				case Protocol.CS_REQ_LOGIN: // 로그인 정보 수신
+					System.out.println("클라이언트가  로그인 정보를 보냈습니다");
 					String login_id = protocol.getId();
 					String login_password = protocol.getPassword();
 					boolean check = false;
@@ -69,42 +70,42 @@ public class MovieServer extends Thread {
 
 					while (rs.next()) {
 						String id = rs.getString("ID");
-						if (login_id.equals(id)) { // DB Select Data ���
+						if (login_id.equals(id)) { // DB Select Data 사용
 							String password = rs.getString("PASSWORD");
 							check = true;
-							if (login_password.equals(password)) { // �α��� ����
+							if (login_password.equals(password)) { // 로그인 성공
 								protocol.setResult("1");
 								memberConfirm = rs.getString("ROLE");
 								userSet(protocol, login_id);
-								System.out.println("�α��� ����"); // ������ �������̽� Ȩ ����
-							} else { // ��ȣ Ʋ��
+								System.out.println("로그인 성공"); // 성공시 인터페이스 홈 접속
+							} else { // 암호 틀림
 								protocol.setResult("2");
-								System.out.println("��ȣ Ʋ��"); // ���н� �޽��� â ��� �� ���Է� ����
+								System.out.println("암호 틀림"); // 실패시 메시지 창 출력 및 재입력 유도
 							}
 							break;
 						}
 					}
-					if (check == false) { // ���̵� ���� ����
+					if (check == false) { // 아이디 존재 안함
 						protocol.setResult("3");
-						System.out.println("���̵� �������");
+						System.out.println("아이디 존재안함");
 					}
 
-					System.out.println("�α��� ó�� ��� ����");
+					System.out.println("로그인 처리 결과 전송");
 					os.write(protocol.getPacket());
 					break;
 
 				case Protocol.CS_REQ_SIGNUP:
-					System.out.println("Ŭ���̾�Ʈ��  ȸ������ ������ ���½��ϴ�");
+					System.out.println("클라이언트가  회원가입 정보를 보냈습니다");
 					String data = protocol.getSignUpData();
 					String dataList[] = data.split("/");
-					String role = dataList[0]; // ����(�����, ������)
-					String id = dataList[1]; // ���̵�
-					String password = dataList[2]; // ��ȣ
-					String name = dataList[3]; // �̸�
-					String gender = dataList[4]; // ����
-					String phone_number = dataList[5]; // ����ó
+					String role = dataList[0]; // 구분(사용자, 관리자)
+					String id = dataList[1]; // 아이디
+					String password = dataList[2]; // 암호
+					String name = dataList[3]; // 이름
+					String gender = dataList[4]; // 성별
+					String phone_number = dataList[5]; // 연락처
 					Date birth = Date.valueOf(dataList[6]);
-					String account = dataList[7]; // ���� ��ȣ
+					String account = dataList[7]; // 계좌 번호
 					String signUp_query = "INSERT INTO MEMBERS VALUES ('1', '1', '1', '1', '1', '1', birth, '1')";
 					boolean signUp_result = movie_DB.InsertDB(signUp_query);
 					String test = "";
@@ -133,8 +134,8 @@ public class MovieServer extends Thread {
 			is.close();
 			os.close();
 			socket.close();
-			System.out.println("[" + socket.getInetAddress() + ":" + socket.getPort() + "]" + "�� �������� �Ͽ����ϴ�.");
-			System.out.println("���� ����� ��:" + currUser);
+			System.out.println("[" + socket.getInetAddress() + ":" + socket.getPort() + "]" + "가 접속종료 하였습니다.");
+			System.out.println("현재 사용자 수:" + currUser);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -149,7 +150,7 @@ public class MovieServer extends Thread {
 //		return tran;
 //	}
 //
-//	// �Ű������� �Է°��� �޾Ƽ� ��� Ȥ�� �Լ��ȿ��� �޴°�쵵 ����
+//	// 매개변수로 입력값을 받아서 사용 혹은 함수안에서 받는경우도 가능
 //	public Protocol performTransaction(int input, Protocol protocol) throws ClassNotFoundException, SQLException {
 //		Transaction tran = null;
 //		switch (input) {
@@ -163,11 +164,11 @@ public class MovieServer extends Thread {
 		currentID = id;
 		String classify;
 		if (memberConfirm.equals("1")) {
-			classify = "������";
+			classify = "관리자";
 		} else {
-			classify = "�����";
+			classify = "사용자";
 		}
-		System.out.println("[Login IP :" + socket.getInetAddress() + ":" + socket.getPort() + ", ���� ���� :" + classify
+		System.out.println("[Login IP :" + socket.getInetAddress() + ":" + socket.getPort() + ", 접속 권한 :" + classify
 				+ ", ID:" + currentID + "]");
 
 	}

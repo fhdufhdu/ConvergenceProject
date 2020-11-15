@@ -15,7 +15,7 @@ public class MovieServerSystem {
 		new MovieServerSystem().start();
 	}
 
-	// ���ι��� ���� ���� ��κ��� �ý��� �����帧
+	// 메인문과 같은 원리 대부분의 시스템 동작흐름
 	public void start() {
 		ServerSocket sSocket;
 		Socket socket;
@@ -25,10 +25,10 @@ public class MovieServerSystem {
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress();
 			sSocket.bind(new InetSocketAddress(localHostAddress, SERVER_PORT));
 			System.out.println("[server] binding! \n[server] address:" + localHostAddress + ", port:" + SERVER_PORT);
-			System.out.println("Ŭ���̾�Ʈ ���� �����...");
+			System.out.println("클라이언트 접속 대기중...");
 			while (true) {
 				socket = sSocket.accept();
-				System.out.println("[" + socket.getInetAddress() + ":" + socket.getPort() + "]" + "���� ���� �Ͽ����ϴ�.");
+				System.out.println("[" + socket.getInetAddress() + ":" + socket.getPort() + "]" + "에서 접속 하였습니다.");
 				MovieServer serverThread = new MovieServer(socket);
 				serverThread.start();
 			}

@@ -1,9 +1,8 @@
 package com.protocol.movieTransaction;
 
 import com.protocol.movieServer.MovieDB;
-import com.protocol.movieServer.Protocol;
-
-//Ʈ�������� �ǵ��̸� �ȉ� �ʿ��ϸ� ��ΰ� ���� ����
+import com.protocol.*;
+//트렌젝션은 건들이면 안됌 필요하면 모두가 같이 변경
 public abstract class DBTransaction {
 	private String id;
 	private boolean admit;
