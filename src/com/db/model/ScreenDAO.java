@@ -18,7 +18,7 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 추가
-    public void addScreen(ScreenDTO screen) throws Exception
+    public void addScreen(ScreenDTO screen) throws DAOException, SQLException
     {
         String insert_sql = "insert into screens(theater_id, name, total_capacity, max_row, max_col) values(?, ?, ?, ?, ?)";
 
@@ -53,7 +53,7 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 있는 지 체크
-    private int checkScreen(ScreenDTO screen) throws Exception
+    private int checkScreen(ScreenDTO screen) throws DAOException, SQLException
     {
         String check_sql = "select * from screens where theater_id = ? and name = ? and not(id = ?)";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -73,7 +73,7 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 리스트 반환
-    public ArrayList<ScreenDTO> getScreenList(ScreenDTO screen) throws Exception
+    public ArrayList<ScreenDTO> getScreenList(ScreenDTO screen) throws DAOException, SQLException
     {
         ArrayList<ScreenDTO> temp_list = new ArrayList<ScreenDTO>();
         String insert_sql = "select * from screens where theater_id = ? and name = ? and total_capacity = ? and max_row = ? and max_col = ?";
@@ -104,7 +104,7 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 리스트 반환
-    public ArrayList<ScreenDTO> getScreenList(String t_id) throws Exception
+    public ArrayList<ScreenDTO> getScreenList(String t_id) throws DAOException, SQLException
     {
         ArrayList<ScreenDTO> temp_list = new ArrayList<ScreenDTO>();
         String insert_sql = "select * from screens where theater_id = ?";
@@ -131,7 +131,7 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 수정
-    public void changeScreen(ScreenDTO screen) throws Exception
+    public void changeScreen(ScreenDTO screen) throws DAOException, SQLException
     {
         String insert_sql = "update screens set name = ?, total_capacity = ?, max_row = ?, max_col = ? where id = ?";
 
@@ -156,7 +156,7 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 삭제
-    public void removeScreen(ScreenDTO screen) throws Exception
+    public void removeScreen(ScreenDTO screen) throws DAOException, SQLException
     {
         String insert_sql = "delete from screens where id = ?";
 
@@ -170,7 +170,7 @@ public class ScreenDAO extends DAO
         ps.close();
     }
 
-    public ScreenDTO getScreenElem(String sid) throws Exception
+    public ScreenDTO getScreenElem(String sid) throws DAOException, SQLException
     {
         String insert_sql = "select * from screens where id = ?";
 

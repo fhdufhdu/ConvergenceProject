@@ -17,7 +17,7 @@ public class MemberDAO extends DAO
     }
 
     //유저 추가
-    public void addMember(MemberDTO mem) throws Exception
+    public void addMember(MemberDTO mem) throws DAOException, SQLException
     {
         String insert_sql = "insert into members(id, role, password, account, name, phone_number, birth, gender) values(?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -45,7 +45,7 @@ public class MemberDAO extends DAO
     }
 
     //id 중복 체크
-    private int checkMember(MemberDTO mem) throws Exception
+    private int checkMember(MemberDTO mem) throws DAOException, SQLException
     {
         String check_sql = "select * from members where id = ?";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -63,7 +63,7 @@ public class MemberDAO extends DAO
     }
 
     //사용자 정보 가져오기
-    public MemberDTO getMember(String mid, String mpasswd) throws Exception
+    public MemberDTO getMember(String mid, String mpasswd) throws DAOException, SQLException
     {
         String check_sql = "select * from members where id = ? and password = ?";
         ps = conn.prepareStatement(check_sql);
@@ -91,7 +91,7 @@ public class MemberDAO extends DAO
     }
 
     //멤버 정보 수정
-    public void changeMemberInfo(MemberDTO mem) throws Exception
+    public void changeMemberInfo(MemberDTO mem) throws DAOException, SQLException
     {
         String insert_sql = "update members set password = ?, account = ?, name = ?, phone_number = ?, birth = ?, gender = ? where id = ?";
 

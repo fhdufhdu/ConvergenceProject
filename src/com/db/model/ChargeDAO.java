@@ -18,7 +18,7 @@ public class ChargeDAO extends DAO
     }
 
     //가격 정보 수정
-    public void changeCharge(ChargeDTO charge) throws Exception
+    public void changeCharge(ChargeDTO charge) throws DAOException, SQLException
     {
         String insert_sql = "update charges set price = ? where type = ?";
 
@@ -34,7 +34,7 @@ public class ChargeDAO extends DAO
     }
 
     //타입별 가격 리스트반환
-    public ArrayList<ChargeDTO> getChargeList() throws Exception
+    public ArrayList<ChargeDTO> getChargeList() throws DAOException, SQLException
     {
         ArrayList<ChargeDTO> temp_list = new ArrayList<ChargeDTO>();
         String insert_sql = "select * from charges";

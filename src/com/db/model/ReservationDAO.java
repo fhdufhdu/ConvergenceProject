@@ -18,7 +18,7 @@ public class ReservationDAO extends DAO
     }
 
     //예약 추가
-    public void addReservation(ReservationDTO rsv, String passwd) throws Exception
+    public void addReservation(ReservationDTO rsv, String passwd) throws DAOException, SQLException
     {
         String insert_sql = "call ADD_RSV(?, ?, ?, ?, ?)";
             
@@ -43,7 +43,7 @@ public class ReservationDAO extends DAO
         ps.close();
     }
 
-    private int checkReservation(ReservationDTO rsv) throws Exception
+    private int checkReservation(ReservationDTO rsv) throws DAOException, SQLException
     {
         String check_sql = "select * from reservations where ttable_id = ? and s_row = ? and s_col = ? and cancel = 0 and not(id = ?)";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -66,7 +66,7 @@ public class ReservationDAO extends DAO
     }
 
     //상영시간표 id에 맞는 예약 DTO 리스트 반환
-    public ArrayList<ReservationDTO> getRsvListFromTT(String ttid) throws Exception
+    public ArrayList<ReservationDTO> getRsvListFromTT(String ttid) throws DAOException, SQLException
     {
         ArrayList<ReservationDTO> temp_list = new ArrayList<ReservationDTO>();
         String insert_sql = "select * from reservations where ttable_id = ? and cancel = 0";
@@ -93,7 +93,7 @@ public class ReservationDAO extends DAO
         return temp_list;
     }
 
-    public ArrayList<ReservationDTO> getRsvListFromMem(String mem_id) throws Exception
+    public ArrayList<ReservationDTO> getRsvListFromMem(String mem_id) throws DAOException, SQLException
     {
         ArrayList<ReservationDTO> temp_list = new ArrayList<ReservationDTO>();
         String insert_sql = "select * from reservations where member_id = ? and cancel = 0";
@@ -121,7 +121,7 @@ public class ReservationDAO extends DAO
     }
 
     //예약 취소
-    public void cancelRsv(String id) throws Exception
+    public void cancelRsv(String id) throws DAOException, SQLException
     {
         String insert_sql = "call CANCEL_RSV(?)";
 
