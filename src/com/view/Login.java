@@ -59,9 +59,9 @@ public class Login {
 
             String path;
             if(mem.getRole().equals("1"))
-                path = "../xml/admin_main.fxml";
+                path = "./xml/admin_main.fxml";
             else
-                path = "../xml/user_main.fxml";
+                path = "./xml/user_main.fxml";
             Parent root = FXMLLoader.load(Login.class.getResource(path));
             Scene scene = new Scene(root, 1000, 666);
             Stage primaryStage = (Stage) login.getScene().getWindow();
