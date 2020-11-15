@@ -53,6 +53,8 @@ public class Login {
         {
             String id = enter_id.getText();
             String passwd = enter_passwd.getText();
+            
+            //
             DAO.connectDB();
             MemberDAO mDao = new MemberDAO();
             MemberDTO mem = mDao.getMember(id, passwd);
