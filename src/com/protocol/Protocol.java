@@ -5,12 +5,13 @@ public class Protocol {
 	public static final int PT_UNDEFINED = -1; // 프로토콜이 지정되어 있지 않은 경우
 	public static final int PT_EXIT = 0; // 프로그램 종료
 	public static final int CS_REQ_CONNECT = 1; // 서버 접근 요청
-	public static final int SC_RES_CONNECT = 2; // 서버 접근 응답 및 로그인 요청
-	public static final int CS_REQ_LOGIN = 3; // 로그인 요청
-	public static final int SC_RES_LOGIN = 4; // 로그인 요청 응답
-	public static final int SC_REQ_SIGNUP = 5; // 회원가입 정보 요청
-	public static final int CS_REQ_SIGNUP = 6; // 회원가입 요청
-	public static final int SC_RES_SIGNUP = 7; // 회원가입 응답
+	public static final int SC_RES_CONNECT = 2; // 서버 접근 응답
+	public static final int SC_REQ_LOGIN = 3; // 로그인 정보 요청
+	public static final int CS_REQ_LOGIN = 4; // 로그인 요청
+	public static final int SC_RES_LOGIN = 5; // 로그인 요청 응답
+	public static final int SC_REQ_SIGNUP = 6; // 회원가입 정보 요청
+	public static final int CS_REQ_SIGNUP = 7; // 회원가입 요청
+	public static final int SC_RES_SIGNUP = 8; // 회원가입 응답
 
 	public static final int LEN_LOGIN_ID = 20; // ID 길이
 	public static final int LEN_LOGIN_PASSWORD = 50; // PWD 길이
@@ -45,6 +46,7 @@ public class Protocol {
 		if (packet == null) {
 			switch (protocolType) {
 			case SC_RES_CONNECT:
+			case SC_REQ_LOGIN:
 				packet = new byte[LEN_PROTOCOL_TYPE];
 				break;
 			case CS_REQ_LOGIN:

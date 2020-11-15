@@ -33,6 +33,9 @@ public class MovieClient {
 			BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 			switch (packetType) {
 			case Protocol.SC_RES_CONNECT:
+				System.out.println("서버와 연결 성공");
+				break;
+			case Protocol.SC_REQ_LOGIN:
 				System.out.println("서버가 로그인 정보 요청");
 				System.out.print("아이디 : ");
 				String id = userIn.readLine();

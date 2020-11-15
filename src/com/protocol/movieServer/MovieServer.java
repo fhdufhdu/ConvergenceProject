@@ -38,7 +38,7 @@ public class MovieServer extends Thread {
 			os = socket.getOutputStream();
 			is = socket.getInputStream();
 
-			Protocol protocol = new Protocol(Protocol.SC_REQ_SIGNUP);
+			Protocol protocol = new Protocol(Protocol.SC_RES_CONNECT);
 			os.write(protocol.getPacket());
 
 			boolean program_stop = false;
@@ -110,18 +110,9 @@ public class MovieServer extends Thread {
 					m1.addMember(
 							new MemberDTO(id, role, password, account, name,
 						            phone_number, birth, gender));
-					//String signUp_query = "INSERT INTO MEMBERS VALUES ('1', '1', '1', '1', '1', '1', birth, '1')";
-					//boolean signUp_result = movie_DB.InsertDB(signUp_query);
-					//String test = "";
-					/*if (signUp_result)
-						test = "1";
-					else
-						test = "0";*/
 					protocol = new Protocol(Protocol.SC_RES_SIGNUP);
-					//protocol.setResult(test);
 					os.write(protocol.getPacket());
 					break;
-
 				}// end switch
 
 				if (program_stop)
