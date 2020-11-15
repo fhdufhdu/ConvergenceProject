@@ -17,7 +17,7 @@ public class testMain  extends Application{
         try {
             Parent root = FXMLLoader.load(testMain.class.getResource("../view/xml/login.fxml"));
             Scene scene = new Scene(root);
-            primaryStage.setTitle("로그인");
+            primaryStage.setTitle("로그인ㅎㅎ");
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);
             primaryStage.show();
