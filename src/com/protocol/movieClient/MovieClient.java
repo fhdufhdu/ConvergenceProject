@@ -9,7 +9,11 @@ public class MovieClient {
 		if (args.length < 2)
 			System.out.println("사용법 : " + "java LoginClient 주소 포트번호");
 
-		Socket socket = new Socket(args[0], 5000); // 소켓 생성과 동시에 ip, port 할당 후 서버와 연결 요청
+		//args 입력없이 바로 실행되게 변경했음, 혹시 맘에 안들면 죄송... - 우성
+		String localHostAddress = InetAddress.getLocalHost().getHostAddress();
+		Socket socket = new Socket(localHostAddress, 5000); // 소켓 생성과 동시에 ip, port 할당 후 서버와 연결 요청
+
+		//Socket socket = new Socket(args[0], 5000);
 
 		OutputStream os = socket.getOutputStream();
 		InputStream is = socket.getInputStream();

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MovieClient",
+            "request": "launch",
+            "mainClass": "com.protocol.movieClient.MovieClient",
+            "projectName": "ConvergenceProject"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MovieServerSystem",
+            "request": "launch",
+            "mainClass": "com.protocol.movieServer.MovieServerSystem",
+            "projectName": "ConvergenceProject"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - testMain",
             "request": "launch",
             "mainClass": "com.main.testMain",
