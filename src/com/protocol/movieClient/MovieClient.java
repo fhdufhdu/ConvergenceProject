@@ -9,7 +9,7 @@ public class MovieClient {
 		if (args.length < 2)
 			System.out.println("사용법 : " + "java LoginClient 주소 포트번호");
 
-		Socket socket = new Socket("192.168.232.88", 5000); // 소켓 생성과 동시에 ip, port 할당 후 서버와 연결 요청
+		Socket socket = new Socket(args[0], 5000); // 소켓 생성과 동시에 ip, port 할당 후 서버와 연결 요청
 
 		OutputStream os = socket.getOutputStream();
 		InputStream is = socket.getInputStream();

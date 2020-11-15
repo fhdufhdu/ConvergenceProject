@@ -6,7 +6,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
-import com.protocol.movieTransaction.DBTransaction;
+import com.db.model.*;
 import com.protocol.*;
 
 public class MovieServer extends Thread {
@@ -23,8 +23,8 @@ public class MovieServer extends Thread {
 		this.socket = socket;
 		currentID = "NULL";
 		admit = false;
-		movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
-
+		//movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
+		DAO.connectDB();
 		System.out.println("현재 사용자 수 :" + ++currUser);
 	}
 
@@ -104,17 +104,21 @@ public class MovieServer extends Thread {
 					String name = dataList[3]; // 이름
 					String gender = dataList[4]; // 성별
 					String phone_number = dataList[5]; // 연락처
-					Date birth = Date.valueOf(dataList[6]);
+					String birth = dataList[6];
 					String account = dataList[7]; // 계좌 번호
-					String signUp_query = "INSERT INTO MEMBERS VALUES ('1', '1', '1', '1', '1', '1', birth, '1')";
-					boolean signUp_result = movie_DB.InsertDB(signUp_query);
-					String test = "";
-					if (signUp_result)
+					MemberDAO m1 = new MemberDAO();
+					m1.addMember(
+							new MemberDTO(id, role, password, account, name,
+						            phone_number, birth, gender));
+					//String signUp_query = "INSERT INTO MEMBERS VALUES ('1', '1', '1', '1', '1', '1', birth, '1')";
+					//boolean signUp_result = movie_DB.InsertDB(signUp_query);
+					//String test = "";
+					/*if (signUp_result)
 						test = "1";
 					else
-						test = "0";
+						test = "0";*/
 					protocol = new Protocol(Protocol.SC_RES_SIGNUP);
-					protocol.setResult(test);
+					//protocol.setResult(test);
 					os.write(protocol.getPacket());
 					break;
 
