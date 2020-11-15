@@ -38,7 +38,7 @@ public class MovieServer extends Thread {
 			os = socket.getOutputStream();
 			is = socket.getInputStream();
 
-			Protocol protocol = new Protocol(Protocol.SC_RES_CONNECT);
+			Protocol protocol = new Protocol(Protocol.SC_REQ_LOGIN);
 			os.write(protocol.getPacket());
 
 			boolean program_stop = false;

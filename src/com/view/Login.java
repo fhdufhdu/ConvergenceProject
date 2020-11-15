@@ -14,7 +14,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+
 import com.db.model.*;
+import com.main.testProtocol;
+import com.protocol.Protocol;
 
 public class Login {
 
@@ -47,10 +54,16 @@ public class Login {
         loginTry();
     }
 
-    void loginTry()
+    void loginTry() throws IOException
     {
         try 
         {
+        	Protocol protocol = new Protocol(Protocol.CS_REQ_LOGIN);
+//			byte[] buf = protocol.getPacket();
+			protocol.setId(enter_id.getText());
+			protocol.setPassword(enter_passwd.getText());
+    		testProtocol.getOs().write(protocol.getPacket());
+    		
             //gui에서 값 가져옴
             String id = enter_id.getText();
             String passwd = enter_passwd.getText();
