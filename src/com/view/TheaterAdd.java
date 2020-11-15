@@ -1,19 +1,14 @@
 package com.view;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.scene.text.*;
 
 import java.lang.Exception;
-import java.net.InetAddress;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.db.model.*;
@@ -55,6 +50,9 @@ public class TheaterAdd implements Initializable {
     @FXML
     private Button insert_theater_btn;
 
+    @FXML
+    private Text error_text;
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -69,6 +67,8 @@ public class TheaterAdd implements Initializable {
             {
                 theater_list.add(tIter.next());
             }
+
+            theater_table.getItems().clear();
             
             theater_name.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
             theater_address.setCellValueFactory(cellData -> cellData.getValue().getAddressProperty());
@@ -89,16 +89,28 @@ public class TheaterAdd implements Initializable {
         try
         {
             TheaterDAO tDao = new TheaterDAO();
-            TheaterDTO tDto = new TheaterDTO(enter_t_name.getText(), enter_t_address.getText(), Integer.valueOf(enter_t_screen.getText()), Integer.valueOf(enter_t_seat.getText()));
+            TheaterDTO tDto = new TheaterDTO(DTO.EMPTY_ID, enter_t_name.getText(), enter_t_address.getText(), Integer.valueOf(enter_t_screen.getText()), Integer.valueOf(enter_t_seat.getText()));
                                     
             tDao.addTheater(tDto);
+
+            theater_list.add(tDto);
+            theater_table.setItems(theater_list);
+
+            enter_t_name.setText("");
+            enter_t_address.setText("");
+            enter_t_screen.setText("");
+            enter_t_seat.setText("");
+            error_text.setText("");
         }
         catch(DAOException e)
         {
+            //여긴 중복 발생
+            error_text.setText("영화관 이름 및 주소가 중복됩니다!");
             e.printStackTrace();
         } 
         catch(SQLException e)
         {
+            //여긴 sql문제 발생
             e.printStackTrace();
         }
     }

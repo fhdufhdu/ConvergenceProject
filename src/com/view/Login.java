@@ -10,7 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -91,7 +90,20 @@ public class Login {
     @FXML
     void signUp(ActionEvent event) 
     {
-
+        try 
+        {
+            Parent root = FXMLLoader.load(Login.class.getResource("./xml/sign_up.fxml"));
+            Scene scene = new Scene(root, 600, 400);
+            Stage primaryStage = (Stage) login.getScene().getWindow();
+            primaryStage.setTitle("회원가입");
+            primaryStage.setResizable(false);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
     }
 
 }
