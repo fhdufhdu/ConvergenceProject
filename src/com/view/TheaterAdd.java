@@ -12,6 +12,7 @@ import javafx.scene.text.*;
 import java.lang.Exception;
 import java.net.InetAddress;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,6 +39,21 @@ public class TheaterAdd implements Initializable {
 
     @FXML
     private TableColumn<TheaterDTO, String> theater_total_seat;
+
+    @FXML
+    private TextField enter_t_seat;
+
+    @FXML
+    private TextField enter_t_screen;
+
+    @FXML
+    private TextField enter_t_name;
+
+    @FXML
+    private TextField enter_t_address;
+
+    @FXML
+    private Button insert_theater_btn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -67,4 +83,23 @@ public class TheaterAdd implements Initializable {
         }
     }
 
+    @FXML
+    void insertTheater(ActionEvent event) 
+    {
+        try
+        {
+            TheaterDAO tDao = new TheaterDAO();
+            TheaterDTO tDto = new TheaterDTO(enter_t_name.getText(), enter_t_address.getText(), Integer.valueOf(enter_t_screen.getText()), Integer.valueOf(enter_t_seat.getText()));
+                                    
+            tDao.addTheater(tDto);
+        }
+        catch(DAOException e)
+        {
+            e.printStackTrace();
+        } 
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

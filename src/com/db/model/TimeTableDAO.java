@@ -18,7 +18,7 @@ public class TimeTableDAO extends DAO
     }
 
     //상영시간표 설정
-    public void addTimeTable(TimeTableDTO elem) throws Exception
+    public void addTimeTable(TimeTableDTO elem) throws DAOException, SQLException
     {
         try 
         {
@@ -52,7 +52,7 @@ public class TimeTableDAO extends DAO
     }
 
     // 시간과 날짜 중복되는지 확인해야함
-    private int checkTimeTable(TimeTableDTO elem) throws Exception
+    private int checkTimeTable(TimeTableDTO elem) throws DAOException, SQLException
     {
         try 
         {
@@ -86,7 +86,7 @@ public class TimeTableDAO extends DAO
     }
 
     //상영 시간표 출력
-    public ArrayList<TimeTableDTO> getTimeTableList(TimeTableDTO elem) throws Exception
+    public ArrayList<TimeTableDTO> getTimeTableList(TimeTableDTO elem) throws DAOException, SQLException
     {
         try 
         {
@@ -124,7 +124,7 @@ public class TimeTableDAO extends DAO
         throw new DAOException("not found result of theaters");
     }
 
-    public ArrayList<TimeTableDTO> getTimeTableList(TimeTableDTO elem, String theater_id) throws Exception
+    public ArrayList<TimeTableDTO> getTimeTableList(TimeTableDTO elem, String theater_id) throws DAOException, SQLException
     {
         try 
         {
@@ -163,7 +163,7 @@ public class TimeTableDAO extends DAO
     }
 
     //상영 시간표 수정
-    public void changeTimeTable(TimeTableDTO elem) throws Exception
+    public void changeTimeTable(TimeTableDTO elem) throws DAOException, SQLException
     {
         try 
         {
@@ -198,7 +198,7 @@ public class TimeTableDAO extends DAO
     }
 
     //상영시간표 삭제
-    public void removeTimeTable(TimeTableDTO elem) throws Exception
+    public void removeTimeTable(TimeTableDTO elem) throws DAOException, SQLException
     {
         try 
         {

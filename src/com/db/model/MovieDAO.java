@@ -19,7 +19,7 @@ public class MovieDAO extends DAO
     }
 
     //영화 추가
-    public void addMovie(MovieDTO new_mov) throws Exception
+    public void addMovie(MovieDTO new_mov) throws DAOException, SQLException
     {
         String insert_sql = "insert into movies(title, release_date, is_current, plot, poster_path, stillcut_path, trailer_path, director, actor, min) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -49,7 +49,7 @@ public class MovieDAO extends DAO
     }
 
     //개봉일과 제목이 같은 영화가 있는 지 탐색
-    public int checkMovie(MovieDTO mov) throws Exception
+    public int checkMovie(MovieDTO mov) throws DAOException, SQLException
     {
         String check_sql = "select * from movies where title = ? and release_date = ? and not(id = ?)";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -68,7 +68,7 @@ public class MovieDAO extends DAO
     }
     
     //영화 출력
-    public ArrayList<MovieDTO> getMovieList(HashMap<String, String> info) throws Exception
+    public ArrayList<MovieDTO> getMovieList(HashMap<String, String> info) throws DAOException, SQLException
     {
         ArrayList<MovieDTO> temp_list = new ArrayList<MovieDTO>();
         String insert_sql = "select * from movies where title like ? and (release_date between ? and ?) and is_current like ? and director like ? and actor like ?";
@@ -105,7 +105,7 @@ public class MovieDAO extends DAO
     }
 
     //영화 수정
-    public void changeMovie(MovieDTO mov) throws Exception
+    public void changeMovie(MovieDTO mov) throws DAOException, SQLException
     {
         String insert_sql = "update movies set title = ?, release_date = ?, is_current = ?, plot = ?, poster_path = ?, stillcut_path = ?, trailer_path = ? , director = ? , actor = ? , min = ?  where id = ?";
 
@@ -136,7 +136,7 @@ public class MovieDAO extends DAO
     }
 
     //영화 삭제
-    public void removeMovie(MovieDTO mov) throws Exception
+    public void removeMovie(MovieDTO mov) throws DAOException, SQLException
     {
         String insert_sql = "delete from movies where id = ?";
 
@@ -152,7 +152,7 @@ public class MovieDAO extends DAO
         ps.close();
     }
 
-    public ArrayList<MovieDTO> getMemberMovie(String mem_id) throws Exception
+    public ArrayList<MovieDTO> getMemberMovie(String mem_id) throws DAOException, SQLException
     {
         ArrayList<MovieDTO> temp_list = new ArrayList<MovieDTO>();
         String insert_sql = "select * from movies where id in (select movie_id from timetables where id in (select distinct ttable_id from reservations where member_id = ? and cancel = 0))";

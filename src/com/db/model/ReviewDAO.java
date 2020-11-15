@@ -18,7 +18,7 @@ public class ReviewDAO extends DAO
     }
 
     //리뷰 등록
-    public void addReview(ReviewDTO rv) throws Exception
+    public void addReview(ReviewDTO rv) throws DAOException, SQLException
     {
         String insert_sql = "insert into reviews(member_id, movie_id, star, text) values(?, ?, ?, ?)";
 
@@ -36,7 +36,7 @@ public class ReviewDAO extends DAO
     }
 
     //리뷰 수정
-    public void changeReview(ReviewDTO rv) throws Exception
+    public void changeReview(ReviewDTO rv) throws DAOException, SQLException
     {
         String insert_sql = "update reviews set star = ?, text = ? where id = ?";
 
@@ -52,7 +52,7 @@ public class ReviewDAO extends DAO
     }
 
     //사용자 id로 조회
-    public ArrayList<ReviewDTO> getRvListFromMem(String mem_id) throws Exception
+    public ArrayList<ReviewDTO> getRvListFromMem(String mem_id) throws DAOException, SQLException
     {
         ArrayList<ReviewDTO> temp_list = new ArrayList<ReviewDTO>();
         String insert_sql = "select * from reviews where member_id = ?";
@@ -78,7 +78,7 @@ public class ReviewDAO extends DAO
     }
 
     //영화 id로 조회
-    public ArrayList<ReviewDTO> getRvListFromMov(String mov_id) throws Exception
+    public ArrayList<ReviewDTO> getRvListFromMov(String mov_id) throws DAOException, SQLException
     {
         ArrayList<ReviewDTO> temp_list = new ArrayList<ReviewDTO>();
         String insert_sql = "select * from reviews where movie_id = ?";
@@ -103,7 +103,7 @@ public class ReviewDAO extends DAO
         return temp_list;
     }
 
-    public ArrayList<ReviewDTO> getRvList(String mem_id, String mov_id) throws Exception
+    public ArrayList<ReviewDTO> getRvList(String mem_id, String mov_id) throws DAOException, SQLException
     {
         ArrayList<ReviewDTO> temp_list = new ArrayList<ReviewDTO>();
         String insert_sql = "select * from reviews where member_id = ? and movie_id = ?";

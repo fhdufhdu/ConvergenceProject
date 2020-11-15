@@ -18,7 +18,7 @@ public class TheaterDAO extends DAO
     }
 
     //새로운 극장 추가
-    public void addTheater(TheaterDTO mt) throws Exception
+    public void addTheater(TheaterDTO mt) throws DAOException, SQLException
     {
         String insert_sql = "insert into theaters(name, address, total_screen, total_seat) values(?, ?, ?, ?)";
 
@@ -42,7 +42,7 @@ public class TheaterDAO extends DAO
     }
 
     //해당하는 영화관이 있는지 판단
-    private int checkTheater(TheaterDTO mt) throws Exception
+    private int checkTheater(TheaterDTO mt) throws DAOException, SQLException
     {
         String check_sql = "select * from theaters where (name = ? or address = ?) and not(id = ?)";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -62,7 +62,7 @@ public class TheaterDAO extends DAO
     }
 
     //id가 존재하는지 파악하기
-    public int checkTheaterID(TheaterDTO mt) throws Exception
+    public int checkTheaterID(TheaterDTO mt) throws DAOException, SQLException
     {
         String check_sql = "select * from theaters where id = ?";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -80,7 +80,7 @@ public class TheaterDAO extends DAO
     }
 
     //모든 영화관 반환
-    public ArrayList<TheaterDTO> getTheaterList() throws Exception
+    public ArrayList<TheaterDTO> getTheaterList() throws DAOException, SQLException
     {
         ArrayList<TheaterDTO> temp_list = new ArrayList<TheaterDTO>();
         String insert_sql = "select * from theaters";
@@ -104,7 +104,7 @@ public class TheaterDAO extends DAO
     }
 
     //조건에 맞는영화관 반환
-    public ArrayList<TheaterDTO> getTheaterList(TheaterDTO mt) throws Exception
+    public ArrayList<TheaterDTO> getTheaterList(TheaterDTO mt) throws DAOException, SQLException
     {
         ArrayList<TheaterDTO> temp_list = new ArrayList<TheaterDTO>();
         String insert_sql = "select * from theaters where name like ? and address like ?";
@@ -131,7 +131,7 @@ public class TheaterDAO extends DAO
     }
 
     //선택한 영화관의 정보 수정
-    public void changeTheater(TheaterDTO mt) throws Exception
+    public void changeTheater(TheaterDTO mt) throws DAOException, SQLException
     {
         String insert_sql = "update theaters set name = ?, address = ?, total_screen = ?, total_seat = ? where id = ?";
 
@@ -157,7 +157,7 @@ public class TheaterDAO extends DAO
     }
 
     //극장 삭제
-    public void removeTheater(TheaterDTO mt) throws Exception
+    public void removeTheater(TheaterDTO mt) throws DAOException, SQLException
     {
         String insert_sql = "delete from theaters where id = ?";
 

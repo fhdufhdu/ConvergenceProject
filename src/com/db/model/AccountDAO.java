@@ -17,7 +17,7 @@ public class AccountDAO extends DAO
     }
 
     /*//계좌 추가
-    public void addAccount(AccountDTO ac) throws Exception
+    public void addAccount(AccountDTO ac) throws DAOException, SQLException
     {
         String insert_sql = "insert into accounts(account, money) values(?, ?)";
 
@@ -39,7 +39,7 @@ public class AccountDAO extends DAO
     }
 
     //계좌가 중복되는지 확인
-    private int checkAccount(AccountDTO ac) throws Exception
+    private int checkAccount(AccountDTO ac) throws DAOException, SQLException
     {
         String check_sql = "select * from accounts where account = ?";
         ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -57,7 +57,7 @@ public class AccountDAO extends DAO
     }
 
     //계좌 잔액 수정 - 문제 발생 시 예외처리
-    public void plusMoney(String account, int money) throws Exception
+    public void plusMoney(String account, int money) throws DAOException, SQLException
     {
         String insert_sql = "update accounts set money = ? where account = ?";
 
@@ -75,7 +75,7 @@ public class AccountDAO extends DAO
     }
 
     //계좌 잔액 수정 - 문제 발생 시 예외처리0
-    public void minusMoney(String account, int money) throws Exception
+    public void minusMoney(String account, int money) throws DAOException, SQLException
     {
         String insert_sql = "update accounts set money = ? where account = ?";
 
@@ -113,7 +113,7 @@ public class AccountDAO extends DAO
         ps.close();
     }
 
-    public int getMoney(String account) throws Exception
+    public int getMoney(String account) throws DAOException, SQLException
     {
         String check_sql = "select * from accounts where account = ?";
         ps = conn.prepareStatement(check_sql);
