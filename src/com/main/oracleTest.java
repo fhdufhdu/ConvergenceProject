@@ -21,7 +21,7 @@ public class oracleTest
         {
             try
             {
-                System.out.print("1. 관리자 모드 \n2. 일반사용자 모드\n3. 종료d\n입력 : ");
+                System.out.print("1. 관리자 모드 \n2. 일반사용자 모드\n3. 종료\n입력 : ");
                 int mode = sc.nextInt();
                 sc.nextLine();
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
