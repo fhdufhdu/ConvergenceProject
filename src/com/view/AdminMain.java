@@ -135,7 +135,7 @@ public class AdminMain
     {
         try 
         {
-            Parent root = FXMLLoader.load(AdminMain.class.getResource("../xml/admin_sub_page/"+file_name+".fxml"));
+            Parent root = FXMLLoader.load(AdminMain.class.getResource("./xml/admin_sub_page/"+file_name+".fxml"));
             admin_main_view.setCenter(root);
         } 
         catch (Exception e) 
