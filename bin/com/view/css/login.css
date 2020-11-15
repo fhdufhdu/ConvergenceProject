@@ -1,9 +1,0 @@
-#login{
-    -fx-background-color : #cc3e44;
-}
-#login:pressed {
-    -fx-background-color : #6f2426;
-}
-#login:hover { 
-   -fx-background-color : #6f2426;
-}
