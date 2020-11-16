@@ -36,7 +36,7 @@
                         <Font name="LG Smart UI Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text fx:id="t_result" layoutX="14.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="269.0">
+                  <Text fx:id="t_result" layoutX="52.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="347.0">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font>
