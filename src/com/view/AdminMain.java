@@ -58,7 +58,7 @@ public class AdminMain
 
     @FXML
     void menuMovieAdd(ActionEvent event) {
-
+        loadPage("movie_add");
     }
 
     @FXML
