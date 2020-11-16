@@ -39,7 +39,7 @@ public class mainGUI extends Application {
 		try {
 			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
 			Scene scene = new Scene(root);
-			primaryStage.setTitle("로그인ㅎㅎ");
+			primaryStage.setTitle("로그인");
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();

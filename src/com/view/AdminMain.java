@@ -25,6 +25,9 @@ public class AdminMain
 {
     
     @FXML
+    private Menu m_theater;
+
+    @FXML
     private MenuItem mi_movie_add;
 
     @FXML
