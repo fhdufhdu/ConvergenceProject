@@ -21,14 +21,11 @@ import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-public class AdminMain 
+public class AdminMain
 {
     
     @FXML
-    private MenuItem mi_theater_manage;
-
-    @FXML
-    private MenuItem mi_screen_add;
+    private Menu m_theater;
 
     @FXML
     private MenuItem mi_movie_add;
@@ -61,7 +58,7 @@ public class AdminMain
 
     @FXML
     void menuMovieAdd(ActionEvent event) {
-
+        loadPage("movie_add");
     }
 
     @FXML
@@ -75,10 +72,10 @@ public class AdminMain
     }
 
     @FXML
-    void menuScreenAdd(ActionEvent event) {
-
+    void menuTheaterManage(Event event) {
+        loadPage("theater_manage");
     }
-
+    
     @FXML
     void menuTheaterManage(ActionEvent event) {
         loadPage("theater_manage");
