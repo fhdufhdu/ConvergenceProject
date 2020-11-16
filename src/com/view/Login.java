@@ -63,7 +63,7 @@ public class Login {
 			String passwd = pf_passwd.getText();
             boolean loginResult = false;
             
-            writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd);
+            writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd); 
 
 			while (true) {
 				String packet = testProtocol.getBr().readLine();
