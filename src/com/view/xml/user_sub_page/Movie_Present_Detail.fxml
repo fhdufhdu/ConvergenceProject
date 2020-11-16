@@ -57,7 +57,6 @@
       </TabPane>
       <Text layoutX="630.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
       <Text layoutX="619.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
-      <Button layoutX="774.0" layoutY="363.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="107.0" text="예매하기" />
       <Button layoutX="781.0" layoutY="804.0" mnemonicParsing="false" text="메인화면으로" />
       <Button layoutX="136.0" layoutY="225.0" mnemonicParsing="false" text="이미지 파일 경로" />
       <TableView layoutX="318.0" layoutY="137.0" prefHeight="200.0" prefWidth="570.0">
