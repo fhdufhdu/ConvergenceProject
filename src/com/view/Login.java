@@ -59,58 +59,52 @@ public class Login {
 			Protocol protocol = new Protocol();
 			byte[] buf = protocol.getPacket();
 
-			while (true) {
-				testProtocol.getIs().read(buf);
-				int packetType = buf[0];
+			testProtocol.getIs().read(buf);
+			int packetType = buf[0];
 
-				// gui에서 값 가져옴
-				if (packetType != Protocol.SC_RES_LOGIN) {
-					String id = tf_id.getText();
-					String passwd = pf_passwd.getText();
+			// gui에서 값 가져옴
+			if (packetType != Protocol.SC_RES_LOGIN) {
+				String id = tf_id.getText();
+				String passwd = pf_passwd.getText();
 
-					protocol = new Protocol(Protocol.CS_REQ_LOGIN);
-					protocol.setId(id);
-					protocol.setPassword(passwd);
-					testProtocol.getOs().write(protocol.getPacket());
-				}
+				protocol = new Protocol(Protocol.CS_REQ_LOGIN);
+				protocol.setId(id);
+				protocol.setPassword(passwd);
+				testProtocol.getOs().write(protocol.getPacket());
+			}
 
-				if (packetType == Protocol.SC_RES_LOGIN) {
-					String result = protocol.getResult();
-					if (result.equals("1")) {
-						try {
-							MemberDAO mDao = new MemberDAO();
-							MemberDTO mem = mDao.getMember(protocol.getId(), protocol.getPassword());
-							// 사용자, 관리자 구분해서 실행할 xml파일 선택
-							String path;
-							String title;
-							if (mem.getRole().equals("1")) {
-								path = "./xml/admin_main.fxml";
-								title = "관리자 모드";
-							} else {
-								path = "./xml/user_main.fxml";
-								title = "시네마";
-							}
-
-							// 로그인 성공시 새로운 window 표시
-							Parent root = FXMLLoader.load(Login.class.getResource(path));
-							Scene scene = new Scene(root, 1000, 666);
-							Stage primaryStage = (Stage) btn_login.getScene().getWindow();
-							primaryStage.setTitle(title);
-							primaryStage.setResizable(false);
-							primaryStage.setScene(scene);
-							primaryStage.show();
-							break;
-						} catch (Exception e) {
-							e.printStackTrace();
-							t_result.setText("로그인 실패!");
-						}
-					} else if (result.equals("2")) {
-						System.out.println("실패");
-					} else if (result.equals("3")) {
-						System.out.println("실패");
+			if (packetType == Protocol.SC_RES_LOGIN) {
+				String result = protocol.getResult();
+				if (result.equals("1")) {
+					MemberDAO mDao = new MemberDAO();
+					MemberDTO mem = mDao.getMember(protocol.getId(), protocol.getPassword());
+					// 사용자, 관리자 구분해서 실행할 xml파일 선택
+					String path;
+					String title;
+					if (mem.getRole().equals("1")) {
+						path = "./xml/admin_main.fxml";
+						title = "관리자 모드";
+					} else {
+						path = "./xml/user_main.fxml";
+						title = "시네마";
 					}
+
+					// 로그인 성공시 새로운 window 표시
+					Parent root = FXMLLoader.load(Login.class.getResource(path));
+					Scene scene = new Scene(root, 1000, 666);
+					Stage primaryStage = (Stage) btn_login.getScene().getWindow();
+					primaryStage.setTitle(title);
+					primaryStage.setResizable(false);
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					
+				} else if (result.equals("2")) {
+					System.out.println("실패");
+				} else if (result.equals("3")) {
+					System.out.println("실패");
 				}
 			}
+
 		} catch (Exception e) // 에러 발생시
 		{
 			e.printStackTrace();

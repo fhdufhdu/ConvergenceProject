@@ -44,6 +44,8 @@ public class testProtocol extends Application {
 
 	public static void main(String args[]) throws Exception {
 		launch();
+		is.close();
+		os.close();
 	}
 
 	@Override
