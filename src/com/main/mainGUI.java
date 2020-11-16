@@ -19,6 +19,7 @@ public class mainGUI extends Application {
 
 	public static void main(String args[]) throws Exception {
 		try {
+			DAO.connectDB();
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress();
 			Socket socket = new Socket(localHostAddress, 5000);
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -27,6 +28,7 @@ public class mainGUI extends Application {
 			bw.close();
 			br.close();
 			socket.close();
+			DAO.connectDB();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
