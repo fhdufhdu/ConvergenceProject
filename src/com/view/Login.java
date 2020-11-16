@@ -88,7 +88,7 @@ public class Login
                     }
                     case "3":
                     {
-                        t_result.setText("로그인 실패! 암호 오류!");
+                        t_result.setText("로그인 실패!");
                         return;
                     }
                 }
@@ -108,7 +108,7 @@ public class Login
         try 
         {
 			// 회원 가입 버튼 누를 시 새로운 윈도우 출력
-			Parent root = FXMLLoader.load(Login.class.getResource("./xml/btn_sign_up.fxml"));
+			Parent root = FXMLLoader.load(Login.class.getResource("./xml/sign_up.fxml"));
 			Scene scene = new Scene(root, 600, 400);
 			Stage primaryStage = (Stage) btn_login.getScene().getWindow();
 			primaryStage.setTitle("회원가입");

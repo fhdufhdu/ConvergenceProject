@@ -13,24 +13,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="1000.0" stylesheets="@../css/admin_main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.AdminMain">
    <children>
-      <Line endX="244.0" layoutX="500.0" layoutY="80.0" startX="-244.0" />
+      <Line endX="244.0" layoutX="418.0" layoutY="80.0" startX="-81.5999755859375" />
       <Text layoutX="434.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관리자 모드">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
       </Text>
-      <MenuBar id="admin_menu" layoutX="329.0" layoutY="96.0">
+      <MenuBar id="admin_menu" layoutX="362.0" layoutY="95.0">
          <menus>
-            <Menu id="menu_movie" mnemonicParsing="false" text="영화관">
-               <items>
-                  <MenuItem fx:id="mi_theater_manage" mnemonicParsing="false" onAction="#menuTheaterManage" text="관리" />
-                  <Menu mnemonicParsing="false" text="상영관">
-                     <items>
-                        <MenuItem fx:id="mi_screen_add" mnemonicParsing="false" onAction="#menuScreenAdd" text="관리" />
-                     </items>
-                  </Menu>
-               </items>
-            </Menu>
+            <Menu id="menu_movie" mnemonicParsing="false" onAction="#menuTheaterManage" text="영화관" />
             <Menu mnemonicParsing="false" text="영화">
                <items>
                   <MenuItem fx:id="mi_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
@@ -44,15 +35,17 @@
                   <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
                   <MenuItem fx:id="mi_timetable_list" mnemonicParsing="false" onAction="#menuTimeTableList" text="출력" />
                </items></Menu>
-            <Menu mnemonicParsing="false" text="통계정보">
+            <Menu fx:id="m_admin_account" mnemonicParsing="false" onAction="#menuAdminAccount" text="수입 계좌 관리">
                <items>
-                  <MenuItem mnemonicParsing="false" text="등록" />
-                  <MenuItem mnemonicParsing="false" text="수정" />
-                  <MenuItem mnemonicParsing="false" text="제거" />
-                  <MenuItem mnemonicParsing="false" text="출력" />
-               </items>
-            </Menu>
-            <Menu fx:id="m_admin_account" mnemonicParsing="false" onAction="#menuAdminAccount" text="수입 계좌 관리" />
+                  <Menu mnemonicParsing="false" text="통계정보">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="등록" />
+                        <MenuItem mnemonicParsing="false" text="수정" />
+                        <MenuItem mnemonicParsing="false" text="제거" />
+                        <MenuItem mnemonicParsing="false" text="출력" />
+                     </items>
+                  </Menu>
+               </items></Menu>
          </menus>
          <cursor>
             <Cursor fx:constant="HAND" />

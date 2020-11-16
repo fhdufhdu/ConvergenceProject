@@ -25,12 +25,6 @@ public class AdminMain
 {
     
     @FXML
-    private MenuItem mi_theater_manage;
-
-    @FXML
-    private MenuItem mi_screen_add;
-
-    @FXML
     private MenuItem mi_movie_add;
 
     @FXML
@@ -71,11 +65,6 @@ public class AdminMain
 
     @FXML
     void menuMovieList(ActionEvent event) {
-
-    }
-
-    @FXML
-    void menuScreenAdd(ActionEvent event) {
 
     }
 

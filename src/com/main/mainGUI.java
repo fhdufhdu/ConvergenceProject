@@ -5,8 +5,6 @@ import java.net.*;
 
 import com.db.model.DAO;
 import com.protocol.Protocol;
-//import com.db.model.DAO;
-import com.protocol.movieServer.MovieDB;
 import com.protocol.movieServer.MovieServer;
 
 import javafx.application.Application;
@@ -26,6 +24,8 @@ public class mainGUI extends Application {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			launch();
+			bw.close();
+			br.close();
 			socket.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

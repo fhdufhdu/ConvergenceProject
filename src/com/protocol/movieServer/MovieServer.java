@@ -12,10 +12,8 @@ import com.protocol.*;
 
 public class MovieServer extends Thread {
 	Socket socket;
-	private MovieDB movie_DB;
 	private String currentID;
 	private boolean admit;
-	private String memberConfirm;
 	private static int currUser = 0;
 	public static int cnt = 1;
 	BufferedReader br = null;
@@ -26,7 +24,6 @@ public class MovieServer extends Thread {
 		this.socket = socket;
 		currentID = "NULL";
 		admit = false;
-		//movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
 		DAO.connectDB();
 		System.out.println("현재 사용자 수 :" + ++currUser);
 	}
