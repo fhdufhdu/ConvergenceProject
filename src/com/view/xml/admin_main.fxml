@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,33 +21,43 @@
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
       </Text>
-      <MenuBar id="admin_menu" layoutX="362.0" layoutY="95.0">
+      <MenuBar id="admin_menu" layoutX="269.0" layoutY="93.0" prefHeight="15.0" style="-fx-padding: 0 10 0 10;">
          <menus>
-            <Menu id="menu_movie" mnemonicParsing="false" onAction="#menuTheaterManage" text="영화관" />
-            <Menu mnemonicParsing="false" text="영화">
-               <items>
-                  <MenuItem fx:id="mi_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
-                  <MenuItem fx:id="mi_movie_change" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
-                  <MenuItem fx:id="mi_movie_list" mnemonicParsing="false" onAction="#menuMovieList" text="출력" />
-               </items>
+            <Menu id="menu_movie" fx:id="m_theater" mnemonicParsing="false" onHiding="#menuTheaterManage" onShowing="#menuTheaterManage">
+               <graphic>
+                  <Button mnemonicParsing="false" onAction="#menuTheaterManage" prefHeight="15.0" style="-fx-background-color: transparent;" text="영화관" />
+               </graphic>
             </Menu>
-            <Menu mnemonicParsing="false" text="예매정보">
-               <items>
-                  <MenuItem fx:id="mi_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
-                  <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
-                  <MenuItem fx:id="mi_timetable_list" mnemonicParsing="false" onAction="#menuTimeTableList" text="출력" />
-               </items></Menu>
-            <Menu fx:id="m_admin_account" mnemonicParsing="false" onAction="#menuAdminAccount" text="수입 계좌 관리">
-               <items>
-                  <Menu mnemonicParsing="false" text="통계정보">
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <MenuButton mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="영화">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="등록" />
-                        <MenuItem mnemonicParsing="false" text="수정" />
-                        <MenuItem mnemonicParsing="false" text="제거" />
-                        <MenuItem mnemonicParsing="false" text="출력" />
+                        <MenuItem fx:id="mi_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
+                        <MenuItem fx:id="mi_movie_change" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
+                        <MenuItem fx:id="mi_movie_list" mnemonicParsing="false" onAction="#menuMovieList" text="출력" />
                      </items>
-                  </Menu>
-               </items></Menu>
+                  </MenuButton>
+               </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <MenuButton mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="예매 정보">
+                    <items>
+                        <MenuItem fx:id="mi_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
+                        <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
+                        <MenuItem fx:id="mi_timetable_list" mnemonicParsing="false" onAction="#menuTimeTableList" text="출력" />
+                    </items>
+                  </MenuButton>
+               </graphic></Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="통계정보" />
+               </graphic>
+            </Menu>
+            <Menu fx:id="m_admin_account" mnemonicParsing="false" onAction="#menuAdminAccount">
+               <graphic>
+                  <Button mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="수입 계좌 관리" />
+               </graphic></Menu>
          </menus>
          <cursor>
             <Cursor fx:constant="HAND" />

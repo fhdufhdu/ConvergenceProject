@@ -21,7 +21,7 @@ import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-public class AdminMain 
+public class AdminMain
 {
     
     @FXML
@@ -71,6 +71,11 @@ public class AdminMain
 
     }
 
+    @FXML
+    void menuTheaterManage(Event event) {
+        loadPage("theater_manage");
+    }
+    
     @FXML
     void menuTheaterManage(ActionEvent event) {
         loadPage("theater_manage");
