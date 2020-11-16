@@ -46,20 +46,20 @@ public class Login {
     {
         if (event.getCode().equals(KeyCode.ENTER)) 
         {
-			loginTry();
-		}
-	}
+         loginTry();
+      }
+   }
 
-	@FXML
-	void login(ActionEvent event) throws Exception {
-		loginTry();
-	}
+   @FXML
+   void login(ActionEvent event) throws Exception {
+      loginTry();
+   }
 
-	// 로그인 시도
+   // 로그인 시도
     void loginTry() throws IOException 
     {
-		try {
-			// gui에서 값 가져옴
+      try {
+         // gui에서 값 가져옴
             String id = tf_id.getText();
             String passwd = pf_passwd.getText();
         
