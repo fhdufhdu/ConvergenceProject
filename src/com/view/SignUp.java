@@ -15,66 +15,65 @@ import java.util.*;
 
 import com.db.model.*;
 
-public class SignUp implements Initializable  {
+public class SignUp 
+{
 
     @FXML
-    private TextField enter_id;
+    private TextField tf_id;
 
     @FXML
-    private PasswordField enter_passwd;
+    private PasswordField pf_passwd;
 
     @FXML
-    private TextField enter_name;
+    private TextField tf_name;
 
     @FXML
-    private TextField enter_account;
+    private TextField tf_account;
 
     @FXML
-    private TextField enter_phone;
+    private TextField tf_phone;
 
     @FXML
-    private MenuButton gender_menu;
+    private MenuButton mb_gender;
 
     @FXML
-    private MenuItem male;
+    private MenuItem mi_male;
 
     @FXML
-    private MenuItem female;
+    private MenuItem mi_female;
 
     @FXML
     private Button btn_sign_up;
 
     @FXML
-    private DatePicker enter_birth;
+    private DatePicker dp_birth;
     
     @FXML
-    private Text success;
+    private Text t_result;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-
-    }
-
+    //메뉴 선택시 외부 메뉴 이름 변경
     @FXML
     void setFemale(ActionEvent event) 
     {
-        gender_menu.setText(female.getText());
+        mb_gender.setText(mi_female.getText());
     }
 
+    //메뉴 선택시 외부 메뉴 이름 변경
     @FXML
     void setMale(ActionEvent event) 
     {
-        gender_menu.setText(male.getText());
+        mb_gender.setText(mi_male.getText());
     }
 
+    //회원가입 시도
     @FXML
     void trySignUp(ActionEvent event) 
     {
         try
         {
             String gender;
-            if(gender_menu.getText().equals("남"))
+            //성별에 따라 gender 값 세팅
+            if(mb_gender.getText().equals("남"))
             {
                 gender = "1";
             }
@@ -82,12 +81,14 @@ public class SignUp implements Initializable  {
             {
                 gender = "0";
             }
+            //DatePicker의 값을 원하는 포맷으로 변경
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             MemberDAO mDAO = new MemberDAO();
-            mDAO.addMember(new MemberDTO(enter_id.getText(), "2", enter_passwd.getText(), enter_account.getText(), enter_name.getText(), enter_phone.getText(), dateFormat.format(enter_birth.getValue()), gender));
+            mDAO.addMember(new MemberDTO(tf_id.getText(), "2", pf_passwd.getText(), tf_account.getText(), tf_name.getText(), tf_phone.getText(), dateFormat.format(dp_birth.getValue()), gender));
 
-            success.setText("회원가입 성공! 2초 후 로그인 화면으로 돌아갑니다!");
+            t_result.setText("회원가입 성공! 2초 후 로그인 화면으로 돌아갑니다!");
 
+            //스레드사용으로 1.5초 후 로그인 페이지로 전환
             new Thread(() -> {
                 Platform.runLater(() -> { 
                     try  

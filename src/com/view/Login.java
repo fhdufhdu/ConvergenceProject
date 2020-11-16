@@ -18,19 +18,19 @@ import com.db.model.*;
 public class Login {
 
     @FXML
-    private TextField enter_id;
+    private TextField tf_id;
 
     @FXML
-    private PasswordField enter_passwd;
+    private PasswordField pf_passwd;
 
     @FXML
-    private Button login;
+    private Button btn_login;
 
     @FXML
-    private Button sign_up;
+    private Button btn_signup;
 
     @FXML
-    private Text status;
+    private Text t_result;
 
     @FXML
     void enter(KeyEvent event) throws Exception {
@@ -44,15 +44,25 @@ public class Login {
     void login(ActionEvent event) throws Exception
     {
         loginTry();
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("./xml/test.fxml"));
+        Scene scene = new Scene(loader.load(), 1000, 666);
+        Stage stage = (Stage) btn_login.getScene().getWindow();
+        stage.setScene(scene);
+
+        Test controller = loader.<Test>getController();
+        controller.initData("1234");
+
+        stage.show();*/
     }
 
+    //로그인 시도
     void loginTry()
     {
         try 
         {
             //gui에서 값 가져옴
-            String id = enter_id.getText();
-            String passwd = enter_passwd.getText();
+            String id = tf_id.getText();
+            String passwd = pf_passwd.getText();
             
             MemberDAO mDao = new MemberDAO();
             MemberDTO mem = mDao.getMember(id, passwd);
@@ -71,30 +81,32 @@ public class Login {
                 title = "시네마";
             }
             
+            //로그인 성공시 새로운 window 표시
             Parent root = FXMLLoader.load(Login.class.getResource(path));
             Scene scene = new Scene(root, 1000, 666);
-            Stage primaryStage = (Stage) login.getScene().getWindow();
+            Stage primaryStage = (Stage) btn_login.getScene().getWindow();
             primaryStage.setTitle(title);
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);
             primaryStage.show();
         } 
-        catch (Exception e) 
+        catch (Exception e)     //에러 발생시
         {
             e.printStackTrace();
-            status.setText("");
-            status.setText("로그인 실패!");
+            t_result.setText("로그인 실패!");
         }
     }
 
+    //회원 가입
     @FXML
     void signUp(ActionEvent event) 
     {
         try 
         {
-            Parent root = FXMLLoader.load(Login.class.getResource("./xml/sign_up.fxml"));
+            //회원 가입 버튼 누를 시 새로운 윈도우 출력
+            Parent root = FXMLLoader.load(Login.class.getResource("./xml/btn_sign_up.fxml"));
             Scene scene = new Scene(root, 600, 400);
-            Stage primaryStage = (Stage) login.getScene().getWindow();
+            Stage primaryStage = (Stage) btn_login.getScene().getWindow();
             primaryStage.setTitle("회원가입");
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);

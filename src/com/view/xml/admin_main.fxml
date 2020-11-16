@@ -23,30 +23,26 @@
          <menus>
             <Menu id="menu_movie" mnemonicParsing="false" text="영화관">
                <items>
-                  <MenuItem fx:id="m_theater_add" mnemonicParsing="false" onAction="#menuTheaterAdd" text="등록" />
-                  <MenuItem fx:id="m_theater_chanage" mnemonicParsing="false" onAction="#menuTheaterChange" text="수정" />
-                  <MenuItem fx:id="m_theater_list" mnemonicParsing="false" onAction="#menuTheaterList" text="출력" />
+                  <MenuItem fx:id="mi_theater_manage" mnemonicParsing="false" onAction="#menuTheaterManage" text="관리" />
                   <Menu mnemonicParsing="false" text="상영관">
                      <items>
-                        <MenuItem fx:id="m_screen_add" mnemonicParsing="false" onAction="#menuScreenAdd" text="등록" />
-                        <MenuItem fx:id="m_screen_change" mnemonicParsing="false" onAction="#menuScreenChange" text="수정" />
-                        <MenuItem fx:id="m_screen_list" mnemonicParsing="false" onAction="#menuScreenList" text="출력" />
+                        <MenuItem fx:id="mi_screen_add" mnemonicParsing="false" onAction="#menuScreenAdd" text="관리" />
                      </items>
                   </Menu>
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="영화">
                <items>
-                  <MenuItem fx:id="m_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
-                  <MenuItem fx:id="m_movie_change" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
-                  <MenuItem fx:id="m_movie_list" mnemonicParsing="false" onAction="#menuMovieList" text="출력" />
+                  <MenuItem fx:id="mi_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
+                  <MenuItem fx:id="mi_movie_change" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
+                  <MenuItem fx:id="mi_movie_list" mnemonicParsing="false" onAction="#menuMovieList" text="출력" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="예매정보">
                <items>
-                  <MenuItem fx:id="m_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
-                  <MenuItem fx:id="m_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
-                  <MenuItem fx:id="m_timetable_list" mnemonicParsing="false" onAction="#menuTimeTableList" text="출력" />
+                  <MenuItem fx:id="mi_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
+                  <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
+                  <MenuItem fx:id="mi_timetable_list" mnemonicParsing="false" onAction="#menuTimeTableList" text="출력" />
                </items></Menu>
             <Menu mnemonicParsing="false" text="통계정보">
                <items>
@@ -65,6 +61,6 @@
             <Blend />
          </effect>
       </MenuBar>
-      <BorderPane fx:id="admin_main_view" layoutX="100.0" layoutY="161.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" />
+      <BorderPane fx:id="bp_admin_sub" layoutX="100.0" layoutY="161.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" />
    </children>
 </AnchorPane>

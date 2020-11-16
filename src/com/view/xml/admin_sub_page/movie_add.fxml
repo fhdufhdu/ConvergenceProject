@@ -5,83 +5,72 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="380.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 등록">
+      <Pane layoutX="38.0" layoutY="91.0" prefHeight="301.0" prefWidth="724.0" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-color: ;" />
+      <Text layoutX="62.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 등록">
          <font>
-            <Font name="LG Smart UI Bold" size="30.0" />
+            <Font name="LG Smart UI Bold" size="15.0" />
          </font>
       </Text>
-      <Line endX="331.0" layoutX="453.0" layoutY="69.0" startX="-343.0" />
-      <Text layoutX="136.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화제목">
+      <Text fx:id="result" layoutX="220.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="359.7599983215332">
          <font>
-            <Font size="19.0" />
+            <Font name="LG Smart UI Bold" size="15.0" />
          </font>
       </Text>
-      <Text layoutX="137.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="출연배우">
+      <Text layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화제목">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="171.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독">
+      <Text layoutX="60.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="출연배우">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <TextField layoutX="225.0" layoutY="257.0" prefHeight="29.0" prefWidth="119.0" />
-      <Text layoutX="441.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="줄거리" wrappingWidth="57.0">
+      <Text layoutX="60.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Button layoutX="710.0" layoutY="475.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="63.0" text="등록" />
-      <TextArea layoutX="225.0" layoutY="146.0" prefHeight="91.0" prefWidth="172.0" />
-      <TextArea layoutX="509.0" layoutY="90.0" prefHeight="197.0" prefWidth="271.0" />
-      <DatePicker layoutX="225.0" layoutY="323.0" />
-      <Text layoutX="155.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일">
+      <Text layoutX="60.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="155.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="종료일">
+      <Text layoutX="400.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="줄거리" wrappingWidth="57.0">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <DatePicker layoutX="225.0" layoutY="369.0" />
-      <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="571.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Desktop/picture/캡처.PNG" />
-         </image>
-      </ImageView>
-      <Text layoutX="509.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러">
+      <Text layoutX="60.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="509.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="포스터">
+      <Text layoutX="400.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="포스터">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="673.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷">
+      <Text layoutX="400.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷">
          <font>
-            <Font size="19.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="735.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Desktop/picture/캡처.PNG" />
-         </image>
-      </ImageView>
-      <Hyperlink layoutX="594.0" layoutY="410.0" prefHeight="27.0" prefWidth="172.0" text="Hyperlink" />
-      <TextField layoutX="225.0" layoutY="90.0" prefHeight="29.0" prefWidth="172.0" />
+      <TextField fx:id="ttile" layoutX="151.0" layoutY="110.0" prefHeight="30.0" prefWidth="180.0" />
+      <TextArea fx:id="actor" layoutX="151.0" layoutY="161.0" prefHeight="60.0" prefWidth="180.0" promptText="공백 기준" />
+      <TextField fx:id="director" layoutX="151.0" layoutY="241.0" prefHeight="30.0" prefWidth="180.0" />
+      <DatePicker fx:id="release_date" layoutX="151.0" layoutY="293.0" prefHeight="30.0" prefWidth="180.0" />
+      <TextArea fx:id="plot" layoutX="491.0" layoutY="112.0" prefHeight="157.0" prefWidth="250.0" />
+      <Button fx:id="poster" layoutX="491.0" layoutY="293.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="경로 선택" />
+      <Button fx:id="still_cut" layoutX="491.0" layoutY="349.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="경로 선택" />
+      <Hyperlink fx:id="trailer" layoutX="155.0" layoutY="350.0" prefHeight="27.0" prefWidth="172.0" text="동영상 링크" />
+      <Button fx:id="btn_add_movie" layoutX="678.0" layoutY="53.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="20.0" prefWidth="63.0" text="등록" />
    </children>
 </AnchorPane>

@@ -89,7 +89,7 @@ public class oracleTest
                                 TheaterDTO temp = list.get(sc.nextInt());
                                 sc.nextLine();
 
-                                tDao.removeTheater(temp);
+                                tDao.removeTheater(temp.getId());
                                 
                                 break;
                             }

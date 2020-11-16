@@ -1,5 +1,8 @@
 package com.db.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class ScreenDTO extends DTO
 {
     private String id;
@@ -56,12 +59,20 @@ public class ScreenDTO extends DTO
         return name;
     }
 
+    public StringProperty getNameProperty() {
+        return new SimpleStringProperty(name);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public int getTotalCapacity() {
         return total_capacity;
+    }
+
+    public StringProperty getTotalCapacityProperty() {
+        return new SimpleStringProperty(Integer.toString(total_capacity));
     }
 
     public void setTotalCapacity(int total_capacity) {
@@ -72,12 +83,20 @@ public class ScreenDTO extends DTO
         return max_row;
     }
 
+    public StringProperty getMaxRowProperty() {
+        return new SimpleStringProperty(Integer.toString(max_row));
+    }
+
     public void setMaxRow(int max_row) {
         this.max_row = max_row;
     }
 
     public int getMaxCol() {
         return max_col;
+    }
+
+    public StringProperty getMaxColProperty() {
+        return new SimpleStringProperty(Integer.toString(max_col));
     }
 
     public void setMaxCol(int max_col) {
