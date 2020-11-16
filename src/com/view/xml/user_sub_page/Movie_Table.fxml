@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutX="30.0" layoutY="67.0" prefHeight="337.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="영화관">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ButtonBar layoutX="23.0" layoutY="46.0" prefHeight="97.0" prefWidth="690.0">
+                           <buttons>
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="동성로" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="구미" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="성서" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="율하" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="경주" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="영주" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="기타" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="등등" />
+                           </buttons>
+                        </ButtonBar>
+                        <TableView layoutX="139.0" layoutY="149.0" prefHeight="134.0" prefWidth="416.0">
+                          <columns>
+                            <TableColumn prefWidth="421.0" text="영화관" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="영화">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ButtonBar layoutX="238.0" layoutY="20.0" prefHeight="83.0" prefWidth="265.0">
+                           <buttons>
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="A" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="B" />
+                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="130.0" text="C" />
+                           </buttons>
+                        </ButtonBar>
+                        <TableView layoutX="137.0" layoutY="103.0" prefHeight="182.0" prefWidth="480.0">
+                          <columns>
+                            <TableColumn prefWidth="479.0" text="영화제목" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+             <Tab text="날짜&amp;상영시간">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ButtonBar layoutX="359.0" layoutY="275.0" prefHeight="80.0" prefWidth="337.0">
+                           <buttons>
+                              <Button mnemonicParsing="false" text="03:40" />
+                              <Button mnemonicParsing="false" text="11:50" />
+                              <Button mnemonicParsing="false" text="11:50" />
+                              <Button mnemonicParsing="false" text="11:50" />
+                           </buttons>
+                        </ButtonBar>
+                        <DatePicker layoutX="137.0" layoutY="66.0" prefHeight="29.0" prefWidth="222.0" />
+                        <Text layoutX="95.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
+                        <Text layoutX="65.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
+                        <TableView layoutX="137.0" layoutY="131.0" prefHeight="157.0" prefWidth="345.0">
+                          <columns>
+                            <TableColumn prefWidth="344.0" text="상영시간" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Text layoutX="325.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간표">
+         <font>
+            <Font name="LG Smart UI Bold" size="30.0" />
+         </font>
+      </Text>
+      <Line endX="168.0" endY="-3.0517578125E-5" layoutX="544.0" layoutY="57.0" startX="-455.5" startY="-3.0517578125E-5" />
+   </children>
+</AnchorPane>
