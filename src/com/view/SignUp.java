@@ -1,17 +1,25 @@
 package com.view;
 
-import javafx.application.Platform;
+import java.net.*;
+import java.util.*;
+import java.lang.*;
+import java.time.format.*;
+import java.sql.*;
+
+import com.db.model.*;
+
+import javafx.beans.value.*;
+import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.text.*;
-import javafx.stage.Stage;
-
-import java.lang.Exception;
-import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import javafx.stage.*;
+import javafx.application.*;
+import javafx.scene.control.Alert.*;
+import javafx.scene.input.*;
 
 import com.db.model.*;
 

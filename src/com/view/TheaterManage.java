@@ -1,22 +1,25 @@
 package com.view;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import java.net.*;
+import java.util.*;
+import java.lang.*;
+import java.time.format.*;
+import java.sql.*;
+
+import com.db.model.*;
+
+import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.Parent;
+import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.*;
-
-import java.lang.Exception;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.*;
-
-import com.db.model.*;
+import javafx.stage.*;
+import javafx.application.*;
+import javafx.scene.control.Alert.*;
+import javafx.scene.input.*;
 
 public class TheaterManage implements Initializable {
 
@@ -302,7 +305,7 @@ public class TheaterManage implements Initializable {
 		alert.showAndWait(); //Alert창 보여주기
     }
 
-    public ButtonType confirm(String head, String msg) 
+    private ButtonType confirm(String head, String msg) 
     {
 		Alert confirm = new Alert(AlertType.CONFIRMATION);
 		confirm.setTitle("확인");

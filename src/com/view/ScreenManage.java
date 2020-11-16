@@ -1,34 +1,33 @@
 package com.view;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import java.net.*;
+import java.util.*;
+import java.lang.*;
+import java.time.format.*;
+import java.sql.*;
 
-import com.db.model.ScreenDAO;
-import com.db.model.ScreenDTO;
-import com.db.model.TheaterDAO;
-import com.db.model.TheaterDTO;
+import com.db.model.*;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
+import javafx.beans.value.*;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.stage.*;
+import javafx.application.*;
+import javafx.scene.control.Alert.*;
+import javafx.scene.input.*;
 
 public class ScreenManage
 {
     private ObservableList<ScreenDTO> screen_list;
     private ScreenDTO table_row_data;
     private TheaterDTO theater;
+
+    private String err_dao, err_type;
 
     @FXML
     private BorderPane bp_parent;
@@ -81,25 +80,135 @@ public class ScreenManage
     @FXML
     void addScreen(ActionEvent event) 
     {
+        try
+        {
+            ScreenDAO sDao = new ScreenDAO();
+            ScreenDTO sDto = new ScreenDTO(DTO.EMPTY_ID, theater.getId(), tf_name.getText(), Integer.valueOf(tf_capacity.getText()), Integer.valueOf(tf_row.getText()), Integer.valueOf(tf_col.getText()));
+                                    
+            sDao.addScreen(sDto);
 
+            //값 추가 후 각 테이블 및 리스트 초기화
+            screen_list.clear();
+            tv_screen.getItems().clear();
+            initList();
+            tv_screen.setItems(screen_list);
+
+            //text field 초기화
+            clearText();
+        }
+        catch(DAOException e)
+        {
+            //값의 중복 발생시
+            t_result.setText(err_dao);
+            e.printStackTrace();
+        } 
+        catch(SQLException e)
+        {
+            //DB관련 문제 발생시
+            e.printStackTrace();
+        }
+        catch(NumberFormatException e)
+        {
+            //입력값 타입이 맞지 않을때
+            t_result.setText(err_type);
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void changeScreen(ActionEvent event) 
     {
+        try
+        {
+            //테이블 값이 선택되어 있는지 확인
+            if (tv_screen.getSelectionModel().isEmpty()) 
+            {
+                alert("수정오류", "수정할 데이터를 선택해주세요");
+                return;
+            }
+            ScreenDAO sDao = new ScreenDAO();
+            ScreenDTO sDto = new ScreenDTO(table_row_data.getId(), theater.getId(), tf_name.getText(), Integer.valueOf(tf_capacity.getText()), Integer.valueOf(tf_row.getText()), Integer.valueOf(tf_col.getText()));
+                                    
+            sDao.changeScreen(sDto);
 
+            screen_list.clear();
+            tv_screen.getItems().clear();
+            initList();
+            tv_screen.setItems(screen_list);
+
+            clearText();
+        }
+        catch(DAOException e)
+        {
+            //값의 중복 발생시
+            t_result.setText(err_dao);
+            e.printStackTrace();
+        } 
+        catch(SQLException e)
+        {
+            //DB관련 문제 발생시
+            e.printStackTrace();
+        }
+        catch(NumberFormatException e)
+        {
+            //입력값 타입이 맞지 않을때
+            t_result.setText(err_type);
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void clearTextField(ActionEvent event) 
     {
-
+        clearText();
     }
 
     @FXML
     void deleteScreen(ActionEvent event) 
     {
+        try
+        {
+            if (tv_screen.getSelectionModel().isEmpty()) 
+            {
+                alert("삭제오류", "삭제할 데이터를 선택해주세요");
+                return;
+            }
 
+            //삭제할 것인지 재 확인
+            ButtonType btnType = confirm("삭제확인","정말로 삭제하시겠습니까?");
+            if(btnType != ButtonType.OK) 
+            {
+                return;
+            }
+
+            ScreenDAO sDao = new ScreenDAO();                  
+            sDao.removeScreen(table_row_data.getId());
+            t_result.setText("삭제되었습니다");
+
+            screen_list.clear();
+            tv_screen.getItems().clear();
+            initList();
+            tv_screen.setItems(screen_list);
+
+            clearText();
+        }
+        catch(DAOException e)
+        {
+            //값의 중복 발생시
+            t_result.setText(err_dao);
+            e.printStackTrace();
+        } 
+        catch(SQLException e)
+        {
+            //DB관련 문제 발생시
+            e.printStackTrace();
+        }
+        catch(NumberFormatException e)
+        {
+            //입력값 타입이 맞지 않을때
+            t_result.setText(err_type);
+            e.printStackTrace();
+        }
     }
 
     //리스트 초기화
@@ -127,6 +236,9 @@ public class ScreenManage
     {
         try
         {
+            err_dao = "상영관 이름이 중복됩니다!";
+            err_type = "총 좌석, 최대 행, 최대 열에는 숫자만 입력해주세요!";
+
             theater = t;
             theater_name.setText(theater.getName()+"의 상영관 리스트");
             screen_list = FXCollections.observableArrayList();
@@ -163,5 +275,34 @@ public class ScreenManage
             e.printStackTrace();
         }
     }
+
+    private void clearText()
+    {
+        tf_name.clear();
+        tf_capacity.clear();
+        tf_row.clear();
+        tf_col.clear();
+        t_result.setText("");
+    }
+
+    private void alert(String head, String msg) 
+    {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("경고");
+		alert.setHeaderText(head);
+		alert.setContentText(msg);
+		
+		alert.showAndWait(); //Alert창 보여주기
+    }
+
+    private ButtonType confirm(String head, String msg) 
+    {
+		Alert confirm = new Alert(AlertType.CONFIRMATION);
+		confirm.setTitle("확인");
+		confirm.setHeaderText(head);
+		confirm.setContentText(msg);
+		return confirm.showAndWait().get();
+
+	}
 
 }

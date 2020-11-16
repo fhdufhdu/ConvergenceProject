@@ -22,18 +22,18 @@ public class ScreenDAO extends DAO
     {
         String insert_sql = "insert into screens(theater_id, name, total_capacity, max_row, max_col) values(?, ?, ?, ?, ?)";
 
-        TheaterDTO temp = new TheaterDTO();
+        /*TheaterDTO temp = new TheaterDTO();
         TheaterDAO tempDao = new TheaterDAO();
 
         temp.setId(screen.getTheaterId());
         if(tempDao.checkTheaterID(temp) == 0) 
         {
-            ps.close();
+            //ps.close();
             throw new DAOException("theater id not found");
-        }
-        else if(checkScreen(screen) > 0)
+        }*/
+        if(checkScreen(screen) > 0)
         {
-            ps.close();
+            //ps.close();
             throw new DAOException("screen info duplicate found");
         }
 
@@ -156,13 +156,13 @@ public class ScreenDAO extends DAO
     }
 
     //상영관 삭제
-    public void removeScreen(ScreenDTO screen) throws DAOException, SQLException
+    public void removeScreen(String sid) throws DAOException, SQLException
     {
         String insert_sql = "delete from screens where id = ?";
 
         ps = conn.prepareStatement(insert_sql);
 
-        ps.setString(1, screen.getId());
+        ps.setString(1, sid);
         
         int r = ps.executeUpdate();
         System.out.println("변경된 row : " + r);
