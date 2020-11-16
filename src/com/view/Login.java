@@ -42,8 +42,10 @@ public class Login {
 	private Text t_result;
 
 	@FXML
-	void enter(KeyEvent event) throws Exception {
-		if (event.getCode().equals(KeyCode.ENTER)) {
+    void enter(KeyEvent event) throws Exception 
+    {
+        if (event.getCode().equals(KeyCode.ENTER)) 
+        {
 			loginTry();
 		}
 	}
@@ -54,58 +56,36 @@ public class Login {
 	}
 
 	// 로그인 시도
-	void loginTry() throws IOException {
+    void loginTry() throws IOException 
+    {
 		try {
-			Protocol protocol = new Protocol();
-			byte[] buf = protocol.getPacket();
-
-			testProtocol.getIs().read(buf);
-			int packetType = buf[0];
-
 			// gui에서 값 가져옴
-			if (packetType != Protocol.SC_RES_LOGIN) {
-				String id = tf_id.getText();
-				String passwd = pf_passwd.getText();
+            String id = tf_id.getText();
+            String passwd = pf_passwd.getText();
+        
+            MemberDAO mDao = new MemberDAO();
+            MemberDTO mem = mDao.getMember(id, passwd);
+            // 사용자, 관리자 구분해서 실행할 xml파일 선택
+            String path;
+            String title;
+            if (mem.getRole().equals("1")) {
+                path = "./xml/admin_main.fxml";
+                title = "관리자 모드";
+            } else {
+                path = "./xml/user_main.fxml";
+                title = "시네마";
+            }
 
-				protocol = new Protocol(Protocol.CS_REQ_LOGIN);
-				protocol.setId(id);
-				protocol.setPassword(passwd);
-				testProtocol.getOs().write(protocol.getPacket());
-			}
-
-			if (packetType == Protocol.SC_RES_LOGIN) {
-				String result = protocol.getResult();
-				if (result.equals("1")) {
-					MemberDAO mDao = new MemberDAO();
-					MemberDTO mem = mDao.getMember(protocol.getId(), protocol.getPassword());
-					// 사용자, 관리자 구분해서 실행할 xml파일 선택
-					String path;
-					String title;
-					if (mem.getRole().equals("1")) {
-						path = "./xml/admin_main.fxml";
-						title = "관리자 모드";
-					} else {
-						path = "./xml/user_main.fxml";
-						title = "시네마";
-					}
-
-					// 로그인 성공시 새로운 window 표시
-					Parent root = FXMLLoader.load(Login.class.getResource(path));
-					Scene scene = new Scene(root, 1000, 666);
-					Stage primaryStage = (Stage) btn_login.getScene().getWindow();
-					primaryStage.setTitle(title);
-					primaryStage.setResizable(false);
-					primaryStage.setScene(scene);
-					primaryStage.show();
-					
-				} else if (result.equals("2")) {
-					System.out.println("실패");
-				} else if (result.equals("3")) {
-					System.out.println("실패");
-				}
-			}
-
-		} catch (Exception e) // 에러 발생시
+            // 로그인 성공시 새로운 window 표시
+            Parent root = FXMLLoader.load(Login.class.getResource(path));
+            Scene scene = new Scene(root, 1000, 666);
+            Stage primaryStage = (Stage) btn_login.getScene().getWindow();
+            primaryStage.setTitle(title);
+            primaryStage.setResizable(false);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } 
+        catch (Exception e) // 에러 발생시
 		{
 			e.printStackTrace();
 			t_result.setText("로그인 실패!");
@@ -114,8 +94,10 @@ public class Login {
 
 	// 회원 가입
 	@FXML
-	void signUp(ActionEvent event) {
-		try {
+    void signUp(ActionEvent event)
+    {
+        try 
+        {
 			// 회원 가입 버튼 누를 시 새로운 윈도우 출력
 			Parent root = FXMLLoader.load(Login.class.getResource("./xml/btn_sign_up.fxml"));
 			Scene scene = new Scene(root, 600, 400);
@@ -124,7 +106,9 @@ public class Login {
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		} catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
 			e.printStackTrace();
 		}
 	}
