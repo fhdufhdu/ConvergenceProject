@@ -156,7 +156,7 @@ public class oracleTest
                                 ScreenDTO screenElem = slist.get(sc.nextInt());
                                 sc.nextLine();
 
-                                sDao.removeScreen(screenElem);
+                                sDao.removeScreen(screenElem.getId());
                                 
                                 break;
                             }
