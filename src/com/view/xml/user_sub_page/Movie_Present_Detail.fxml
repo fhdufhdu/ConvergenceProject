@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="866.0" prefWidth="999.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="866.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="435.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
          <font>
@@ -20,29 +21,13 @@
          </font>
       </Text>
       <Line endX="425.0" layoutX="463.0" layoutY="79.0" startX="-391.0" />
-      <ImageView fitHeight="318.0" fitWidth="223.0" layoutX="113.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Desktop/picture/movieee.PNG" />
-         </image>
-      </ImageView>
-      <TextField layoutX="363.0" layoutY="110.0" prefHeight="29.0" prefWidth="243.0" promptText="(12) 삼진그룹" />
-      <Text layoutX="363.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관람객 평점" />
-      <TextField layoutX="468.0" layoutY="167.0" prefHeight="29.0" prefWidth="131.0" promptText="4.8점" />
-      <Text layoutX="363.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="누적 관객 수" />
-      <TextField layoutX="468.0" layoutY="210.0" prefHeight="29.0" prefWidth="131.0" promptText="4.8점" />
-      <Text layoutX="415.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독" />
-      <TextField layoutX="468.0" layoutY="254.0" prefHeight="29.0" prefWidth="131.0" promptText="놀란" />
-      <Text layoutX="415.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="배우" />
-      <TextArea layoutX="468.0" layoutY="299.0" prefHeight="88.0" prefWidth="262.0" promptText="조우성,김재훈,이재준,정용우" />
-      <Text layoutX="403.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일" />
-      <TextField layoutX="468.0" layoutY="402.0" prefHeight="29.0" prefWidth="131.0" promptText="11.02" />
-      <TabPane layoutX="113.0" layoutY="463.0" prefHeight="379.0" prefWidth="433.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="113.0" layoutY="463.0" prefHeight="379.0" prefWidth="469.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="줄거리">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="225.0" prefWidth="350.0">
                      <children>
-                        <TextArea layoutX="14.0" layoutY="7.0" prefHeight="207.0" prefWidth="365.0" text="마이 드림 이즈 커리어우먼”&#10;1995년, 토익 600점만 넘기면 대리가 될 수 있다!&#10;&#10;입사 8년차 동기인 말단 여직원들이 ‘삼진그룹 &#10;영어토익반’에 모인다!" />
+                        <TextArea layoutX="14.0" layoutY="7.0" prefHeight="320.0" prefWidth="444.0" text="마이 드림 이즈 커리어우먼”&#10;1995년, 토익 600점만 넘기면 대리가 될 수 있다!&#10;&#10;입사 8년차 동기인 말단 여직원들이 ‘삼진그룹 &#10;영어토익반’에 모인다!" />
                      </children>
                   </AnchorPane>
             </content>
@@ -51,33 +36,42 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="433.0">
                      <children>
-                        <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점:" wrappingWidth="45.000002950429916" />
+                        <Text layoutX="19.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점:" wrappingWidth="45.000002950429916" />
                         <TextField layoutX="58.0" layoutY="18.0" prefHeight="29.0" prefWidth="73.0" promptText="0~10" />
-                        <TextArea layoutX="59.0" layoutY="55.0" prefHeight="150.0" prefWidth="200.0" />
-                        <Text layoutX="7.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관람평:" wrappingWidth="59.99999773129821" />
-                        <Button layoutX="338.0" layoutY="176.0" mnemonicParsing="false" text="등록" />
-                        <TextArea layoutX="14.0" layoutY="242.0" prefHeight="75.0" prefWidth="391.0" text="요기다가는 리뷰 목록 쭉 나열하면 될 듯!" />
+                        <TextArea layoutX="58.0" layoutY="55.0" prefHeight="150.0" prefWidth="321.0" />
+                        <Text layoutX="4.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관람평:" wrappingWidth="59.99999773129821" />
+                        <Button layoutX="390.0" layoutY="176.0" mnemonicParsing="false" text="등록" />
+                        <TableView layoutX="4.0" layoutY="218.0" prefHeight="117.0" prefWidth="458.0">
+                          <columns>
+                            <TableColumn prefWidth="100.0" text="작성자" />
+                            <TableColumn prefWidth="50.0" text="별점" />
+                              <TableColumn prefWidth="94.0" text="작성일" />
+                              <TableColumn prefWidth="317.0" text="리뷰내용" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Text layoutX="561.0" layoutY="478.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
-      <ImageView fitHeight="88.0" fitWidth="223.0" layoutX="619.0" layoutY="456.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Desktop/picture/23.PNG" />
-         </image>
-      </ImageView>
-      <Text layoutX="554.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
-      <ImageView fitHeight="100.0" fitWidth="173.0" layoutX="619.0" layoutY="644.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Desktop/picture/캡처fwef.PNG" />
-         </image>
-      </ImageView>
-      <Text layoutX="619.0" layoutY="774.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---&gt;요기다 링크 걸면 될 듯!" />
-      <Line endX="21.0" layoutX="505.0" layoutY="726.0" startX="-391.0" />
-      <Button layoutX="802.0" layoutY="421.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="107.0" text="예매하기" />
-      <Button layoutX="784.0" layoutY="813.0" mnemonicParsing="false" text="메인화면으로" />
+      <Text layoutX="630.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
+      <Text layoutX="619.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
+      <Button layoutX="774.0" layoutY="363.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="107.0" text="예매하기" />
+      <Button layoutX="781.0" layoutY="804.0" mnemonicParsing="false" text="메인화면으로" />
+      <Button layoutX="136.0" layoutY="225.0" mnemonicParsing="false" text="이미지 파일 경로" />
+      <TableView layoutX="318.0" layoutY="137.0" prefHeight="200.0" prefWidth="570.0">
+        <columns>
+          <TableColumn prefWidth="117.0" text="영화제목" />
+          <TableColumn prefWidth="83.0" text="출연배우" />
+            <TableColumn prefWidth="86.0" text="감독" />
+            <TableColumn prefWidth="108.0" text="개봉일" />
+            <TableColumn prefWidth="175.0" text="줄거리" />
+        </columns>
+      </TableView>
+      <Hyperlink layoutX="701.0" layoutY="640.0" text="&quot;트레일러 링크&quot;" />
+      <Button layoutX="703.0" layoutY="482.0" mnemonicParsing="false" text="이미지 파일 경로" />
+      <Button layoutX="703.0" layoutY="521.0" mnemonicParsing="false" text="이미지 파일 경로" />
+      <Button layoutX="703.0" layoutY="561.0" mnemonicParsing="false" text="이미지 파일 경로" />
    </children>
 </AnchorPane>

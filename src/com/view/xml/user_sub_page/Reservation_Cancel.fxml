@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="321.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매 취소" textAlignment="CENTER" wrappingWidth="150.0">
@@ -20,10 +19,10 @@
       <TableView layoutX="74.0" layoutY="147.0" prefHeight="200.0" prefWidth="646.0">
         <columns>
           <TableColumn prefWidth="165.0" text="영화" />
-          <TableColumn minWidth="0.0" prefWidth="112.0" text="날짜" />
-            <TableColumn prefWidth="110.0" text="시간" />
-            <TableColumn prefWidth="133.0" text="좌석" />
-            <TableColumn prefWidth="125.0" text="결제금액" />
+          <TableColumn minWidth="0.0" prefWidth="103.0" text="날짜" />
+            <TableColumn prefWidth="103.0" text="시간" />
+            <TableColumn prefWidth="125.0" text="좌석" />
+            <TableColumn prefWidth="149.0" text="결제금액" />
         </columns>
       </TableView>
       <Button layoutX="669.0" layoutY="359.0" mnemonicParsing="false" text="취소" />
