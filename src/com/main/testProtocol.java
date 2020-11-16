@@ -49,7 +49,6 @@ public class testProtocol extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			testProtocol test = new testProtocol();
 			Parent root = FXMLLoader.load(testProtocol.class.getResource("../view/xml/login.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("로그인ㅎㅎ");
