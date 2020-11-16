@@ -1,76 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieAdd">
    <children>
-      <Pane layoutX="38.0" layoutY="91.0" prefHeight="301.0" prefWidth="724.0" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-color: ;" />
-      <Text layoutX="62.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 등록">
-         <font>
-            <Font name="LG Smart UI Bold" size="15.0" />
-         </font>
-      </Text>
-      <Text fx:id="result" layoutX="220.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="359.7599983215332">
-         <font>
-            <Font name="LG Smart UI Bold" size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="60.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화제목">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="60.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="출연배우">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="60.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="60.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="400.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="줄거리" wrappingWidth="57.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="60.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="400.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="포스터">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="400.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <TextField fx:id="ttile" layoutX="151.0" layoutY="110.0" prefHeight="30.0" prefWidth="180.0" />
-      <TextArea fx:id="actor" layoutX="151.0" layoutY="161.0" prefHeight="60.0" prefWidth="180.0" promptText="공백 기준" />
-      <TextField fx:id="director" layoutX="151.0" layoutY="241.0" prefHeight="30.0" prefWidth="180.0" />
-      <DatePicker fx:id="release_date" layoutX="151.0" layoutY="293.0" prefHeight="30.0" prefWidth="180.0" />
-      <TextArea fx:id="plot" layoutX="491.0" layoutY="112.0" prefHeight="157.0" prefWidth="250.0" />
-      <Button fx:id="poster" layoutX="491.0" layoutY="293.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="경로 선택" />
-      <Button fx:id="still_cut" layoutX="491.0" layoutY="349.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="경로 선택" />
-      <Hyperlink fx:id="trailer" layoutX="155.0" layoutY="350.0" prefHeight="27.0" prefWidth="172.0" text="동영상 링크" />
-      <Button fx:id="btn_add_movie" layoutX="678.0" layoutY="53.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="20.0" prefWidth="63.0" text="등록" />
+      <ScrollPane prefHeight="800.0" prefWidth="800.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="785.0">
+               <children>
+                  <Text layoutX="42.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 등록">
+                     <font>
+                        <Font name="LG Smart UI Bold" size="25.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="result" layoutX="195.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="359.7599983215332">
+                     <font>
+                        <Font name="LG Smart UI Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="40.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화제목">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tf_title" layoutX="40.0" layoutY="227.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <Text layoutX="40.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <DatePicker layoutX="43.0" layoutY="321.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <CheckBox fx:id="cb_current" layoutX="39.0" layoutY="118.0" mnemonicParsing="false" text="현재 상영작">
+                     <font>
+                        <Font name="LG Smart UI Light" size="15.0" />
+                     </font>
+                  </CheckBox>
+                  <CheckBox fx:id="cb_close" layoutX="252.0" layoutY="118.0" mnemonicParsing="false" text="상영 종료">
+                     <font>
+                        <Font name="LG Smart UI Light" size="15.0" />
+                     </font>
+                  </CheckBox>
+                  <CheckBox fx:id="cb_soon" layoutX="147.0" layoutY="118.0" mnemonicParsing="false" text="상영 예정작">
+                     <font>
+                        <Font name="LG Smart UI Light" size="15.0" />
+                     </font>
+                  </CheckBox>
+                  <Text layoutX="43.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tf_title1" layoutX="43.0" layoutY="419.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <Text layoutX="48.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="배우">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextArea layoutX="42.0" layoutY="523.0" prefHeight="35.0" prefWidth="332.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <Text layoutX="408.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="줄거리">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextArea layoutX="403.0" layoutY="523.0" prefHeight="136.0" prefWidth="332.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <Text layoutX="404.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="포스터 경로">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="404.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷 경로">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="404.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러 경로">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tf_title211" layoutX="404.0" layoutY="420.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <Text layoutX="43.0" layoutY="605.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간(분)">
+                     <font>
+                        <Font name="LG Smart UI Light" size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tf_title22" layoutX="43.0" layoutY="624.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <Button layoutX="648.0" layoutY="227.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="경로 추가" />
+                  <Button layoutX="648.0" layoutY="321.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="85.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="경로 추가" />
+                  <TextField fx:id="tf_poster" layoutX="404.0" layoutY="227.0" prefHeight="35.0" prefWidth="244.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+                  <TextField fx:id="tf_stillcut" layoutX="404.0" layoutY="321.0" prefHeight="35.0" prefWidth="244.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
