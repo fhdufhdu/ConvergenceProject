@@ -100,11 +100,10 @@ public class Login {
 							primaryStage.setScene(scene);
 							primaryStage.show();
 							break;
-						}catch(Exception e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 							t_result.setText("로그인 실패!");
 						}
-						
 					} else if (result.equals("2")) {
 						System.out.println("실패");
 					} else if (result.equals("3")) {
