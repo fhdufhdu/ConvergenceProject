@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -20,21 +18,9 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar layoutX="23.0" layoutY="46.0" prefHeight="97.0" prefWidth="690.0">
-                           <buttons>
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="동성로" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="구미" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="성서" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="율하" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="경주" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="영주" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="기타" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="등등" />
-                           </buttons>
-                        </ButtonBar>
-                        <TableView layoutX="139.0" layoutY="149.0" prefHeight="134.0" prefWidth="416.0">
+                        <TableView layoutX="31.0" layoutY="47.0" prefHeight="213.0" prefWidth="498.0">
                           <columns>
-                            <TableColumn prefWidth="421.0" text="영화관" />
+                            <TableColumn prefWidth="497.0" text="영화관" />
                           </columns>
                         </TableView>
                      </children>
@@ -45,14 +31,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar layoutX="238.0" layoutY="20.0" prefHeight="83.0" prefWidth="265.0">
-                           <buttons>
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="A" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="75.0" text="B" />
-                              <Button minWidth="0.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="130.0" text="C" />
-                           </buttons>
-                        </ButtonBar>
-                        <TableView layoutX="137.0" layoutY="103.0" prefHeight="182.0" prefWidth="480.0">
+                        <TableView layoutX="31.0" layoutY="45.0" prefHeight="213.0" prefWidth="498.0">
                           <columns>
                             <TableColumn prefWidth="479.0" text="영화제목" />
                           </columns>
@@ -65,18 +44,10 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar layoutX="359.0" layoutY="275.0" prefHeight="80.0" prefWidth="337.0">
-                           <buttons>
-                              <Button mnemonicParsing="false" text="03:40" />
-                              <Button mnemonicParsing="false" text="11:50" />
-                              <Button mnemonicParsing="false" text="11:50" />
-                              <Button mnemonicParsing="false" text="11:50" />
-                           </buttons>
-                        </ButtonBar>
-                        <DatePicker layoutX="137.0" layoutY="66.0" prefHeight="29.0" prefWidth="222.0" />
-                        <Text layoutX="95.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
-                        <Text layoutX="65.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
-                        <TableView layoutX="137.0" layoutY="131.0" prefHeight="157.0" prefWidth="345.0">
+                        <DatePicker layoutX="105.0" layoutY="37.0" prefHeight="29.0" prefWidth="222.0" />
+                        <Text layoutX="63.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
+                        <Text layoutX="33.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
+                        <TableView layoutX="105.0" layoutY="102.0" prefHeight="157.0" prefWidth="345.0">
                           <columns>
                             <TableColumn prefWidth="344.0" text="상영시간" />
                           </columns>
