@@ -23,8 +23,8 @@ public class MovieServer extends Thread {
 		this.socket = socket;
 		currentID = "NULL";
 		admit = false;
-		//movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
-		DAO.connectDB();
+		movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
+//		DAO.connectDB();
 		System.out.println("현재 사용자 수 :" + ++currUser);
 	}
 
@@ -38,7 +38,7 @@ public class MovieServer extends Thread {
 			os = socket.getOutputStream();
 			is = socket.getInputStream();
 
-			Protocol protocol = new Protocol(Protocol.SC_REQ_SIGNUP);
+			Protocol protocol = new Protocol(Protocol.SC_REQ_LOGIN);
 			os.write(protocol.getPacket());
 
 			boolean program_stop = false;
@@ -106,22 +106,13 @@ public class MovieServer extends Thread {
 					String phone_number = dataList[5]; // 연락처
 					String birth = dataList[6];
 					String account = dataList[7]; // 계좌 번호
-					MemberDAO m1 = new MemberDAO();
-					m1.addMember(
+					MemberDAO signUpDAO = new MemberDAO();
+					signUpDAO.addMember(
 							new MemberDTO(id, role, password, account, name,
 						            phone_number, birth, gender));
-					//String signUp_query = "INSERT INTO MEMBERS VALUES ('1', '1', '1', '1', '1', '1', birth, '1')";
-					//boolean signUp_result = movie_DB.InsertDB(signUp_query);
-					//String test = "";
-					/*if (signUp_result)
-						test = "1";
-					else
-						test = "0";*/
 					protocol = new Protocol(Protocol.SC_RES_SIGNUP);
-					//protocol.setResult(test);
 					os.write(protocol.getPacket());
 					break;
-
 				}// end switch
 
 				if (program_stop)
