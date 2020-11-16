@@ -21,11 +21,11 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import com.db.model.*;
-import com.main.testProtocol;
+import com.main.mainGUI;
 import com.protocol.Protocol;
 
-public class Login {
-
+public class Login
+{
 	@FXML
 	private TextField tf_id;
 
@@ -46,82 +46,58 @@ public class Login {
     {
         if (event.getCode().equals(KeyCode.ENTER)) 
         {
-         loginTry();
-      }
-   }
+            loginTry();
+        }
+    }
 
-   @FXML
-   void login(ActionEvent event) throws Exception {
-      loginTry();
-   }
+    @FXML
+    void login(ActionEvent event) throws Exception 
+    {
+        loginTry();
+    }
 
 	// 로그인 시도
-	void loginTry() throws IOException {
-		try {
+    void loginTry() throws IOException 
+    {
+        try 
+        {
 			// gui에서 값 가져옴
 			String id = tf_id.getText();
 			String passwd = pf_passwd.getText();
-            boolean loginResult = false;
             
-            writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd); 
+            mainGUI.writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd); 
 
-			while (true) {
-				String packet = testProtocol.getBr().readLine();
-				String packetArr[] = packet.split("/");
-				String packetType = packetArr[0];
+            String packet = mainGUI.readLine();
+            String packetArr[] = packet.split("/");
+            String packetType = packetArr[0];
 
-                switch (packetType) 
+            if(packetType.equals(Protocol.SC_RES_LOGIN))
+            {
+                String result = packetArr[1];
+                switch(result)
                 {
-				case Protocol.SC_RES_LOGIN:
-					String result = packetArr[1];
-					if (result.equals("1") || result.equals("2")) {
-						loginResult = true;
-
-						// 사용자, 관리자 구분해서 실행할 xml파일 선택
-						String path;
-						String title;
-						if (result.equals("1")) {
-							path = "./xml/admin_main.fxml";
-							title = "관리자 모드";
-						} else {
-							path = "./xml/user_main.fxml";
-							title = "시네마";
-						}
-
-						// 로그인 성공시 새로운 window 표시
-						Parent root = FXMLLoader.load(Login.class.getResource(path));
-						Scene scene = new Scene(root, 1000, 666);
-						Stage primaryStage = (Stage) btn_login.getScene().getWindow();
-						primaryStage.setTitle(title);
-						primaryStage.setResizable(false);
-						primaryStage.setScene(scene);
-						primaryStage.show();
-					} else if (result.equals("3")) {
+                    case "1":
+                    {
+                        startWindow("./xml/admin_main.fxml", "관리자 모드");
+                        return;
+                    }
+                    case "2":
+                    {
+                        startWindow("./xml/user_main.fxml", "시네마");
+                        return;
+                    }
+                    case "3":
+                    {
                         t_result.setText("로그인 실패! 암호 오류!");
                         return;
-					} else if (result.equals("4")) {
-                        t_result.setText("로그인 실패! 아디디 존재 오류!");
-                        return;
-					}
-					break;
-				}
-				if (loginResult == true)
-					break;
-			}
-		} catch (Exception e) // 에러 발생시
+                    }
+                }
+            }
+        } 
+        catch (Exception e) // 에러 발생시
 		{
 			e.printStackTrace();
 			t_result.setText("로그인 실패!");
-		}
-	}
-
-	public void writePacket(String source) throws Exception {
-		try {
-			testProtocol.getBw().write(source);
-			testProtocol.getBw().newLine();
-			testProtocol.getBw().flush();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -144,6 +120,17 @@ public class Login {
         {
 			e.printStackTrace();
 		}
-	}
+    }
+    
+    private void startWindow(String path, String title) throws Exception
+    {
+        Parent root = FXMLLoader.load(Login.class.getResource(path));
+        Scene scene = new Scene(root, 1000, 666);
+        Stage primaryStage = (Stage) btn_login.getScene().getWindow();
+        primaryStage.setTitle(title);
+        primaryStage.setResizable(false);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
 }
