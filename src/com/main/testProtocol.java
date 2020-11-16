@@ -16,12 +16,10 @@ public class testProtocol extends Application {
 	private static OutputStream os;
 	private InputStream is;
 	private Protocol protocol;
-	private String currID;
 	private String localHostAddress;
 	byte[] buf;
 
 	public testProtocol() {
-		currID = null;
 		try {
 			localHostAddress = InetAddress.getLocalHost().getHostAddress();
 			socket = new Socket(localHostAddress, 5000);

@@ -1,9 +1,9 @@
-#login{
+#btn_sign_up{
     -fx-background-color : #cc3e44;
 }
-#login:pressed {
+#btn_sign_up:pressed {
     -fx-background-color : #6f2426;
 }
-#login:hover { 
+#btn_sign_up:hover { 
    -fx-background-color : #6f2426;
 }

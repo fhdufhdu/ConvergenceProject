@@ -1,13 +1,8 @@
 package com.view;
 
-import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.scene.text.*;
 
-import java.lang.Exception;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
