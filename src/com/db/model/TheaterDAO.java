@@ -157,13 +157,13 @@ public class TheaterDAO extends DAO
     }
 
     //극장 삭제
-    public void removeTheater(TheaterDTO mt) throws DAOException, SQLException
+    public void removeTheater(String id) throws DAOException, SQLException
     {
         String insert_sql = "delete from theaters where id = ?";
 
         ps = conn.prepareStatement(insert_sql);
 
-        ps.setString(1, mt.getId());
+        ps.setString(1, id);
         
         int r = ps.executeUpdate();
         System.out.println("변경된 row : " + r);

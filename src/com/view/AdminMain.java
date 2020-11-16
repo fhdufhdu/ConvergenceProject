@@ -9,137 +9,93 @@ import java.lang.Exception;
 
 public class AdminMain 
 {
+    
     @FXML
-    private MenuItem m_theater_add;
+    private MenuItem mi_theater_manage;
 
     @FXML
-    private MenuItem m_theater_chanage;
+    private MenuItem mi_screen_add;
 
     @FXML
-    private MenuItem m_theater_list;
+    private MenuItem mi_movie_add;
 
     @FXML
-    private MenuItem m_screen_add;
+    private MenuItem mi_movie_change;
 
     @FXML
-    private MenuItem m_screen_change;
+    private MenuItem mi_movie_list;
 
     @FXML
-    private MenuItem m_screen_list;
+    private MenuItem mi_timetable_add;
 
     @FXML
-    private MenuItem m_movie_add;
+    private MenuItem mi_timetable_change;
 
     @FXML
-    private MenuItem m_movie_change;
-
-    @FXML
-    private MenuItem m_movie_list;
-
-    @FXML
-    private MenuItem m_timetable_add;
-
-    @FXML
-    private MenuItem m_timetable_change;
-
-    @FXML
-    private MenuItem m_timetable_list;
+    private MenuItem mi_timetable_list;
 
     @FXML
     private Menu m_admin_account;
 
     @FXML
-    private BorderPane admin_main_view;
+    private BorderPane bp_admin_sub;
 
     @FXML
-    void menuAdminAccount(ActionEvent event) 
-    {
+    void menuAdminAccount(ActionEvent event) {
 
     }
 
     @FXML
-    void menuMovieAdd(ActionEvent event) 
-    {
+    void menuMovieAdd(ActionEvent event) {
 
     }
 
     @FXML
-    void menuMovieChange(ActionEvent event) 
-    {
+    void menuMovieChange(ActionEvent event) {
 
     }
 
     @FXML
-    void menuMovieList(ActionEvent event) 
-    {
+    void menuMovieList(ActionEvent event) {
 
     }
 
     @FXML
-    void menuScreenAdd(ActionEvent event) 
-    {
+    void menuScreenAdd(ActionEvent event) {
 
     }
 
     @FXML
-    void menuScreenChange(ActionEvent event) 
-    {
+    void menuTheaterManage(ActionEvent event) {
+        loadPage("theater_manage");
+    }
+
+    @FXML
+    void menuTimeTableAdd(ActionEvent event) {
 
     }
 
     @FXML
-    void menuScreenList(ActionEvent event) 
-    {
+    void menuTimeTableChange(ActionEvent event) {
 
     }
 
     @FXML
-    void menuTheaterAdd(ActionEvent event) 
-    {
-        loadPage("theater_add");
-    }
-
-    @FXML
-    void menuTheaterChange(ActionEvent event) 
-    {
+    void menuTimeTableList(ActionEvent event) {
 
     }
 
-    @FXML
-    void menuTheaterList(ActionEvent event) 
-    {
-
-    }
-
-    @FXML
-    void menuTimeTableAdd(ActionEvent event) 
-    {
-
-    }
-
-    @FXML
-    void menuTimeTableChange(ActionEvent event) 
-    {
-
-    }
-
-    @FXML
-    void menuTimeTableList(ActionEvent event) 
-    {
-
-    }
-
-
+    //각 파일이름에 해당하는 뷰 불러오기
     private void loadPage(String file_name) 
     {
         try 
         {
             Parent root = FXMLLoader.load(AdminMain.class.getResource("./xml/admin_sub_page/"+file_name+".fxml"));
-            admin_main_view.setCenter(root);
+            bp_admin_sub.setCenter(root);
         } 
         catch (Exception e) 
         {
-           
+           e.printStackTrace();
         }
     }
 }

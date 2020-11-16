@@ -23,8 +23,8 @@ public class MovieServer extends Thread {
 		this.socket = socket;
 		currentID = "NULL";
 		admit = false;
-		//movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
-		DAO.connectDB();
+		movie_DB = new MovieDB("jdbc:oracle:thin:@192.168.224.250:1521:xe", "MT", "1234");
+//		DAO.connectDB();
 		System.out.println("현재 사용자 수 :" + ++currUser);
 	}
 
@@ -106,8 +106,8 @@ public class MovieServer extends Thread {
 					String phone_number = dataList[5]; // 연락처
 					String birth = dataList[6];
 					String account = dataList[7]; // 계좌 번호
-					MemberDAO m1 = new MemberDAO();
-					m1.addMember(
+					MemberDAO signUpDAO = new MemberDAO();
+					signUpDAO.addMember(
 							new MemberDTO(id, role, password, account, name,
 						            phone_number, birth, gender));
 					protocol = new Protocol(Protocol.SC_RES_SIGNUP);
