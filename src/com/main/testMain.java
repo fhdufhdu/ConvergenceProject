@@ -15,7 +15,6 @@ public class testMain extends Application {
 		DAO.closeDB();
 	}
 
-<<<<<<< HEAD
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -30,19 +29,3 @@ public class testMain extends Application {
 		}
 	}
 }
-=======
-    @Override
-    public void start(Stage primaryStage) {
-        try {
-            Parent root = FXMLLoader.load(testMain.class.getResource("../view/xml/login.fxml"));
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("로그인");
-            primaryStage.setResizable(false);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
->>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject

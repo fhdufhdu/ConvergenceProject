@@ -55,25 +55,23 @@ public class Login {
       loginTry();
    }
 
-<<<<<<< HEAD
 	// 로그인 시도
 	void loginTry() throws IOException {
 		try {
 			// gui에서 값 가져옴
 			String id = tf_id.getText();
 			String passwd = pf_passwd.getText();
-			boolean loginResult = false;
+            boolean loginResult = false;
+            
+            writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd);
 
 			while (true) {
 				String packet = testProtocol.getBr().readLine();
 				String packetArr[] = packet.split("/");
 				String packetType = packetArr[0];
 
-				switch (packetType) {
-				case Protocol.SC_REQ_LOGIN:
-					writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd);
-					break;
-
+                switch (packetType) 
+                {
 				case Protocol.SC_RES_LOGIN:
 					String result = packetArr[1];
 					if (result.equals("1") || result.equals("2")) {
@@ -99,9 +97,11 @@ public class Login {
 						primaryStage.setScene(scene);
 						primaryStage.show();
 					} else if (result.equals("3")) {
-						t_result.setText("로그인 실패! 암호 오류!");
+                        t_result.setText("로그인 실패! 암호 오류!");
+                        return;
 					} else if (result.equals("4")) {
-						t_result.setText("로그인 실패! 아디디 존재 오류!");
+                        t_result.setText("로그인 실패! 아디디 존재 오류!");
+                        return;
 					}
 					break;
 				}
@@ -109,39 +109,6 @@ public class Login {
 					break;
 			}
 		} catch (Exception e) // 에러 발생시
-=======
-   // 로그인 시도
-    void loginTry() throws IOException 
-    {
-      try {
-         // gui에서 값 가져옴
-            String id = tf_id.getText();
-            String passwd = pf_passwd.getText();
-        
-            MemberDAO mDao = new MemberDAO();
-            MemberDTO mem = mDao.getMember(id, passwd);
-            // 사용자, 관리자 구분해서 실행할 xml파일 선택
-            String path;
-            String title;
-            if (mem.getRole().equals("1")) {
-                path = "./xml/admin_main.fxml";
-                title = "관리자 모드";
-            } else {
-                path = "./xml/user_main.fxml";
-                title = "시네마";
-            }
-
-            // 로그인 성공시 새로운 window 표시
-            Parent root = FXMLLoader.load(Login.class.getResource(path));
-            Scene scene = new Scene(root, 1000, 666);
-            Stage primaryStage = (Stage) btn_login.getScene().getWindow();
-            primaryStage.setTitle(title);
-            primaryStage.setResizable(false);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } 
-        catch (Exception e) // 에러 발생시
->>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
 		{
 			e.printStackTrace();
 			t_result.setText("로그인 실패!");
