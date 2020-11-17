@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="1000.0" stylesheets="@../css/admin_main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.AdminMain">
    <children>
-      <Line endX="244.0" layoutX="418.0" layoutY="80.0" startX="-81.5999755859375" />
+      <Line endX="465.0" layoutX="418.0" layoutY="80.0" startX="-246.0" />
       <Text layoutX="434.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관리자 모드">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
@@ -34,7 +34,7 @@
                      <items>
                         <MenuItem fx:id="mi_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
                         <MenuItem fx:id="mi_movie_change" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
-                        <MenuItem fx:id="mi_movie_list" mnemonicParsing="false" onAction="#menuMovieList" text="출력" />
+                        <MenuItem fx:id="mi_movie_change2" mnemonicParsing="false" onAction="#menuMovieChange" text="삭제" />
                      </items>
                   </MenuButton>
                </graphic>
@@ -45,7 +45,7 @@
                     <items>
                         <MenuItem fx:id="mi_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
                         <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
-                        <MenuItem fx:id="mi_timetable_list" mnemonicParsing="false" onAction="#menuTimeTableList" text="출력" />
+                        <MenuItem fx:id="mi_timetable_change1" mnemonicParsing="false" onAction="#menuTimeTableChange" text="삭제" />
                     </items>
                   </MenuButton>
                </graphic></Menu>
@@ -55,7 +55,7 @@
                      <items>
                         <MenuItem fx:id="mi_movie_add1" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
                         <MenuItem fx:id="mi_movie_change1" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
-                        <MenuItem fx:id="mi_movie_list1" mnemonicParsing="false" onAction="#menuMovieList" text="출력" />
+                        <MenuItem fx:id="mi_movie_add11" mnemonicParsing="false" onAction="#menuMovieAdd" text="삭제" />
                      </items>
                   </MenuButton>
                </graphic>
@@ -77,6 +77,6 @@
             <Blend />
          </effect>
       </MenuBar>
-      <BorderPane fx:id="bp_admin_sub" layoutX="100.0" layoutY="161.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" />
+      <BorderPane fx:id="bp_admin_sub" layoutX="99.0" layoutY="169.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" />
    </children>
 </AnchorPane>

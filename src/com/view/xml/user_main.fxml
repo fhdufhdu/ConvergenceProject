@@ -15,8 +15,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="1000.0" stylesheets="@../css/admin_main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.UserMain">
    <children>
-      <Line endX="244.0" layoutX="400.0" layoutY="80.0" startX="-44.0" />
-      <Text layoutX="463.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시네마" textAlignment="CENTER">
+      <Line endX="307.0" layoutX="400.0" layoutY="80.0" startX="-125.0" />
+      <Text layoutX="446.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시네마" textAlignment="CENTER">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
