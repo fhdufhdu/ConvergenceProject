@@ -82,7 +82,7 @@ public class MovieServer extends Thread {
 						String phone_number = packetArr[6]; // 연락처
 						String birth = packetArr[7];
 						String gender = packetArr[8]; // 성별
-						
+
 						MemberDAO signUpDAO = new MemberDAO();
 						signUpDAO.addMember(new MemberDTO(signUp_id, role, signUp_password, account, name, phone_number,
 								birth, gender));
@@ -91,6 +91,72 @@ public class MovieServer extends Thread {
 					} catch (Exception e) {
 						e.printStackTrace();
 						writePacket(Protocol.SC_RES_SIGNUP + "/2");
+						break;
+					}
+				}
+				case Protocol.CS_REQ_THEATER_ADD: {
+					try {
+						System.out.println("클라이언트가 영화관 등록 요청를 보냈습니다.");
+						String name = packetArr[1]; // 영화관 이름
+						String address = packetArr[2]; // 영화관 주소
+						String screen = packetArr[3]; // 총 스크린 수
+						String seat = packetArr[4]; // 총 좌석 수
+
+						TheaterDAO theaterDAO = new TheaterDAO();
+						TheaterDTO theaterDTO = new TheaterDTO(DTO.EMPTY_ID, name, address, Integer.valueOf(screen),
+								Integer.valueOf(seat));
+
+						theaterDAO.addTheater(theaterDTO);
+
+						System.out.println("영화관 등록 성공");
+						writePacket(Protocol.SC_RES_THEATER_ADD + "/1");
+						break;
+					} catch (Exception e) {
+						e.printStackTrace();
+						writePacket(Protocol.SC_RES_THEATER_ADD + "/2");
+						break;
+					}
+				}
+				
+				case Protocol.CS_REQ_THEATER_CHANGE: {
+					try {
+						System.out.println("클라이언트가 영화관 수정 요청를 보냈습니다.");
+						String id = packetArr[1]; // 영화관 ID
+						String name = packetArr[2]; // 영화관 이름
+						String address = packetArr[3]; // 영화관 주소
+						String screen = packetArr[4]; // 총 스크린 수
+						String seat = packetArr[5]; // 총 좌석 수
+
+						TheaterDAO theaterDAO = new TheaterDAO();
+						TheaterDTO theaterDTO = new TheaterDTO(id, name, address, Integer.valueOf(screen),
+								Integer.valueOf(seat));
+
+						theaterDAO.changeTheater(theaterDTO);
+
+						System.out.println("영화관 수정 성공");
+						writePacket(Protocol.SC_RES_THEATER_ADD + "/1");
+						break;
+					} catch (Exception e) {
+						e.printStackTrace();
+						writePacket(Protocol.SC_RES_THEATER_ADD + "/2");
+						break;
+					}
+				}
+				
+				case Protocol.CS_REQ_THEATER_DELETE:{
+					try {
+						System.out.println("클라이언트가 영화관 삭제 요청을 보냈습니다.");
+						String id = packetArr[1]; // 영화관 ID
+						
+						TheaterDAO theaterDAO = new TheaterDAO();
+						theaterDAO.removeTheater(id);
+						
+						System.out.println("영화관 삭제 성공");
+						writePacket(Protocol.SC_RES_THEATER_ADD + "/1");
+						break;
+					}catch(Exception e) {
+						e.printStackTrace();
+						writePacket(Protocol.SC_RES_THEATER_ADD + "/2");
 						break;
 					}
 				}
