@@ -60,46 +60,49 @@ public class Login
 	// 로그인 시도
     void loginTry() throws IOException 
     {
-        try 
+        while(true)
         {
-			// gui에서 값 가져옴
-			String id = tf_id.getText();
-			String passwd = pf_passwd.getText();
-            
-            mainGUI.writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd); 
-
-            String packet = mainGUI.readLine();
-            String packetArr[] = packet.split("/");
-            String packetType = packetArr[0];
-
-            if(packetType.equals(Protocol.SC_RES_LOGIN))
+            try 
             {
-                String result = packetArr[1];
-                switch(result)
+                // gui에서 값 가져옴
+                String id = tf_id.getText();
+                String passwd = pf_passwd.getText();
+                
+                mainGUI.writePacket(Protocol.CS_REQ_LOGIN + "/" + id + "/" + passwd); 
+    
+                String packet = mainGUI.readLine();
+                String packetArr[] = packet.split("/");
+                String packetType = packetArr[0];
+    
+                if(packetType.equals(Protocol.SC_RES_LOGIN))
                 {
-                    case "1":
+                    String result = packetArr[1];
+                    switch(result)
                     {
-                        startWindow("./xml/admin_main.fxml", "관리자 모드");
-                        return;
-                    }
-                    case "2":
-                    {
-                        startWindow("./xml/user_main.fxml", "시네마");
-                        return;
-                    }
-                    case "3":
-                    {
-                        t_result.setText("로그인 실패!");
-                        return;
+                        case "1":
+                        {
+                            startWindow("./xml/admin_main.fxml", "관리자 모드");
+                            return;
+                        }
+                        case "2":
+                        {
+                            startWindow("./xml/user_main.fxml", "시네마");
+                            return;
+                        }
+                        case "3":
+                        {
+                            t_result.setText("로그인 실패!");
+                            return;
+                        }
                     }
                 }
+            } 
+            catch (Exception e) // 에러 발생시
+            {
+                e.printStackTrace();
+                t_result.setText("로그인 실패!");
             }
-        } 
-        catch (Exception e) // 에러 발생시
-		{
-			e.printStackTrace();
-			t_result.setText("로그인 실패!");
-		}
+        }
 	}
 
 	// 회원 가입

@@ -473,28 +473,31 @@ public class TheaterManage implements Initializable {
 
 			mainGUI.writePacket(Protocol.CS_REQ_THEATER_ADD + "/" + name + "/" + address + "/" + screen + "/" + seat);
 
-			String packet = mainGUI.readLine();
-			String packetArr[] = packet.split("/");
-			String packetType = packetArr[0];
+            while(true)
+            {
+                String packet = mainGUI.readLine();
+                String packetArr[] = packet.split("/");
+                String packetType = packetArr[0];
 
-			if (packetType.equals(Protocol.SC_RES_THEATER_ADD)) {
-				String result = packetArr[1];
-				switch (result) {
-				case "1":
-					// 값 추가 후 각 테이블 및 리스트 초기화
-					theater_list.clear();
-					tv_theater.getItems().clear();
-					initList();
-					tv_theater.setItems(theater_list);
+                if (packetType.equals(Protocol.SC_RES_THEATER_ADD)) {
+                    String result = packetArr[1];
+                    switch (result) {
+                    case "1":
+                        // 값 추가 후 각 테이블 및 리스트 초기화
+                        theater_list.clear();
+                        tv_theater.getItems().clear();
+                        initList();
+                        tv_theater.setItems(theater_list);
 
-					// text field 초기화
-					clearText();
-					return;
-				case "2":
-					t_result.setText("영화관 등록 실패!");
-					return;
-				}
-			}
+                        // text field 초기화
+                        clearText();
+                        return;
+                    case "2":
+                        t_result.setText("영화관 등록 실패!");
+                        return;
+                    }
+                }
+            }
 		} catch (DAOException e) {
 			// 값의 중복 발생시
 			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
@@ -523,26 +526,29 @@ public class TheaterManage implements Initializable {
 			mainGUI.writePacket(
 					Protocol.CS_REQ_THEATER_CHANGE + "/" + id + "/" + name + "/" + address + "/" + screen + "/" + seat);
 
-			String packet = mainGUI.readLine();
-			String packetArr[] = packet.split("/");
-			String packetType = packetArr[0];
-
-			if (packetType.equals(Protocol.SC_RES_THEATER_ADD)) {
-				String result = packetArr[1];
-				switch (result) {
-				case "1":
-					theater_list.clear();
-					tv_theater.getItems().clear();
-					initList();
-					tv_theater.setItems(theater_list);
-
-					clearText();
-					return;
-				case "2":
-					t_result.setText("영화관 수정 실패!");
-					return;
-				}
-			}
+            while(true)
+            {
+                String packet = mainGUI.readLine();
+                String packetArr[] = packet.split("/");
+                String packetType = packetArr[0];
+    
+                if (packetType.equals(Protocol.SC_RES_THEATER_CHANGE)) {
+                    String result = packetArr[1];
+                    switch (result) {
+                    case "1":
+                        theater_list.clear();
+                        tv_theater.getItems().clear();
+                        initList();
+                        tv_theater.setItems(theater_list);
+    
+                        clearText();
+                        return;
+                    case "2":
+                        t_result.setText("영화관 수정 실패!");
+                        return;
+                    }
+                }
+            }
 		} catch (DAOException e) {
 			// 값의 중복 발생시
 			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
@@ -571,32 +577,36 @@ public class TheaterManage implements Initializable {
 				return;
 			}
 
+
 			String id = table_row_data.getId();
 
 			mainGUI.writePacket(Protocol.CS_REQ_THEATER_DELETE + "/" + id);
 
-			String packet = mainGUI.readLine();
-			String packetArr[] = packet.split("/");
-			String packetType = packetArr[0];
-
-			if (packetType.equals(Protocol.SC_RES_THEATER_DELETE)) {
-				String result = packetArr[1];
-				switch (result) {
-				case "1":
-					t_result.setText("삭제되었습니다");
-
-					theater_list.clear();
-					tv_theater.getItems().clear();
-					initList();
-					tv_theater.setItems(theater_list);
-
-					clearText();
-					return;
-				case "2":
-					t_result.setText("영화관 삭제 실패!");
-					return;
-				}
-			}
+            while(true)
+            {
+                String packet = mainGUI.readLine();
+                String packetArr[] = packet.split("/");
+                String packetType = packetArr[0];
+    
+                if (packetType.equals(Protocol.SC_RES_THEATER_DELETE)) {
+                    String result = packetArr[1];
+                    switch (result) {
+                    case "1":
+                        t_result.setText("삭제되었습니다");
+    
+                        theater_list.clear();
+                        tv_theater.getItems().clear();
+                        initList();
+                        tv_theater.setItems(theater_list);
+    
+                        clearText();
+                        return;
+                    case "2":
+                        t_result.setText("영화관 삭제 실패!");
+                        return;
+                    }
+                }
+            }
 		} catch (DAOException e) {
 			// 값의 중복 발생시
 			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
@@ -665,7 +675,6 @@ public class TheaterManage implements Initializable {
 
 	}
 
-<<<<<<< HEAD
 	private void initList() {
 		try {
 			TheaterDAO tDao = new TheaterDAO();
@@ -687,15 +696,3 @@ public class TheaterManage implements Initializable {
 		t_result.setText("");
 	}
 }
-=======
-    private void clearText()
-    {
-        tf_name.clear();
-        tf_address.clear();
-        tf_screen.clear();
-        tf_seat.clear();
-        t_result.setText("");
-    }
-}
- 
->>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject

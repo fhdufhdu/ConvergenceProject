@@ -134,11 +134,11 @@ public class MovieServer extends Thread {
 						theaterDAO.changeTheater(theaterDTO);
 
 						System.out.println("영화관 수정 성공");
-						writePacket(Protocol.SC_RES_THEATER_ADD + "/1");
+						writePacket(Protocol.SC_RES_THEATER_CHANGE + "/1");
 						break;
 					} catch (Exception e) {
 						e.printStackTrace();
-						writePacket(Protocol.SC_RES_THEATER_ADD + "/2");
+						writePacket(Protocol.SC_RES_THEATER_CHANGE + "/2");
 						break;
 					}
 				}
@@ -152,11 +152,11 @@ public class MovieServer extends Thread {
 						theaterDAO.removeTheater(id);
 						
 						System.out.println("영화관 삭제 성공");
-						writePacket(Protocol.SC_RES_THEATER_ADD + "/1");
+						writePacket(Protocol.SC_RES_THEATER_DELETE + "/1");
 						break;
 					}catch(Exception e) {
 						e.printStackTrace();
-						writePacket(Protocol.SC_RES_THEATER_ADD + "/2");
+						writePacket(Protocol.SC_RES_THEATER_DELETE + "/2");
 						break;
 					}
 				}
@@ -182,8 +182,7 @@ public class MovieServer extends Thread {
 
 	public void writePacket(String source) throws Exception {
 		try {
-			bw.write(source);
-			bw.newLine();
+			bw.write(source+"\n");
 			bw.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
