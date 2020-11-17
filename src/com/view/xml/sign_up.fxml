@@ -28,9 +28,8 @@
       <PasswordField fx:id="pf_passwd" layoutX="317.0" layoutY="150.0" prefHeight="40.0" prefWidth="200.0" promptText="비밀번호 " style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd;" />
       <TextField fx:id="tf_name" layoutX="80.0" layoutY="200.0" prefHeight="40.0" prefWidth="200.0" promptText="이름" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd;" />
       <DatePicker fx:id="dp_birth" layoutX="317.0" layoutY="200.0" prefHeight="40.0" prefWidth="200.0" promptText="생년월일" style="-fx-background-color: #ffffff; -fx-border-radius: 0; -fx-border-color: #dddddd; -fx-effect: null;" />
-      <TextField fx:id="tf_account" layoutX="80.0" layoutY="250.0" prefHeight="40.0" prefWidth="200.0" promptText="계좌번호" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd;" />
       <TextField fx:id="tf_phone" layoutX="317.0" layoutY="250.0" prefHeight="40.0" prefWidth="200.0" promptText="전화번호" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd;" />
-      <MenuButton fx:id="mb_gender" layoutX="80.0" layoutY="300.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd;" text="성별을 선택해 주세요">
+      <MenuButton fx:id="mb_gender" layoutX="80.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd;" text="성별을 선택해 주세요">
         <items>
           <MenuItem fx:id="mi_male" mnemonicParsing="false" onAction="#setMale" text="남" />
           <MenuItem fx:id="mi_female" mnemonicParsing="false" onAction="#setFemale" text="여" />
@@ -40,9 +39,9 @@
          <font>
             <Font name="LG Smart UI Bold" size="20.0" />
          </font></Button>
-      <Text fx:id="t_result" layoutX="77.0" layoutY="372.0" strokeType="INSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="445.6513671875">
+      <Text fx:id="t_result" layoutX="74.0" layoutY="326.0" strokeType="INSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.0">
          <font>
-            <Font name="LG Smart UI Bold" size="18.0" />
+            <Font name="LG Smart UI Bold" size="15.0" />
          </font>
       </Text>
    </children>

@@ -40,8 +40,7 @@ public class mainGUI extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
-			// Parent root =
-			// FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/Seat_Choice.fxml"));
+			//Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/Seat_Choice.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("로그인");
 			primaryStage.setResizable(false);
