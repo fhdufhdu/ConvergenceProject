@@ -101,30 +101,30 @@ public class SignUp {
 			if (packetType.equals(Protocol.SC_RES_SIGNUP)) {
 				String result = packetArr[1];
 				switch (result) {
-				case "1":
-					t_result.setText("회원가입 성공! 2초 후 로그인 화면으로 돌아갑니다!");
+					case "1":
+						t_result.setText("회원가입 성공! 2초 후 로그인 화면으로 돌아갑니다!");
 
-					// 스레드사용으로 1.5초 후 로그인 페이지로 전환
-					new Thread(() -> {
-						Platform.runLater(() -> {
-							try {
-								Thread.sleep(1500);
-								Parent root = FXMLLoader.load(SignUp.class.getResource("../view/xml/login.fxml"));
-								Scene scene = new Scene(root, 600, 400);
-								Stage primaryStage = (Stage) btn_sign_up.getScene().getWindow();
-								primaryStage.setTitle("로그인");
-								primaryStage.setResizable(false);
-								primaryStage.setScene(scene);
-								primaryStage.show();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						});
-					}).start();
-					return;
-				case "2":
-					t_result.setText("회원가입 실패!");
-					return;
+						// 스레드사용으로 1.5초 후 로그인 페이지로 전환
+						new Thread(() -> {
+							Platform.runLater(() -> {
+								try {
+									Thread.sleep(1500);
+									Parent root = FXMLLoader.load(SignUp.class.getResource("../view/xml/login.fxml"));
+									Scene scene = new Scene(root, 600, 400);
+									Stage primaryStage = (Stage) btn_sign_up.getScene().getWindow();
+									primaryStage.setTitle("로그인");
+									primaryStage.setResizable(false);
+									primaryStage.setScene(scene);
+									primaryStage.show();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							});
+						}).start();
+						return;
+					case "2":
+						t_result.setText("회원가입 실패!");
+						return;
 				}
 			}
 		} catch (Exception e) {

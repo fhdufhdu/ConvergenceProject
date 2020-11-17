@@ -2,10 +2,10 @@ package com.db.model;
 
 import java.sql.Date;
 
-public class MovieDTO extends DTO{
+public class MovieDTO extends DTO {
     private String id;
     private String title;
-    private Date release_date; //date
+    private Date release_date; // date
     private String is_current;
     private String plot;
     private String poster_path;
@@ -16,9 +16,8 @@ public class MovieDTO extends DTO{
     private int min;
 
     public MovieDTO(String id, String title, String release_date, String is_current, String plot, String poster_path,
-            String still_cut_path, String trailer_path, String director, String actor, int min) 
-    {
-        //release_date의 포맷은 "YYYY-MM-DD"
+            String still_cut_path, String trailer_path, String director, String actor, int min) {
+        // release_date의 포맷은 "YYYY-MM-DD"
         this.id = id;
         this.title = title;
         this.release_date = Date.valueOf(release_date);
@@ -33,9 +32,8 @@ public class MovieDTO extends DTO{
     }
 
     public MovieDTO(String title, String release_date, String is_current, String plot, String poster_path,
-            String still_cut_path, String trailer_path, String director, String actor, int min) 
-    {
-        //release_date의 포맷은 "YYYY-MM-DD"
+            String still_cut_path, String trailer_path, String director, String actor, int min) {
+        // release_date의 포맷은 "YYYY-MM-DD"
         this.title = title;
         this.release_date = Date.valueOf(release_date);
         this.is_current = is_current;
@@ -47,8 +45,8 @@ public class MovieDTO extends DTO{
         this.actor = actor;
         this.min = min;
     }
-    public MovieDTO()
-    {
+
+    public MovieDTO() {
 
     }
 

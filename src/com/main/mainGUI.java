@@ -40,7 +40,8 @@ public class mainGUI extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
-			//Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/Seat_Choice.fxml"));
+			// Parent root =
+			// FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/Seat_Choice.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("로그인");
 			primaryStage.setResizable(false);
@@ -50,7 +51,7 @@ public class mainGUI extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static BufferedReader getBr() {
 		return br;
 	}
@@ -59,27 +60,19 @@ public class mainGUI extends Application {
 		return bw;
 	}
 
-	public static void writePacket(String source) throws Exception 
-    {
-        try 
-        {
-			bw.write(source+"\n");
+	public static void writePacket(String source) throws Exception {
+		try {
+			bw.write(source + "\n");
 			bw.flush();
-        } 
-        catch (Exception e) 
-        {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static String readLine()
-	{
-		try 
-        {
+	public static String readLine() {
+		try {
 			return br.readLine();
-        } 
-        catch (Exception e) 
-        {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

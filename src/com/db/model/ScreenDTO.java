@@ -3,8 +3,7 @@ package com.db.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ScreenDTO extends DTO
-{
+public class ScreenDTO extends DTO {
     private String id;
     private String theater_id;
     private String name;
@@ -103,5 +102,4 @@ public class ScreenDTO extends DTO
         this.max_col = max_col;
     }
 
-    
 }

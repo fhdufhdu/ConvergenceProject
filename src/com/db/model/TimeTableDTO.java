@@ -2,7 +2,7 @@ package com.db.model;
 
 import java.sql.Timestamp;
 
-public class TimeTableDTO extends DTO{
+public class TimeTableDTO extends DTO {
     private String id;
     private String movieId;
     private String screenId;
@@ -12,18 +12,18 @@ public class TimeTableDTO extends DTO{
     private int current_rsv;
 
     public TimeTableDTO(String id, String movieId, String screenId, String startTime, String endTime, String type, int current_rsv) {
-        //날짜 2018-09-21 10:53:00.0 의 형태로
+        // 날짜 2018-09-21 10:53:00.0 의 형태로
         this.id = id;
         this.movieId = movieId;
         this.screenId = screenId;
         this.startTime = Timestamp.valueOf(startTime);
         this.endTime = Timestamp.valueOf(endTime);
-        this.type = type;   //plsql 만들기
+        this.type = type; // plsql 만들기
         this.current_rsv = current_rsv;
     }
 
     public TimeTableDTO(String movieId, String screenId, String startTime, String endTime, int current_rsv) {
-        //날짜 2018-09-21 10:53:00.0 의 형태로
+        // 날짜 2018-09-21 10:53:00.0 의 형태로
         this.movieId = movieId;
         this.screenId = screenId;
         this.startTime = Timestamp.valueOf(startTime);
@@ -33,7 +33,7 @@ public class TimeTableDTO extends DTO{
     }
 
     public TimeTableDTO(String id, String movieId, String screenId, String startTime, String endTime, int current_rsv) {
-        //날짜 2018-09-21 10:53:00.0 의 형태로
+        // 날짜 2018-09-21 10:53:00.0 의 형태로
         this.id = id;
         this.movieId = movieId;
         this.screenId = screenId;
@@ -44,7 +44,7 @@ public class TimeTableDTO extends DTO{
     }
 
     public TimeTableDTO(String id, String movieId, String screenId, Timestamp startTime, int current_rsv) {
-        //날짜 2018-09-21 10:53:00.0 의 형태로
+        // 날짜 2018-09-21 10:53:00.0 의 형태로
         this.id = id;
         this.movieId = movieId;
         this.screenId = screenId;

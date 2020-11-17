@@ -2,7 +2,7 @@ package com.db.model;
 
 import java.sql.*;
 
-public class MemberDTO extends DTO{
+public class MemberDTO extends DTO {
     private String id;
     private String role;
     private String password;
@@ -12,15 +12,15 @@ public class MemberDTO extends DTO{
     private Date birth;
     private String gender;
 
-    public MemberDTO(String id, String role, String password, String account, String name,
-            String phone_number, String birth, String gender) {
+    public MemberDTO(String id, String role, String password, String account, String name, String phone_number,
+            String birth, String gender) {
         this.id = id;
         this.role = role;
         this.password = password;
         this.account = account;
         this.name = name;
         this.phone_number = phone_number;
-        this.birth = Date.valueOf(birth); //date
+        this.birth = Date.valueOf(birth); // date
         this.gender = gender;
     }
 
@@ -32,7 +32,7 @@ public class MemberDTO extends DTO{
     }
 
     public MemberDTO() {
-        
+
     }
 
     public String getId() {

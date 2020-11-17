@@ -23,9 +23,7 @@ import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-
-public class MovieAdd 
-{
+public class MovieAdd {
     private String is_current;
 
     @FXML
@@ -68,75 +66,63 @@ public class MovieAdd
     private Text result;
 
     @FXML
-    void addMovie(ActionEvent event) 
-    {
-        try
-        {
+    void addMovie(ActionEvent event) {
+        try {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             MovieDAO mDao = new MovieDAO();
-            MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID, tf_title.getText(), dateFormat.format(dp_release_date.getValue()), is_current, ta_plot.getText(), tf_poster.getText(),
-            tf_stillcut.getText(), tf_trailer.getText(), tf_director.getText(), ta_actor.getText(), Integer.valueOf(tf_min.getText()));
+            MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID, tf_title.getText(),
+                    dateFormat.format(dp_release_date.getValue()), is_current, ta_plot.getText(), tf_poster.getText(),
+                    tf_stillcut.getText(), tf_trailer.getText(), tf_director.getText(), ta_actor.getText(),
+                    Integer.valueOf(tf_min.getText()));
             mDao.addMovie(mDto);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void selectClose(ActionEvent event) 
-    {
+    void selectClose(ActionEvent event) {
         cb_current.setSelected(false);
         cb_soon.setSelected(false);
         is_current = "0";
     }
 
     @FXML
-    void selectCurrent(ActionEvent event) 
-    {
+    void selectCurrent(ActionEvent event) {
         cb_soon.setSelected(false);
         cb_close.setSelected(false);
         is_current = "1";
     }
 
     @FXML
-    void selectSoon(ActionEvent event) 
-    {
+    void selectSoon(ActionEvent event) {
         cb_current.setSelected(false);
         cb_close.setSelected(false);
         is_current = "2";
     }
 
     @FXML
-    void getPosterPath(ActionEvent event) 
-    {
+    void getPosterPath(ActionEvent event) {
         tf_poster.setText(getFile().getPath());
     }
 
     @FXML
-    void getStillCutPath(ActionEvent event) 
-    {
+    void getStillCutPath(ActionEvent event) {
         tf_stillcut.setText(getFile().getPath());
     }
 
-    private File getFile()
-    {
+    private File getFile() {
         FileChooser fc = new FileChooser();
         File selectedFile = fc.showOpenDialog((Stage) tf_poster.getScene().getWindow());
-        
+
         return selectedFile;
     }
 
-    private byte[] getFileByteArray(File selectedFile)
-    {
-        try
-        {
+    private byte[] getFileByteArray(File selectedFile) {
+        try {
             byte arr[] = Files.readAllBytes(selectedFile.toPath());
             return arr;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

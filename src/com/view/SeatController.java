@@ -21,14 +21,12 @@ import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-public class SeatController implements Initializable
-{
+public class SeatController implements Initializable {
     @FXML
     private VBox vbox;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
+    public void initialize(URL location, ResourceBundle resources) {
         vbox.getChildren().addAll(new ButtonBar("Cut"), new ButtonBar("Copy"), new ButtonBar("Paste"));
     }
 }
