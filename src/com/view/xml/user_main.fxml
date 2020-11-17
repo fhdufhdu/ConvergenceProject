@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,18 +21,31 @@
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
       </Text>
-      <MenuBar id="admin_menu" layoutX="370.0" layoutY="96.0">
+      <MenuBar id="admin_menu" layoutX="281.0" layoutY="96.0">
          <menus>
-            <Menu id="menu_movie" mnemonicParsing="false" text="영화관" />
-            <Menu mnemonicParsing="false" text="영화">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="현재 상영작" />
-                  <MenuItem mnemonicParsing="false" text="상영 예정작" />
-                  <MenuItem mnemonicParsing="false" text="영화 찾아보기" />
-               </items>
+            <Menu id="menu_movie" mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="영화관" />
+               </graphic></Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent;" text="영화">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="현재 상영작" />
+                        <MenuItem mnemonicParsing="false" text="상영 예정작" />
+                        <MenuItem mnemonicParsing="false" text="영화 찾아보기" />
+                    </items>
+                  </MenuButton>
+               </graphic>
             </Menu>
-            <Menu mnemonicParsing="false" text="상영시간표" />
-            <Menu mnemonicParsing="false" text="예매 관리" />
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="상영시간표" />
+               </graphic></Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="예매 관리" />
+               </graphic></Menu>
          </menus>
          <cursor>
             <Cursor fx:constant="HAND" />

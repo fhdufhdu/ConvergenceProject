@@ -62,7 +62,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="97.0" layoutY="79.0" prefHeight="200.0" prefWidth="288.0">
+                        <TableView layoutX="97.0" layoutY="79.0" prefHeight="171.0" prefWidth="288.0">
                           <columns>
                             <TableColumn prefWidth="144.0" text="시작시간" />
                               <TableColumn prefWidth="143.0" text="상영시간" />
@@ -71,7 +71,7 @@
                         <DatePicker layoutX="97.0" layoutY="20.0" />
                         <Text layoutX="56.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
                         <Text layoutX="26.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
-                        <Button layoutX="621.0" layoutY="250.0" mnemonicParsing="false" text="등록" />
+                        <Button layoutX="620.0" layoutY="223.0" mnemonicParsing="false" text="등록" />
                      </children></AnchorPane>
             </content>
           </Tab>
