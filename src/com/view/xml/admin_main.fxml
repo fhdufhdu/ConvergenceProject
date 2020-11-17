@@ -34,7 +34,7 @@
                      <items>
                         <MenuItem fx:id="mi_movie_add" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
                         <MenuItem fx:id="mi_movie_change" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
-                        <MenuItem fx:id="mi_movie_change2" mnemonicParsing="false" onAction="#menuMovieChange" text="삭제" />
+                        <MenuItem mnemonicParsing="false" text="삭제" />
                      </items>
                   </MenuButton>
                </graphic>
@@ -45,7 +45,7 @@
                     <items>
                         <MenuItem fx:id="mi_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
                         <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
-                        <MenuItem fx:id="mi_timetable_change1" mnemonicParsing="false" onAction="#menuTimeTableChange" text="삭제" />
+                        <MenuItem mnemonicParsing="false" text="삭제" />
                     </items>
                   </MenuButton>
                </graphic></Menu>
@@ -53,9 +53,9 @@
                <graphic>
                   <MenuButton mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="상영시간표">
                      <items>
-                        <MenuItem fx:id="mi_movie_add1" mnemonicParsing="false" onAction="#menuMovieAdd" text="등록" />
-                        <MenuItem fx:id="mi_movie_change1" mnemonicParsing="false" onAction="#menuMovieChange" text="수정" />
-                        <MenuItem fx:id="mi_movie_add11" mnemonicParsing="false" onAction="#menuMovieAdd" text="삭제" />
+                        <MenuItem mnemonicParsing="false" text="등록" />
+                        <MenuItem mnemonicParsing="false" text="수정" />
+                        <MenuItem mnemonicParsing="false" text="삭제" />
                      </items>
                   </MenuButton>
                </graphic>
