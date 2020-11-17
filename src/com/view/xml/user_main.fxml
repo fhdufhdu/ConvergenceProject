@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,24 +15,37 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="1000.0" stylesheets="@../css/admin_main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.UserMain">
    <children>
-      <Line endX="244.0" layoutX="400.0" layoutY="80.0" startX="-44.0" />
-      <Text layoutX="463.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시네마" textAlignment="CENTER">
+      <Line endX="307.0" layoutX="400.0" layoutY="80.0" startX="-125.0" />
+      <Text layoutX="446.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시네마" textAlignment="CENTER">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
       </Text>
-      <MenuBar id="admin_menu" layoutX="370.0" layoutY="96.0">
+      <MenuBar id="admin_menu" layoutX="281.0" layoutY="96.0">
          <menus>
-            <Menu id="menu_movie" mnemonicParsing="false" text="영화관" />
-            <Menu mnemonicParsing="false" text="영화">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="현재 상영작" />
-                  <MenuItem mnemonicParsing="false" text="상영 예정작" />
-                  <MenuItem mnemonicParsing="false" text="영화 찾아보기" />
-               </items>
+            <Menu id="menu_movie" mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="영화관" />
+               </graphic></Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent;" text="영화">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="현재 상영작" />
+                        <MenuItem mnemonicParsing="false" text="상영 예정작" />
+                        <MenuItem mnemonicParsing="false" text="영화 찾아보기" />
+                    </items>
+                  </MenuButton>
+               </graphic>
             </Menu>
-            <Menu mnemonicParsing="false" text="상영시간표" />
-            <Menu mnemonicParsing="false" text="예매 관리" />
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="상영시간표" />
+               </graphic></Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="예매 관리" />
+               </graphic></Menu>
          </menus>
          <cursor>
             <Cursor fx:constant="HAND" />
