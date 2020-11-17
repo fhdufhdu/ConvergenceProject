@@ -16,4 +16,10 @@ public class Protocol {
 	// 프로토콜 타입의 코드에 관한 변수
 	public static final String CS_REQ_SIGNUP = "8-0"; // 회원가입 요청
 	public static final String SC_RES_SIGNUP = "9-0"; // 회원가입 응답
+	public static final String CS_REQ_THEATER_ADD = "8-4"; // 영화관 등록 요청
+	public static final String SC_RES_THEATER_ADD = "9-8"; // 영화관 등록 응답
+	public static final String CS_REQ_THEATER_DELETE = "8-5"; // 영화관 삭제 요청
+	public static final String SC_RES_THEATER_DELETE = "9-A"; // 영화관 삭제 응답
+	public static final String CS_REQ_THEATER_CHANGE = "8-6"; // 영화관 수정 요청
+	public static final String SC_RES_THEATER_CHANGE = "9-B"; // 영화관 수정 응답
 }

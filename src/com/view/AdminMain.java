@@ -16,14 +16,23 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.*;
 import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-public class AdminMain
+public class AdminMain implements Initializable
 {
-    
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        /*WebEngine webEngine = test_webview.getEngine();
+
+	    webEngine.load("https://m.map.naver.com/search2/search.nhn?query="+"경북 구미시 인동 메가박스"+"&sm=hty&style=v5#/map");*/
+    }
+
     @FXML
     private Menu m_theater;
 
@@ -50,6 +59,9 @@ public class AdminMain
 
     @FXML
     private BorderPane bp_admin_sub;
+
+    @FXML
+    private WebView test_webview;
 
     @FXML
     void menuAdminAccount(ActionEvent event) {
@@ -95,6 +107,8 @@ public class AdminMain
     void menuTimeTableList(ActionEvent event) {
 
     }
+
+    
 
     //각 파일이름에 해당하는 뷰 불러오기
     private void loadPage(String file_name) 
