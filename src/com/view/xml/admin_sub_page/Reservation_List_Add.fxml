@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,87 +11,71 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutY="-17.0" prefHeight="450.0" prefWidth="800.0">
-         <children>
-            <Text layoutX="326.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 관리">
-               <font>
-                  <Font name="LG Smart UI Bold" size="30.0" />
-               </font>
-            </Text>
-            <Line endX="375.0" layoutX="404.0" layoutY="66.0" startX="-343.0" />
-            <TabPane layoutX="62.0" layoutY="284.0" prefHeight="255.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                                <Tab text="영화">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="719.0">
-                           <children>
-                              <TableView layoutY="7.0" prefHeight="200.0" prefWidth="360.0">
-                                <columns>
-                                  <TableColumn prefWidth="359.0" text="영화" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="영화관">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView layoutY="7.0" prefHeight="200.0" prefWidth="360.0">
-                                <columns>
-                                  <TableColumn prefWidth="359.0" text="영화관" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                                <Tab text="상영관">
-                     <content>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <TableView layoutY="7.0" prefHeight="200.0" prefWidth="360.0">
-                                <columns>
-                                  <TableColumn prefWidth="359.0" text="상영관" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                </Tab>
-                <Tab text="날짜&amp;시간">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView layoutY="6.0" prefHeight="200.0" prefWidth="360.0">
-                                <columns>
-                                  <TableColumn prefWidth="359.0" text="날짜&amp;시간" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <Button layoutX="563.0" layoutY="543.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="65.0" text="등록" />
-            <TableView layoutX="61.0" layoutY="76.0" prefHeight="200.0" prefWidth="719.0">
-              <columns>
-                <TableColumn prefWidth="77.0" text="사용자" />
-                <TableColumn prefWidth="165.0" text="영화" />
-                  <TableColumn prefWidth="94.0" text="영화관" />
-                  <TableColumn prefWidth="105.0" text="상영관" />
-                  <TableColumn prefWidth="108.0" resizable="false" text="날짜" />
-                  <TableColumn prefWidth="95.0" text="시간" />
-                  <TableColumn prefWidth="74.0" text="좌석" />
-              </columns>
-            </TableView>
-            <Button layoutX="634.0" layoutY="543.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="65.0" text="삭제" />
-            <Button layoutX="707.0" layoutY="543.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="65.0" text="수정" />
-         </children>
-      </AnchorPane>
+      <Text layoutX="305.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 등록">
+         <font>
+            <Font name="LG Smart UI Bold" size="30.0" />
+            
+         </font>
+      </Text>
+      <Line endX="375.0" layoutX="390.0" layoutY="64.0" startX="-343.0" />
+      <TabPane layoutX="47.0" layoutY="86.0" prefHeight="304.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="영화관">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="199.0" text="영화관" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="영화">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="297.0">
+                          <columns>
+                            <TableColumn prefWidth="296.0" text="영화" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="상영관">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="199.0" text="상영관" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="날짜&amp;상영시간">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="97.0" layoutY="79.0" prefHeight="200.0" prefWidth="288.0">
+                          <columns>
+                            <TableColumn prefWidth="144.0" text="시작시간" />
+                              <TableColumn prefWidth="143.0" text="상영시간" />
+                          </columns>
+                        </TableView>
+                        <DatePicker layoutX="97.0" layoutY="20.0" />
+                        <Text layoutX="56.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
+                        <Text layoutX="26.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
+                        <Button layoutX="621.0" layoutY="250.0" mnemonicParsing="false" text="등록" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

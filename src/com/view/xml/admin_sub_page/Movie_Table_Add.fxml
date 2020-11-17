@@ -33,6 +33,23 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="상영관">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="31.0" layoutY="27.0" prefHeight="213.0" prefWidth="250.0">
+                          <columns>
+                            <TableColumn prefWidth="250.0" text="상영관" />
+                          </columns>
+                        </TableView>
+                        <TextField layoutX="344.0" layoutY="119.0" prefHeight="29.0" prefWidth="167.0" />
+                        <Button layoutX="345.0" layoutY="161.0" mnemonicParsing="false" text="등록" />
+                        <Button layoutX="402.0" layoutY="161.0" mnemonicParsing="false" text="수정" />
+                        <Button layoutX="460.0" layoutY="161.0" mnemonicParsing="false" text="삭제" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="영화">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

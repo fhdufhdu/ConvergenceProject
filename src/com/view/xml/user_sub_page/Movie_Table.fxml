@@ -28,6 +28,19 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="상영관">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="31.0" layoutY="45.0" prefHeight="213.0" prefWidth="250.0">
+                          <columns>
+                            <TableColumn prefWidth="250.0" text="상영관" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             <Tab text="영화">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
