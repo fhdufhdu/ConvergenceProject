@@ -342,3 +342,4 @@ public class TheaterManage implements Initializable {
         t_result.setText("");
     }
 }
+ 
