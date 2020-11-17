@@ -4,7 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TheaterDTO extends DTO{
+public class TheaterDTO extends DTO {
     private String id;
     private String name;
     private String address;
@@ -18,9 +18,8 @@ public class TheaterDTO extends DTO{
         this.total_seats = total_seats;
     }
 
-    public TheaterDTO()
-    {
-        
+    public TheaterDTO() {
+
     }
 
     public TheaterDTO(String id, String name, String address, int total_screen, int total_seats) {
@@ -91,5 +90,4 @@ public class TheaterDTO extends DTO{
         this.total_seats = total_seats;
     }
 
-    
 }

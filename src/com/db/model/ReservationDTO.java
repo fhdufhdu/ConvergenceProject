@@ -1,12 +1,12 @@
 package com.db.model;
 
-public class ReservationDTO extends DTO{
+public class ReservationDTO extends DTO {
     private String id;
     private String member_id;
     private String time_table_id;
     private int screen_row;
     private int screen_col;
-    private int price;          //자동 결정 되게 하기
+    private int price; // 자동 결정 되게 하기
     private String cancel;
 
     public ReservationDTO(String id, String member_id, String time_table_id, int screen_row, int screen_col, int price,
@@ -20,8 +20,7 @@ public class ReservationDTO extends DTO{
         this.cancel = cancel;
     }
 
-    public ReservationDTO(String member_id, String time_table_id, int screen_row, int screen_col,
-            String cancel) {
+    public ReservationDTO(String member_id, String time_table_id, int screen_row, int screen_col, String cancel) {
         this.member_id = member_id;
         this.time_table_id = time_table_id;
         this.screen_row = screen_row;
@@ -89,5 +88,4 @@ public class ReservationDTO extends DTO{
         this.cancel = cancel;
     }
 
-    
 }

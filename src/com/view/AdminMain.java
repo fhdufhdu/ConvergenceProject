@@ -23,14 +23,16 @@ import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-public class AdminMain implements Initializable
-{
+public class AdminMain implements Initializable {
     @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-        /*WebEngine webEngine = test_webview.getEngine();
-
-	    webEngine.load("https://m.map.naver.com/search2/search.nhn?query="+"경북 구미시 인동 메가박스"+"&sm=hty&style=v5#/map");*/
+    public void initialize(URL location, ResourceBundle resources) {
+        /*
+         * WebEngine webEngine = test_webview.getEngine();
+         * 
+         * webEngine.load(
+         * "https://m.map.naver.com/search2/search.nhn?query="+"경북 구미시 인동 메가박스"
+         * +"&sm=hty&style=v5#/map");
+         */
     }
 
     @FXML
@@ -87,7 +89,7 @@ public class AdminMain implements Initializable
     void menuTheaterManage(Event event) {
         loadPage("theater_manage");
     }
-    
+
     @FXML
     void menuTheaterManage(ActionEvent event) {
         loadPage("theater_manage");
@@ -108,20 +110,13 @@ public class AdminMain implements Initializable
 
     }
 
-    
-
-    //각 파일이름에 해당하는 뷰 불러오기
-    private void loadPage(String file_name) 
-    {
-        try 
-        {
-            Parent root = FXMLLoader.load(AdminMain.class.getResource("./xml/admin_sub_page/"+file_name+".fxml"));
+    // 각 파일이름에 해당하는 뷰 불러오기
+    private void loadPage(String file_name) {
+        try {
+            Parent root = FXMLLoader.load(AdminMain.class.getResource("./xml/admin_sub_page/" + file_name + ".fxml"));
             bp_admin_sub.setCenter(root);
-        } 
-        catch (Exception e) 
-        {
-           e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
-
