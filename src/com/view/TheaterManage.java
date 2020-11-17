@@ -665,6 +665,7 @@ public class TheaterManage implements Initializable {
 
 	}
 
+<<<<<<< HEAD
 	private void initList() {
 		try {
 			TheaterDAO tDao = new TheaterDAO();
@@ -686,3 +687,15 @@ public class TheaterManage implements Initializable {
 		t_result.setText("");
 	}
 }
+=======
+    private void clearText()
+    {
+        tf_name.clear();
+        tf_address.clear();
+        tf_screen.clear();
+        tf_seat.clear();
+        t_result.setText("");
+    }
+}
+ 
+>>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject

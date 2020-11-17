@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import com.sun.javafx.sg.prism.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;

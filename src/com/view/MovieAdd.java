@@ -1,7 +1,9 @@
 package com.view;
 
 import java.net.*;
+import java.nio.file.Files;
 import java.util.*;
+import java.io.File;
 import java.lang.*;
 import java.time.format.*;
 import java.sql.*;
@@ -22,49 +24,122 @@ import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
 
-public class MovieAdd {
+public class MovieAdd 
+{
+    private String is_current;
 
     @FXML
-    private Text result;
+    private CheckBox cb_current;
+
+    @FXML
+    private CheckBox cb_close;
+
+    @FXML
+    private CheckBox cb_soon;
 
     @FXML
     private TextField tf_title;
 
     @FXML
-    private TextArea ta_actor;
+    private DatePicker dp_release_date;
 
     @FXML
     private TextField tf_director;
 
     @FXML
-    private DatePicker dp_release_date;
-
-    @FXML
-    private TextArea ta_plot;
+    private TextArea ta_actor;
 
     @FXML
     private TextField tf_min;
 
     @FXML
-    private Button btn_poster;
+    private TextField tf_poster;
 
     @FXML
-    private Button btn_still_cut;
+    private TextField tf_stillcut;
 
     @FXML
-    private Hyperlink hl_trailer;
+    private TextField tf_trailer;
 
     @FXML
-    private Button btn_add_movie;
+    private TextArea ta_plot;
+
+    @FXML
+    private Text result;
 
     @FXML
     void addMovie(ActionEvent event) 
     {
-        /*DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        MovieDAO mDao = new MovieDAO();
-        MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID, tf_title.getText(), dateFormat.format(dp_release_date.getValue()), String is_current, String plot, String poster_path,
-        String still_cut_path, String trailer_path, String director, String actor, int min)
-        mDao.addMovie(new_mov);*/
+        try
+        {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            MovieDAO mDao = new MovieDAO();
+            MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID, tf_title.getText(), dateFormat.format(dp_release_date.getValue()), is_current, ta_plot.getText(), tf_poster.getText(),
+            tf_stillcut.getText(), tf_trailer.getText(), tf_director.getText(), ta_actor.getText(), Integer.valueOf(tf_min.getText()));
+            mDao.addMovie(mDto);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void selectClose(ActionEvent event) 
+    {
+        cb_current.setSelected(false);
+        cb_soon.setSelected(false);
+        is_current = "0";
+    }
+
+    @FXML
+    void selectCurrent(ActionEvent event) 
+    {
+        cb_soon.setSelected(false);
+        cb_close.setSelected(false);
+        is_current = "1";
+    }
+
+    @FXML
+    void selectSoon(ActionEvent event) 
+    {
+        cb_current.setSelected(false);
+        cb_close.setSelected(false);
+        is_current = "2";
+    }
+
+    @FXML
+    void getPosterPath(ActionEvent event) 
+    {
+        tf_poster.setText(getFile().getPath());
+    }
+
+    @FXML
+    void getStillCutPath(ActionEvent event) 
+    {
+        tf_stillcut.setText(getFile().getPath());
+    }
+
+    private File getFile()
+    {
+        FileChooser fc = new FileChooser();
+        File selectedFile = fc.showOpenDialog((Stage) tf_poster.getScene().getWindow());
+        
+        return selectedFile;
+    }
+
+    private byte[] getFileByteArray(File selectedFile)
+    {
+        try
+        {
+            byte arr[] = Files.readAllBytes(selectedFile.toPath());
+            return arr;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
