@@ -16,16 +16,16 @@
          </font>
       </Text>
       <Line endX="290.0" layoutX="494.0" layoutY="112.0" startX="-479.0" />
-      <TableView layoutX="14.0" layoutY="142.0" prefHeight="200.0" prefWidth="770.0">
+      <TableView fx:id="tv_reservation" layoutX="14.0" layoutY="142.0" prefHeight="200.0" prefWidth="770.0">
         <columns>
-          <TableColumn prefWidth="121.0" text="영화관" />
-          <TableColumn minWidth="0.0" prefWidth="172.0" text="영화" />
-            <TableColumn prefWidth="98.0" text="상영관" />
-            <TableColumn prefWidth="105.0" text="날짜" />
-            <TableColumn prefWidth="198.0" text="상영시간" />
-            <TableColumn prefWidth="75.0" text="좌석" />
+          <TableColumn fx:id="tc_theater" prefWidth="121.0" text="영화관" />
+          <TableColumn fx:id="tc_movie" minWidth="0.0" prefWidth="172.0" text="영화" />
+            <TableColumn fx:id="tc_screen" prefWidth="98.0" text="상영관" />
+            <TableColumn fx:id="tc_date" prefWidth="105.0" text="날짜" />
+            <TableColumn fx:id="tc_movie_time" prefWidth="198.0" text="상영시간" />
+            <TableColumn fx:id="tc_seat" prefWidth="75.0" text="좌석" />
         </columns>
       </TableView>
-      <Button layoutX="734.0" layoutY="357.0" mnemonicParsing="false" text="취소" />
+      <Button fx:id="btn_cancel" layoutX="734.0" layoutY="357.0" mnemonicParsing="false" onAction="#getCancel" text="취소" />
    </children>
 </AnchorPane>

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.Payment">
    <children>
       <Text layoutX="370.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="결제">
          <font>
@@ -22,15 +22,15 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <TableView layoutX="36.0" layoutY="100.0" prefHeight="200.0" prefWidth="728.0">
+      <TableView fx:id="tv_reservation" layoutX="36.0" layoutY="100.0" prefHeight="200.0" prefWidth="728.0">
         <columns>
-          <TableColumn prefWidth="120.0" text="영화관" />
-          <TableColumn prefWidth="186.0" text="영화" />
-            <TableColumn minWidth="0.0" prefWidth="71.0" text="상영관" />
-            <TableColumn prefWidth="81.0" text="날짜" />
-            <TableColumn prefWidth="186.0" text="상영시간" />
-            <TableColumn minWidth="0.0" prefWidth="83.0" text="좌석" />
-            <TableColumn minWidth="0.0" prefWidth="100.0" text="가격" />
+          <TableColumn fx:id="tc_theater" prefWidth="120.0" text="영화관" />
+          <TableColumn fx:id="tc_movie" prefWidth="186.0" text="영화" />
+            <TableColumn fx:id="tc_screen" minWidth="0.0" prefWidth="71.0" text="상영관" />
+            <TableColumn fx:id="tc_date" prefWidth="81.0" text="날짜" />
+            <TableColumn fx:id="tc_movie_time" prefWidth="186.0" text="상영시간" />
+            <TableColumn fx:id="tc_seat" minWidth="0.0" prefWidth="83.0" text="좌석" />
+            <TableColumn fx:id="tc_price" minWidth="0.0" prefWidth="100.0" text="가격" />
         </columns>
       </TableView>
       <Text layoutX="36.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="신용카드 정보">
@@ -38,10 +38,10 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <TextField layoutX="36.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <TextField layoutX="145.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <TextField layoutX="254.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <TextField layoutX="363.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <Button layoutX="684.0" layoutY="384.0" mnemonicParsing="false" text="결제하기" />
+      <TextField fx:id="tf_card_number" layoutX="36.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
+      <TextField fx:id="tf_card_number2" layoutX="145.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
+      <TextField fx:id="tf_card_number3" layoutX="254.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
+      <TextField fx:id="tf_card_number4" layoutX="363.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
+      <Button fx:id="btn_payment" layoutX="684.0" layoutY="384.0" mnemonicParsing="false" onAction="#getPayment" text="결제하기" />
    </children>
 </AnchorPane>

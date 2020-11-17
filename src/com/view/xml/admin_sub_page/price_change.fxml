@@ -30,9 +30,9 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <TextField layoutX="349.0" layoutY="148.0" prefHeight="29.0" prefWidth="155.0" />
-      <TextField layoutX="349.0" layoutY="219.0" prefHeight="29.0" prefWidth="155.0" />
-      <TextField layoutX="349.0" layoutY="290.0" prefHeight="29.0" prefWidth="155.0" />
-      <Button layoutX="652.0" layoutY="360.0" mnemonicParsing="false" text="수정" />
+      <TextField fx:id="tf_morning" layoutX="349.0" layoutY="148.0" prefHeight="29.0" prefWidth="155.0" />
+      <TextField fx:id="tf_afternoon" layoutX="349.0" layoutY="219.0" prefHeight="29.0" prefWidth="155.0" />
+      <TextField fx:id="tf_night" layoutX="349.0" layoutY="290.0" prefHeight="29.0" prefWidth="155.0" />
+      <Button fx:id="btn_change_price" layoutX="652.0" layoutY="360.0" mnemonicParsing="false" onAction="#changePrice" text="수정" />
    </children>
 </AnchorPane>

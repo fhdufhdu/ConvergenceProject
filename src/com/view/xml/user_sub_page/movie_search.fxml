@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieSearch">
    <children>
       <Text layoutX="324.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 찾아보기">
          <font>
@@ -22,19 +21,19 @@
       </Text>
       <Line endX="253.5" layoutX="468.0" layoutY="46.0" startX="-391.0" />
       <Text layoutX="79.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 타이틀" />
-      <TextField layoutX="170.0" layoutY="59.0" prefHeight="29.0" prefWidth="152.0" />
+      <TextField fx:id="tf_title" layoutX="170.0" layoutY="59.0" prefHeight="29.0" prefWidth="152.0" />
       <Text layoutX="92.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시작 날짜" />
-      <TextField layoutX="540.0" layoutY="137.0" prefHeight="29.0" prefWidth="99.0" />
+      <TextField fx:id="tf_actor" layoutX="540.0" layoutY="137.0" prefHeight="29.0" prefWidth="99.0" />
       <Text layoutX="476.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영 여부 선택" />
-      <DatePicker layoutX="170.0" layoutY="98.0" prefHeight="29.0" prefWidth="152.0" />
+      <DatePicker fx:id="datepick_start" layoutX="170.0" layoutY="98.0" prefHeight="29.0" prefWidth="152.0" />
       <Text layoutX="78.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="마지막 날짜" />
-      <DatePicker layoutX="170.0" layoutY="137.0" prefHeight="29.0" prefWidth="152.0" />
+      <DatePicker fx:id="datepick_end" layoutX="170.0" layoutY="137.0" prefHeight="29.0" prefWidth="152.0" />
       <Text layoutX="363.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(상영종료 : 0 , 현재상영 : 1 , 상영예정 : 2)">
          <font>
             <Font size="11.0" />
          </font>
       </Text>
-      <MenuButton layoutX="585.0" layoutY="57.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="54.0">
+      <MenuButton fx:id="menubtn_watch" layoutX="585.0" layoutY="57.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="54.0">
         <items>
           <MenuItem mnemonicParsing="false" text="0" />
           <MenuItem mnemonicParsing="false" text="1" />
@@ -42,17 +41,17 @@
         </items>
       </MenuButton>
       <Text layoutX="496.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독" />
-      <TextField layoutX="540.0" layoutY="98.0" prefHeight="29.0" prefWidth="99.0" />
+      <TextField fx:id="tf_director" layoutX="540.0" layoutY="98.0" prefHeight="29.0" prefWidth="99.0" />
       <Text layoutX="496.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="배우" />
-      <Button layoutX="668.0" layoutY="137.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="54.0" text="검색" />
-      <TableView layoutX="77.0" layoutY="195.0" prefHeight="222.0" prefWidth="645.0">
+      <Button fx:id="btn_search" layoutX="668.0" layoutY="137.0" mnemonicParsing="false" onAction="#getMovieSearch" prefHeight="29.0" prefWidth="54.0" text="검색" />
+      <TableView fx:id="tv_movie" layoutX="77.0" layoutY="195.0" prefHeight="222.0" prefWidth="645.0">
         <columns>
-          <TableColumn prefWidth="140.0" text="영화 타이틀" />
-          <TableColumn prefWidth="111.0" text="시작 날짜" />
-            <TableColumn prefWidth="108.0" text="마지막 날짜" />
-            <TableColumn prefWidth="76.0" text="상영 여부" />
-            <TableColumn prefWidth="109.0" text="감독" />
-            <TableColumn prefWidth="100.0" text="배우" />
+          <TableColumn fx:id="tc_title" prefWidth="140.0" text="영화 타이틀" />
+          <TableColumn fx:id="tc_start_date" prefWidth="111.0" text="시작 날짜" />
+            <TableColumn fx:id="tc_end_date" prefWidth="108.0" text="마지막 날짜" />
+            <TableColumn fx:id="tc_watch" prefWidth="76.0" text="상영 여부" />
+            <TableColumn fx:id="tc_director" prefWidth="109.0" text="감독" />
+            <TableColumn fx:id="tc_actor" prefWidth="100.0" text="배우" />
         </columns>
       </TableView>
    </children>

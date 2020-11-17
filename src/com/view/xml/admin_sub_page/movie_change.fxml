@@ -97,7 +97,7 @@
                         <Font name="LG Smart UI Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Button layoutX="649.0" layoutY="61.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="영화 수정" />
+                  <Button fx:id="btn_movie_change" layoutX="649.0" layoutY="61.0" mnemonicParsing="false" onAction="#changeMovie" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="영화 수정" />
                </children>
             </AnchorPane>
         </content>
