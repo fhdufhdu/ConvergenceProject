@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+
 
 public class ReservationListChange {
 
-	 @FXML
+	   @FXML
 	    private TableView<?> tv_reservation;
 
 	    @FXML
@@ -42,8 +44,35 @@ public class ReservationListChange {
 	    private Button btn_change;
 
 	    @FXML
+	    private TextField tf_user;
+
+	    @FXML
+	    private TextField tf_movie;
+
+	    @FXML
+	    private TextField tf_theater;
+
+	    @FXML
+	    private TextField tf_date;
+
+	    @FXML
+	    private TextField tf_start_time;
+
+	    @FXML
+	    private TextField tf_end_time;
+
+	    @FXML
+	    private Button btn_search;
+
+	    @FXML
 	    void getChange(ActionEvent event) {
 
 	    }
+
+	    @FXML
+	    void getSearch(ActionEvent event) {
+
+	    }
+
 	    
 }
