@@ -46,9 +46,8 @@
                      <graphic>
                         <MenuButton mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="예매 정보">
                           <items>
-                              <MenuItem fx:id="mi_timetable_add" mnemonicParsing="false" onAction="#menuTimeTableAdd" text="등록" />
-                              <MenuItem fx:id="mi_timetable_change" mnemonicParsing="false" onAction="#menuTimeTableChange" text="수정" />
-                              <MenuItem mnemonicParsing="false" text="삭제" />
+                              <MenuItem fx:id="mi_rsv_add" mnemonicParsing="false" onAction="#menuRsvAdd" text="등록" />
+                              <MenuItem fx:id="mi_rsv_manage" mnemonicParsing="false" onAction="#menuRsvManage" text="관리" />
                           </items>
                         </MenuButton>
                      </graphic>

@@ -41,6 +41,9 @@ public class AdminMain implements Initializable {
     }
 
     @FXML
+    private ScrollPane sp_admin_main;
+
+    @FXML
     private Menu m_theater;
 
     @FXML
@@ -50,28 +53,16 @@ public class AdminMain implements Initializable {
     private MenuItem mi_movie_change;
 
     @FXML
-    private MenuItem mi_movie_list;
+    private MenuItem mi_rsv_add;
 
     @FXML
-    private MenuItem mi_timetable_add;
-
-    @FXML
-    private MenuItem mi_timetable_change;
-
-    @FXML
-    private MenuItem mi_timetable_list;
+    private MenuItem mi_rsv_manage;
 
     @FXML
     private Menu m_admin_account;
 
     @FXML
     private BorderPane bp_admin_sub;
-
-    @FXML
-    private WebView test_webview;
-
-    @FXML
-    private ScrollPane sp_admin_main;
 
     @FXML
     void menuAdminAccount(ActionEvent event) {
@@ -89,33 +80,18 @@ public class AdminMain implements Initializable {
     }
 
     @FXML
-    void menuMovieList(ActionEvent event) {
+    void menuRsvAdd(ActionEvent event) {
 
     }
 
     @FXML
-    void menuTheaterManage(Event event) {
-        loadPage("theater_manage");
+    void menuRsvManage(ActionEvent event) {
+        loadPage("reservation_manage");
     }
 
     @FXML
     void menuTheaterManage(ActionEvent event) {
         loadPage("theater_manage");
-    }
-
-    @FXML
-    void menuTimeTableAdd(ActionEvent event) {
-
-    }
-
-    @FXML
-    void menuTimeTableChange(ActionEvent event) {
-
-    }
-
-    @FXML
-    void menuTimeTableList(ActionEvent event) {
-
     }
 
     // 각 파일이름에 해당하는 뷰 불러오기
