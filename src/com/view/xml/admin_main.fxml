@@ -77,6 +77,6 @@
             <Blend />
          </effect>
       </MenuBar>
-      <BorderPane fx:id="bp_admin_sub" layoutX="99.0" layoutY="169.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" />
+      <BorderPane fx:id="bp_admin_sub" layoutX="114.0" layoutY="147.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" />
    </children>
 </AnchorPane>

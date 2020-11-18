@@ -77,18 +77,17 @@ public class MovieServer extends Thread {
 							String role = packetArr[1]; // 구분(사용자, 관리자)
 							String signUp_id = packetArr[2]; // 아이디
 							String signUp_password = packetArr[3]; // 암호
-							String account = packetArr[4]; // 계좌 번호
-							String name = packetArr[5]; // 이름
-							String phone_number = packetArr[6]; // 연락처
-							String birth = packetArr[7];
-							String gender = packetArr[8]; // 성별
+							String name = packetArr[4]; // 이름
+							String phone_number = packetArr[5]; // 연락처
+							String birth = packetArr[6];
+							String gender = packetArr[7]; // 성별
 
 							MemberDAO signUpDAO = new MemberDAO();
-							signUpDAO.addMember(new MemberDTO(signUp_id, role, signUp_password, account, name,
+							signUpDAO.addMember(new MemberDTO(signUp_id, role, signUp_password, null, name,
 									phone_number, birth, gender));
 							writePacket(Protocol.SC_RES_SIGNUP + "/1");
 							break;
-						} catch (Exception e) {
+						} catch (DAOException e) {
 							e.printStackTrace();
 							writePacket(Protocol.SC_RES_SIGNUP + "/2");
 							break;

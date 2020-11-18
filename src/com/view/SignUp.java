@@ -37,9 +37,6 @@ public class SignUp {
 	private TextField tf_name;
 
 	@FXML
-	private TextField tf_account;
-
-	@FXML
 	private TextField tf_phone;
 
 	@FXML
@@ -79,7 +76,6 @@ public class SignUp {
 			t_result.setText("");
 			String id = tf_id.getText();
 			String passwd = pf_passwd.getText();
-			String account = tf_account.getText();
 			String name = tf_name.getText();
 			String phone_number = tf_phone.getText();
 			String birth = dp_birth.getValue().toString();
@@ -91,44 +87,62 @@ public class SignUp {
 				gender = "0";
 			}
 
-			mainGUI.writePacket(Protocol.CS_REQ_SIGNUP + "/2/" + id + "/" + passwd + "/" + account + "/" + name + "/"
-					+ phone_number + "/" + birth + "/" + gender);
+			mainGUI.writePacket(Protocol.CS_REQ_SIGNUP + "/2/" + id + "/" + passwd + "/" + name + "/" + phone_number
+					+ "/" + birth + "/" + gender);
+			while (true) {
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("/");
+				String packetType = packetArr[0];
 
-			String packet = mainGUI.readLine();
-			String packetArr[] = packet.split("/");
-			String packetType = packetArr[0];
-
-			if (packetType.equals(Protocol.SC_RES_SIGNUP)) {
-				String result = packetArr[1];
-				switch (result) {
-					case "1":
-						t_result.setText("회원가입 성공! 2초 후 로그인 화면으로 돌아갑니다!");
-
-						// 스레드사용으로 1.5초 후 로그인 페이지로 전환
-						new Thread(() -> {
-							Platform.runLater(() -> {
-								try {
-									Thread.sleep(1500);
-									Parent root = FXMLLoader.load(SignUp.class.getResource("../view/xml/login.fxml"));
-									Scene scene = new Scene(root, 600, 400);
-									Stage primaryStage = (Stage) btn_sign_up.getScene().getWindow();
-									primaryStage.setTitle("로그인");
-									primaryStage.setResizable(false);
-									primaryStage.setScene(scene);
-									primaryStage.show();
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							});
-						}).start();
-						return;
-					case "2":
-						t_result.setText("회원가입 실패!");
-						return;
+				if (packetType.equals(Protocol.SC_RES_SIGNUP)) {
+					String result = packetArr[1];
+					switch (result) {
+						case "1":
+							alert("회원가입 완료", "확인을 누르시면 로그인 화면으로 전환됩니다!");
+							// 스레드사용으로 1.5초 후 로그인 페이지로 전환
+							/*new Thread(() -> {
+								Platform.runLater(() -> {
+									try {
+										Thread.sleep(1500);
+										Parent root = FXMLLoader
+												.load(SignUp.class.getResource("../view/xml/login.fxml"));
+										Scene scene = new Scene(root, 600, 400);
+										Stage primaryStage = (Stage) btn_sign_up.getScene().getWindow();
+										primaryStage.setTitle("로그인");
+										primaryStage.setResizable(false);
+										primaryStage.setScene(scene);
+										primaryStage.show();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								});
+							}).start();*/
+							Parent root = FXMLLoader.load(SignUp.class.getResource("../view/xml/login.fxml"));
+							Scene scene = new Scene(root, 600, 400);
+							Stage primaryStage = (Stage) btn_sign_up.getScene().getWindow();
+							primaryStage.setTitle("로그인");
+							primaryStage.setResizable(false);
+							primaryStage.setScene(scene);
+							primaryStage.show();
+							return;
+						case "2":
+							t_result.setText("회원가입 실패! 아이디가 중복됩니다!");
+							return;
+					}
 				}
 			}
 		} catch (Exception e) {
+			t_result.setText("회원가입 실패! 알맞은 정보를 입력했나요?");
 			e.printStackTrace();
 		}
 	}
+
+	private void alert(String head, String msg) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("정보");
+        alert.setHeaderText(head);
+        alert.setContentText(msg);
+
+        alert.showAndWait(); // Alert창 보여주기
+    }
 }
