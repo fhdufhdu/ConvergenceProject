@@ -16,7 +16,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="785.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <Text layoutX="48.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 수정">
+                  <Text layoutX="47.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 수정">
                      <font>
                         <Font name="LG Smart UI Bold" size="25.0" />
                      </font>

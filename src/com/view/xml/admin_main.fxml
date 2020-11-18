@@ -21,7 +21,7 @@
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
       </Text>
-      <MenuBar id="admin_menu" layoutX="177.0" layoutY="93.0" prefHeight="15.0" style="-fx-padding: 0 10 0 10;">
+      <MenuBar id="admin_menu" layoutX="175.0" layoutY="93.0" prefHeight="15.0" style="-fx-padding: 0 10 0 10;">
          <menus>
             <Menu id="menu_movie" fx:id="m_theater" mnemonicParsing="false" onHiding="#menuTheaterManage" onShowing="#menuTheaterManage">
                <graphic>

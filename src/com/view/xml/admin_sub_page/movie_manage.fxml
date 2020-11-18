@@ -14,7 +14,7 @@
          <center>
             <AnchorPane prefHeight="450.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text focusTraversable="true" layoutX="50.0" layoutY="39.0" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 리스트">
+                  <Text focusTraversable="true" layoutX="50.0" layoutY="40.0" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 리스트">
                      <font>
                         <Font name="LG Smart UI Bold" size="15.0" />
                      </font>

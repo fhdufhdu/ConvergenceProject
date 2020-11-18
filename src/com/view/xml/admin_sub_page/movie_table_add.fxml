@@ -94,7 +94,7 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Text layoutX="291.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간표 관리">
+      <Text layoutX="292.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간표 관리">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>

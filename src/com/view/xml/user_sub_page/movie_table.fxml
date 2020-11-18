@@ -75,7 +75,7 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Text layoutX="325.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간표">
+      <Text layoutX="326.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간표">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>

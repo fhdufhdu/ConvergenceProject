@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="866.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresentDetail">
    <children>
-      <Text layoutX="435.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
+      <Text layoutX="436.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>

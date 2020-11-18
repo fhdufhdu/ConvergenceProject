@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="268.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화관 리스트" textAlignment="CENTER" wrappingWidth="295.0">
+      <Text layoutX="269.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화관 리스트" textAlignment="CENTER" wrappingWidth="295.0">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>

@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieSearch">
    <children>
-      <Text layoutX="324.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 찾아보기">
+      <Text layoutX="325.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 찾아보기">
          <font>
             <Font size="24.0" />
          </font>
