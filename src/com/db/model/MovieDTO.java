@@ -2,6 +2,9 @@ package com.db.model;
 
 import java.sql.Date;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class MovieDTO extends DTO {
     private String id;
     private String title;
@@ -48,6 +51,16 @@ public class MovieDTO extends DTO {
 
     public MovieDTO() {
 
+    }
+
+    public StringProperty getScreeningProperty() {
+        if (is_current.equals("0")) {
+            return new SimpleStringProperty("상영종료");
+        } else if (is_current.equals("1")) {
+            return new SimpleStringProperty("상영중");
+        } else {
+            return new SimpleStringProperty("상영예정");
+        }
     }
 
     public String getId() {

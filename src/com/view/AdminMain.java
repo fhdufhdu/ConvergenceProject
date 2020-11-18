@@ -33,6 +33,11 @@ public class AdminMain implements Initializable {
          * "https://m.map.naver.com/search2/search.nhn?query="+"경북 구미시 인동 메가박스"
          * +"&sm=hty&style=v5#/map");
          */
+        final double SPEED = 0.005;
+        sp_admin_main.getContent().setOnScroll(scrollEvent -> {
+            double deltaY = scrollEvent.getDeltaY() * SPEED;
+            sp_admin_main.setVvalue(sp_admin_main.getVvalue() - deltaY);
+        });
     }
 
     @FXML
@@ -66,6 +71,9 @@ public class AdminMain implements Initializable {
     private WebView test_webview;
 
     @FXML
+    private ScrollPane sp_admin_main;
+
+    @FXML
     void menuAdminAccount(ActionEvent event) {
 
     }
@@ -77,7 +85,7 @@ public class AdminMain implements Initializable {
 
     @FXML
     void menuMovieChange(ActionEvent event) {
-
+        loadPage("movie_manage");
     }
 
     @FXML
@@ -115,6 +123,9 @@ public class AdminMain implements Initializable {
         try {
             Parent root = FXMLLoader.load(AdminMain.class.getResource("./xml/admin_sub_page/" + file_name + ".fxml"));
             bp_admin_sub.setCenter(root);
+
+            /*GridPane a = new GridPane();
+            a.add(root, 1, 0);*/
         } catch (Exception e) {
             e.printStackTrace();
         }

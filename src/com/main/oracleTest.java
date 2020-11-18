@@ -196,7 +196,7 @@ public class oracleTest {
                                 MovieDTO movieElem = mList.get(sc.nextInt());
                                 sc.nextLine();
 
-                                mDao.removeMovie(movieElem);
+                                mDao.removeMovie(movieElem.getId());
 
                                 break;
                             }

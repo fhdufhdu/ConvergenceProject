@@ -128,14 +128,12 @@ public class MovieDAO extends DAO {
     }
 
     // 영화 삭제
-    public void removeMovie(MovieDTO mov) throws DAOException, SQLException {
+    public void removeMovie(String id) throws DAOException, SQLException {
         String insert_sql = "delete from movies where id = ?";
 
         ps = conn.prepareStatement(insert_sql);
 
-        System.out.println(mov.getId());
-
-        ps.setString(1, mov.getId());
+        ps.setString(1, id);
 
         int r = ps.executeUpdate();
         System.out.println("변경된 row : " + r);

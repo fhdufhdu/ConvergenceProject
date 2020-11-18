@@ -68,15 +68,28 @@ public class MovieAdd {
     @FXML
     void addMovie(ActionEvent event) {
         try {
+            if (is_current == null || tf_title.getText().equals("") || dp_release_date.getValue() == null
+                    || tf_director.getText().equals("") || ta_actor.getText().equals("") || tf_min.getText().equals("")
+                    || tf_poster.getText().equals("") || tf_stillcut.getText().equals("")
+                    || tf_trailer.getText().equals("") || ta_plot.getText().equals("")) {
+                alert("입력오류", "모든 필드를 채워주세요!");
+            }
+            
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            MovieDAO mDao = new MovieDAO();
-            MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID, tf_title.getText(),
-                    dateFormat.format(dp_release_date.getValue()), is_current, ta_plot.getText(), tf_poster.getText(),
-                    tf_stillcut.getText(), tf_trailer.getText(), tf_director.getText(), ta_actor.getText(),
-                    Integer.valueOf(tf_min.getText()));
+            MovieDAO mDao = new MovieDAO(); 
+            MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID,
+            tf_title.getText(), dateFormat.format(dp_release_date.getValue()),
+            is_current, ta_plot.getText(), tf_poster.getText(), tf_stillcut.getText(),
+            tf_trailer.getText(), tf_director.getText(), ta_actor.getText(),
+            Integer.valueOf(tf_min.getText())); 
             mDao.addMovie(mDto);
-        } catch (Exception e) {
-            e.printStackTrace();
+             
+        } catch (NumberFormatException e) {
+            alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
+        }catch (DAOException e) {
+            alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
+        }catch (SQLException e) {
+            alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
         }
     }
 
@@ -126,6 +139,15 @@ public class MovieAdd {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void alert(String head, String msg) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("경고");
+        alert.setHeaderText(head);
+        alert.setContentText(msg);
+
+        alert.showAndWait(); // Alert창 보여주기
     }
 
 }
