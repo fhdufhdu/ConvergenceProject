@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Tab?>
@@ -7,75 +8,76 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="306.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 등록">
+      <Text layoutX="96.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 등록">
          <font>
-            <Font name="LG Smart UI Bold" size="30.0" />
+            <Font size="25.0" />
             
          </font>
       </Text>
-      <Line endX="375.0" layoutX="390.0" layoutY="64.0" startX="-343.0" />
-      <TabPane layoutX="47.0" layoutY="86.0" prefHeight="304.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabpane_reservation" layoutX="96.0" layoutY="86.0" prefHeight="304.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="영화관">
+          <Tab fx:id="tab_theater" text="영화관">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="tab_theater1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tv_theater" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="199.0" text="영화관" />
+                            <TableColumn fx:id="tc_theater" prefWidth="199.0" text="영화관" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="영화">
+          <Tab fx:id="tab_movie" text="영화">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="tab_movie1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="297.0">
+                        <TableView fx:id="tv_movie" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="297.0">
                           <columns>
-                            <TableColumn prefWidth="296.0" text="영화" />
+                            <TableColumn fx:id="tc_movie" prefWidth="296.0" text="영화" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="상영관">
+          <Tab fx:id="tab_screen" text="상영관">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="tab_screen1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="tv_screen" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="199.0" text="상영관" />
+                            <TableColumn fx:id="tc_screen" prefWidth="199.0" text="상영관" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="날짜&amp;상영시간">
+          <Tab fx:id="tab_date_time" text="날짜&amp;상영시간">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="tab_date_time1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="97.0" layoutY="79.0" prefHeight="171.0" prefWidth="288.0">
+                        <TableView fx:id="tv_screen_time" layoutX="97.0" layoutY="79.0" prefHeight="171.0" prefWidth="288.0">
                           <columns>
-                            <TableColumn prefWidth="144.0" text="시작시간" />
-                              <TableColumn prefWidth="143.0" text="상영시간" />
+                            <TableColumn fx:id="tc_start_time" prefWidth="144.0" text="시작시간" />
+                              <TableColumn fx:id="tc_end_time" prefWidth="143.0" text="종료시간" />
                           </columns>
                         </TableView>
-                        <DatePicker layoutX="97.0" layoutY="20.0" />
+                        <DatePicker fx:id="dt_movie" layoutX="97.0" layoutY="20.0" />
                         <Text layoutX="56.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
                         <Text layoutX="26.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
-                        <Button layoutX="620.0" layoutY="223.0" mnemonicParsing="false" text="등록" />
+                        <Button fx:id="btn_add" layoutX="625.0" layoutY="221.0" mnemonicParsing="false" onAction="#getAddReservation" text="등록" />
                      </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
    </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
 </AnchorPane>

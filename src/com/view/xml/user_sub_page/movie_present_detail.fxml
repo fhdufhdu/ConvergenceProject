@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Tab?>
@@ -9,19 +10,17 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="866.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresentDetail">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresentDetail">
    <children>
-      <Text layoutX="436.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
+      <Text layoutX="395.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
          <font>
-            <Font name="LG Smart UI Bold" size="30.0" />
+            <Font size="25.0" />
          </font>
       </Text>
-      <Line endX="425.0" layoutX="463.0" layoutY="79.0" startX="-391.0" />
-      <TabPane fx:id="tabpane_detail" layoutX="113.0" layoutY="463.0" prefHeight="379.0" prefWidth="469.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabpane_detail" layoutX="88.0" layoutY="372.0" prefHeight="379.0" prefWidth="469.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="tab_plot" text="줄거리">
             <content>
@@ -55,10 +54,10 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Text layoutX="630.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
-      <Text layoutX="619.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
-      <Button fx:id="btn_image" layoutX="136.0" layoutY="225.0" mnemonicParsing="false" onAction="#getPosterPath" text="이미지 파일 경로" />
-      <TableView fx:id="tv_movie" layoutX="318.0" layoutY="137.0" prefHeight="200.0" prefWidth="570.0">
+      <Text layoutX="625.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
+      <Text layoutX="614.0" layoutY="652.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
+      <Button fx:id="btn_image" layoutX="88.0" layoutY="223.0" mnemonicParsing="false" onAction="#getPosterPath" text="이미지 파일 경로" />
+      <TableView fx:id="tv_movie" layoutX="268.0" layoutY="126.0" prefHeight="200.0" prefWidth="570.0">
         <columns>
           <TableColumn fx:id="tc_title" prefWidth="117.0" text="영화제목" />
           <TableColumn fx:id="tc_actor" prefWidth="83.0" text="출연배우" />
@@ -67,9 +66,12 @@
             <TableColumn fx:id="tc_plot" prefWidth="175.0" text="줄거리" />
         </columns>
       </TableView>
-      <Hyperlink fx:id="link_trailer" layoutX="701.0" layoutY="640.0" onAction="#getTrailerPath" text="&quot;트레일러 링크&quot;" />
-      <Button fx:id="btn_image2" layoutX="703.0" layoutY="482.0" mnemonicParsing="false" onAction="#getPosterPath2" text="이미지 파일 경로" />
-      <Button fx:id="btn_image3" layoutX="703.0" layoutY="521.0" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 파일 경로" />
-      <Button fx:id="btn_image4" layoutX="703.0" layoutY="561.0" mnemonicParsing="false" onAction="#getPosterPath4" text="이미지 파일 경로" />
+      <Hyperlink fx:id="link_trailer" layoutX="696.0" layoutY="633.0" onAction="#getTrailerPath" text="&quot;트레일러 링크&quot;" />
+      <Button fx:id="btn_image2" layoutX="698.0" layoutY="475.0" mnemonicParsing="false" onAction="#getPosterPath2" text="이미지 파일 경로" />
+      <Button fx:id="btn_image3" layoutX="698.0" layoutY="514.0" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 파일 경로" />
+      <Button fx:id="btn_image4" layoutX="698.0" layoutY="554.0" mnemonicParsing="false" onAction="#getPosterPath4" text="이미지 파일 경로" />
    </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
 </AnchorPane>
