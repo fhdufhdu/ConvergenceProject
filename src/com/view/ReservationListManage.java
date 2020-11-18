@@ -7,7 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 
-public class ReservationListRemove {
+public class ReservationListManage {
 
 	 @FXML
 	    private TableView<?> tv_reservation;
