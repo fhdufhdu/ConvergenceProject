@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class ReservationCancel {
+public class ReservationManage {
 
 	@FXML
     private TableView<?> tv_reservation;

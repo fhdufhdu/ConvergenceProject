@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="334.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="가격 수정">
+      <Text layoutX="401.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="가격 수정">
          <font>
-            <Font name="LG Smart UI Bold" size="30.0" />
+            <Font size="25.0" />
          </font>
       </Text>
-      <Line endX="268.5" layoutX="451.0" layoutY="69.0" startX="-391.0" />
-      <Text layoutX="281.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="조조" wrappingWidth="52.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Text>
-      <Text layoutX="281.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="심야" wrappingWidth="52.0">
+      <Text layoutX="337.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="조조" wrappingWidth="52.0">
          <font>
             <Font size="23.0" />
          </font>
       </Text>
-      <Text layoutX="281.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="일반" wrappingWidth="52.0">
+      <Text layoutX="337.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="심야" wrappingWidth="52.0">
          <font>
             <Font size="23.0" />
          </font>
       </Text>
-      <TextField fx:id="tf_morning" layoutX="349.0" layoutY="148.0" prefHeight="29.0" prefWidth="155.0" />
-      <TextField fx:id="tf_afternoon" layoutX="349.0" layoutY="219.0" prefHeight="29.0" prefWidth="155.0" />
-      <TextField fx:id="tf_night" layoutX="349.0" layoutY="290.0" prefHeight="29.0" prefWidth="155.0" />
-      <Button fx:id="btn_change_price" layoutX="652.0" layoutY="360.0" mnemonicParsing="false" onAction="#changePrice" text="수정" />
+      <Text layoutX="337.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="일반" wrappingWidth="52.0">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Text>
+      <TextField fx:id="tf_morning" layoutX="405.0" layoutY="109.0" prefHeight="29.0" prefWidth="155.0" />
+      <TextField fx:id="tf_afternoon" layoutX="405.0" layoutY="180.0" prefHeight="29.0" prefWidth="155.0" />
+      <TextField fx:id="tf_night" layoutX="405.0" layoutY="251.0" prefHeight="29.0" prefWidth="155.0" />
+      <Button fx:id="btn_change_price" layoutX="650.0" layoutY="317.0" mnemonicParsing="false" onAction="#changePrice" text="수정" />
    </children>
+   <padding>
+      <Insets bottom="20.0" />
+   </padding>
 </AnchorPane>
