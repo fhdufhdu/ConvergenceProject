@@ -2,82 +2,39 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.ReservationListChange">
    <children>
-      <Text layoutX="96.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 등록">
-         <font>
-            <Font size="25.0" />
-            
-         </font>
-      </Text>
-      <TabPane fx:id="tabpane_reservation" layoutX="96.0" layoutY="86.0" prefHeight="304.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab fx:id="tab_theater" text="영화관">
-            <content>
-              <AnchorPane fx:id="tab_theater1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tv_theater" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
-                          <columns>
-                            <TableColumn fx:id="tc_theater" prefWidth="199.0" text="영화관" />
-                          </columns>
-                        </TableView>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="tab_movie" text="영화">
-            <content>
-              <AnchorPane fx:id="tab_movie1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tv_movie" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="297.0">
-                          <columns>
-                            <TableColumn fx:id="tc_movie" prefWidth="296.0" text="영화" />
-                          </columns>
-                        </TableView>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="tab_screen" text="상영관">
-            <content>
-              <AnchorPane fx:id="tab_screen1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tv_screen" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
-                          <columns>
-                            <TableColumn fx:id="tc_screen" prefWidth="199.0" text="상영관" />
-                          </columns>
-                        </TableView>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="tab_date_time" text="날짜&amp;상영시간">
-            <content>
-              <AnchorPane fx:id="tab_date_time1" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tv_screen_time" layoutX="97.0" layoutY="79.0" prefHeight="171.0" prefWidth="288.0">
-                          <columns>
-                            <TableColumn fx:id="tc_start_time" prefWidth="144.0" text="시작시간" />
-                              <TableColumn fx:id="tc_end_time" prefWidth="143.0" text="종료시간" />
-                          </columns>
-                        </TableView>
-                        <DatePicker fx:id="dt_movie" layoutX="97.0" layoutY="20.0" />
-                        <Text layoutX="56.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜" />
-                        <Text layoutX="26.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영시간" />
-                        <Button fx:id="btn_add" layoutX="625.0" layoutY="221.0" mnemonicParsing="false" onAction="#getAddReservation" text="등록" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0">
+         <children>
+            <Text layoutX="18.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 리스트">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <TableView fx:id="tv_reservation" layoutX="18.0" layoutY="67.0" prefHeight="321.0" prefWidth="874.0">
+              <columns>
+                <TableColumn fx:id="tc_user" prefWidth="77.0" text="사용자" />
+                <TableColumn fx:id="tc_movie" prefWidth="165.0" text="영화" />
+                  <TableColumn fx:id="tv_theater" prefWidth="105.0" text="영화관" />
+                  <TableColumn fx:id="tc_screen" prefWidth="102.0" text="상영관" />
+                  <TableColumn fx:id="tc_date" prefWidth="94.0" resizable="false" text="날짜" />
+                  <TableColumn fx:id="tc_start_time" prefWidth="82.0" text="시작시간" />
+                  <TableColumn fx:id="tc_end_time" text="종료시간" />
+                  <TableColumn fx:id="tc_seat" prefWidth="85.0" text="좌석" />
+                  <TableColumn fx:id="tc_price" prefWidth="83.0" text="가격" />
+              </columns>
+            </TableView>
+            <Button fx:id="btn_change" layoutX="827.0" layoutY="399.0" mnemonicParsing="false" onAction="#getChange" prefHeight="12.0" prefWidth="65.0" text="수정" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </AnchorPane>
    </children>
-   <padding>
-      <Insets bottom="20.0" />
-   </padding>
 </AnchorPane>
