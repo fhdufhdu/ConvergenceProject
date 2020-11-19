@@ -128,7 +128,6 @@ public class MovieServer extends Thread
 									Iterator<ScreenDTO> tIter = tlist.iterator();
 									ScreenDTO sDto;
 									
-									if(tDao.)
 									while (tIter.hasNext())
 									{
 										sDto = tIter.next();
@@ -275,7 +274,7 @@ public class MovieServer extends Thread
 									sDao.addScreen(sDto);
 									
 									System.out.println("상영관 등록 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_ADD + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_ADD + "/1");
 									break;
 								}
 								catch (Exception e)
@@ -303,7 +302,7 @@ public class MovieServer extends Thread
 									sDao.changeScreen(sDto);
 									
 									System.out.println("상영관 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_CHANGE + "/1");
 									break;
 								}
 								catch (Exception e)
@@ -325,7 +324,7 @@ public class MovieServer extends Thread
 									sDao.removeScreen(id);
 									
 									System.out.println("상영관 삭제 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_DELETE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_DELETE + "/1");
 									break;
 								}
 								catch (Exception e)

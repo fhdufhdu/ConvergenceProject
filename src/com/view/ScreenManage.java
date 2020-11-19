@@ -97,7 +97,7 @@ public class ScreenManage
 				String packetArr[] = packet.split("/");
 				String packetType = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_ADD))
+				if (packetType.equals(Protocol.SC_RES_SCREEN_ADD))
 				{
 					String result = packetArr[2];
 					switch (result)
@@ -167,7 +167,7 @@ public class ScreenManage
 				String packetArr[] = packet.split("/");
 				String packetType = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_CHANGE))
+				if (packetType.equals(Protocol.SC_RES_SCREEN_CHANGE))
 				{
 					String result = packetArr[2];
 					switch (result)
@@ -244,7 +244,7 @@ public class ScreenManage
 				String packetArr[] = packet.split("/");
 				String packetType = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_DELETE))
+				if (packetType.equals(Protocol.SC_RES_SCREEN_DELETE))
 				{
 					String result = packetArr[2];
 					switch (result)

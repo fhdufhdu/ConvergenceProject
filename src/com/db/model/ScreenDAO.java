@@ -98,8 +98,9 @@ public class ScreenDAO extends DAO {
         ArrayList<ScreenDTO> temp_list = new ArrayList<ScreenDTO>();
         String insert_sql = "select * from screens where theater_id = ?";
 
+        System.out.println("1");
         ps = conn.prepareStatement(insert_sql);
-
+        System.out.println("2");
         ps.setString(1, t_id);
 
         rs = ps.executeQuery();
@@ -112,7 +113,7 @@ public class ScreenDAO extends DAO {
             int max_col = rs.getInt(6);
             temp_list.add(new ScreenDTO(id, theater_id, name, total_capacity, max_row, max_col));
         }
-
+        System.out.println(3);
         ps.close();
 
         return temp_list;
