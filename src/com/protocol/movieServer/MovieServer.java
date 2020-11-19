@@ -123,25 +123,28 @@ public class MovieServer extends Thread
 									System.out.println("클라이언트가 상영관 리스트 요청을 보냈습니다.");
 									String id = packetArr[2];
 									
-									ScreenDAO tDao = new ScreenDAO();
-									ArrayList<ScreenDTO> tlist = tDao.getScreenList(id);
-									Iterator<ScreenDTO> tIter = tlist.iterator();
-									ScreenDTO sDto;
+									ScreenDAO sDao = new ScreenDAO();
+									ArrayList<ScreenDTO> slist = sDao.getScreenList(id);
+									Iterator<ScreenDTO> sIter = slist.iterator();
 									
-									while (tIter.hasNext())
+									if (sIter.hasNext() == false)
 									{
-										sDto = tIter.next();
-										if (tIter.hasNext())
-											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/0");
-										else
-											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/1");
+										writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/2");
 									}
-									break;
+									
+									while (sIter.hasNext())
+									{
+										ScreenDTO sDto = sIter.next();
+										if (sIter.hasNext())
+											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/0");
+										else
+											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/1");
+									}
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_VIEW + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_VIEW + "/3");
 									break;
 								}
 							}
@@ -185,7 +188,7 @@ public class MovieServer extends Thread
 								try
 								{
 									System.out.println("클라이언트가 영화관 등록 요청를 보냈습니다.");
-									String name = packetArr[2]; // 영화관 이름
+									String name = packetArr[2]; // 영화관 id
 									String address = packetArr[3]; // 영화관 주소
 									String screen = packetArr[4]; // 총 스크린 수
 									String seat = packetArr[5]; // 총 좌석 수
@@ -262,14 +265,14 @@ public class MovieServer extends Thread
 								try
 								{
 									System.out.println("클라이언트가 상영관 등록 요청을 보냈습니다.");
-									String id = packetArr[2];
+									String theater_id = packetArr[2];
 									String name = packetArr[3];
 									String capacity = packetArr[4];
 									String row = packetArr[5];
 									String col = packetArr[6];
 									
 									ScreenDAO sDao = new ScreenDAO();
-									ScreenDTO sDto = new ScreenDTO(DTO.EMPTY_ID, id, name, Integer.valueOf(capacity), Integer.valueOf(row), Integer.valueOf(col));
+									ScreenDTO sDto = new ScreenDTO(DTO.EMPTY_ID, theater_id, name, Integer.valueOf(capacity), Integer.valueOf(row), Integer.valueOf(col));
 									
 									sDao.addScreen(sDto);
 									
@@ -291,13 +294,14 @@ public class MovieServer extends Thread
 								{
 									System.out.println("클라이언트가 상영관 수정 요청을 보냈습니다.");
 									String id = packetArr[2];
-									String name = packetArr[3];
-									String capacity = packetArr[4];
-									String row = packetArr[5];
-									String col = packetArr[6];
+									String theater_id = packetArr[3];
+									String name = packetArr[4];
+									String capacity = packetArr[5];
+									String row = packetArr[6];
+									String col = packetArr[7];
 									
 									ScreenDAO sDao = new ScreenDAO();
-									ScreenDTO sDto = new ScreenDTO(id, name, Integer.valueOf(capacity), Integer.valueOf(row), Integer.valueOf(col));
+									ScreenDTO sDto = new ScreenDTO(id, theater_id, name, Integer.valueOf(capacity), Integer.valueOf(row), Integer.valueOf(col));
 									
 									sDao.changeScreen(sDto);
 									

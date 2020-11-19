@@ -80,9 +80,14 @@ public class Login
 	// 로그인 시도
 	void loginTry() throws IOException
 	{
-		while (true)
+		try
 		{
-			try
+			String id = tf_id.getText();
+			String passwd = pf_passwd.getText();
+			
+			mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "/" + id + "/" + passwd);
+			
+			while (true)
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
@@ -90,13 +95,11 @@ public class Login
 				
 				switch (packetType)
 				{
-					case Protocol.PT_REQ_LOGIN_INFO:
-						// gui에서 값 가져옴
-						String id = tf_id.getText();
-						String passwd = pf_passwd.getText();
-						
-						mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "/" + id + "/" + passwd);
-						return;
+					/*
+					 * case Protocol.PT_REQ_LOGIN_INFO: // gui에서 값 가져옴 id = tf_id.getText(); passwd = pf_passwd.getText();
+					 * 
+					 * mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "/" + id + "/" + passwd); return;
+					 */
 					
 					case Protocol.PT_RES_LOGIN:
 						String result = packetArr[1];
@@ -120,11 +123,11 @@ public class Login
 						}
 				}
 			}
-			catch (Exception e) // 에러 발생시
-			{
-				e.printStackTrace();
-				t_result.setText("로그인 실패!");
-			}
+		}
+		catch (Exception e)
+		{
+			t_result.setText("로그인 실패!");
+			e.printStackTrace();
 		}
 	}
 	
