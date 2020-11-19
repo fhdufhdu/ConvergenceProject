@@ -59,7 +59,7 @@ public class CustomDTO {
 
     public StringProperty getSeat() {
         return new SimpleStringProperty(
-                Character.toString(rDto.getScreenRow() + 64) + Integer.toString(rDto.getScreenCol() + 1));
+                Character.toString((char) (rDto.getScreenRow() + 64)) + Integer.toString(rDto.getScreenCol() + 1));
     }
 
     public StringProperty getPrice() {
