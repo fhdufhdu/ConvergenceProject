@@ -95,16 +95,16 @@ public class SignUp
 				gender = "0";
 			}
 			
-			mainGUI.writePacket(Protocol.CS_REQ_SIGNUP + "/2/" + id + "/" + passwd + "/" + name + "/" + phone_number + "/" + birth + "/" + gender);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_SIGNUP + "/2/" + id + "/" + passwd + "/" + name + "/" + phone_number + "/" + birth + "/" + gender);
 			while (true)
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[0];
+				String packetType = packetArr[1];
 				
 				if (packetType.equals(Protocol.SC_RES_SIGNUP))
 				{
-					String result = packetArr[1];
+					String result = packetArr[2];
 					switch (result)
 					{
 						case "1":
