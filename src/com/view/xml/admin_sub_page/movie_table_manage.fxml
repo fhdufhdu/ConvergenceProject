@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -20,7 +22,7 @@
                         <Font name="LG Smart UI Bold" size="25.0" />
                      </font>
                   </Text>
-                  <TableView id="theater_table" fx:id="tv_movie_table" editable="true" layoutX="49.0" layoutY="286.0" prefHeight="264.0" prefWidth="723.0">
+                  <TableView id="theater_table" fx:id="tv_movie_table" editable="true" layoutX="50.0" layoutY="60.0" prefHeight="526.0" prefWidth="723.0">
                     <columns>
                       <TableColumn fx:id="tc_theater" prefWidth="117.0" text="영화관" />
                       <TableColumn fx:id="tc_screen" prefWidth="150.0" text="상영관" />
@@ -29,37 +31,25 @@
                         <TableColumn fx:id="tc_screen_time" prefWidth="119.0" text="상영시간" />
                     </columns>
                   </TableView>
+                  <Text layoutX="51.0" layoutY="630.0" strokeType="OUTSIDE" strokeWidth="0.0" text="정보 입력">
+                     <font>
+                        <Font name="LG Smart UI Bold" size="25.0" />
+                     </font>
+                  </Text>
                   <Text fx:id="t_result" layoutX="14.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="269.0">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font>
                   </Text>
-                  <Button fx:id="btn_reservation" layoutX="668.0" layoutY="556.0" mnemonicParsing="false" onAction="#getReservation" prefHeight="30.0" prefWidth="102.0" text="예매하기" />
-                  <TableView fx:id="tv_theater1" layoutX="49.0" layoutY="64.0" prefHeight="200.0" prefWidth="117.0">
-                    <columns>
-                      <TableColumn fx:id="tc_theater1" prefWidth="116.0" text="영화관" />
-                    </columns>
-                  </TableView>
-                  <TableView fx:id="tv_screen1" layoutX="168.0" layoutY="64.0" prefHeight="200.0" prefWidth="148.0">
-                    <columns>
-                      <TableColumn fx:id="tc_screen1" prefWidth="147.0" text="상영관" />
-                    </columns>
-                  </TableView>
-                  <TableView fx:id="tv_movie1" layoutX="318.0" layoutY="64.0" prefHeight="200.0" prefWidth="204.0">
-                    <columns>
-                      <TableColumn fx:id="tc_movie1" prefWidth="203.0" text="영화" />
-                    </columns>
-                  </TableView>
-                  <TableView fx:id="tv_date1" layoutX="524.0" layoutY="64.0" prefHeight="200.0" prefWidth="127.0">
-                    <columns>
-                      <TableColumn fx:id="tc_date1" prefWidth="126.0" text="날짜" />
-                    </columns>
-                  </TableView>
-                  <TableView fx:id="tv_screen_time1" layoutX="654.0" layoutY="64.0" prefHeight="200.0" prefWidth="118.0">
-                    <columns>
-                      <TableColumn fx:id="tc_screen_time1" prefWidth="114.0" text="상영시간" />
-                    </columns>
-                  </TableView>
+                  <TextField fx:id="tf_theater" layoutX="49.0" layoutY="660.0" prefHeight="30.0" prefWidth="120.0" promptText="영화관" />
+                  <TextField fx:id="tf_screen" layoutX="169.0" layoutY="660.0" prefHeight="30.0" prefWidth="150.0" promptText="상영관" />
+                  <TextField fx:id="tf_movie" layoutX="319.0" layoutY="660.0" prefHeight="30.0" prefWidth="203.0" promptText="영화" />
+                  <Button fx:id="btn_add_movie_table" layoutX="664.0" layoutY="730.0" mnemonicParsing="false" onAction="#addMovieTable" prefHeight="30.0" prefWidth="110.0" text="등록" />
+                  <Button fx:id="btn_change_movie_table" layoutX="554.0" layoutY="730.0" mnemonicParsing="false" onAction="#changeMovieTable" prefHeight="30.0" prefWidth="110.0" text="수정" />
+                  <Button fx:id="btn_delete_movie_table" layoutX="444.0" layoutY="730.0" mnemonicParsing="false" onAction="#deleteMovieTable" prefHeight="30.0" prefWidth="110.0" text="삭제" />
+                  <Button fx:id="btn_clear" layoutX="793.0" layoutY="660.0" mnemonicParsing="false" onAction="#clearTextField" prefHeight="30.0" prefWidth="102.0" text="모두지우기" />
+                  <TextField fx:id="tf_scrren_time" layoutX="655.0" layoutY="660.0" prefHeight="30.0" prefWidth="119.0" promptText="상영시간" />
+                  <DatePicker fx:id="dp_movie" layoutX="522.0" layoutY="661.0" prefHeight="29.0" prefWidth="132.0" />
                </children>
             </AnchorPane>
          </center>
