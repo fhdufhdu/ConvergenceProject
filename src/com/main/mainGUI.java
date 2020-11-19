@@ -48,8 +48,8 @@ public class mainGUI extends Application
 	{
 		try
 		{
-			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
-			// Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/admin_sub_page/reservation_manage.fxml"));
+			// Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
+			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/seat_choice.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("로그인");
 			primaryStage.setResizable(false);

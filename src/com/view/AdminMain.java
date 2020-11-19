@@ -21,6 +21,8 @@ import javafx.scene.web.WebView;
 import javafx.stage.*;
 import javafx.application.*;
 import javafx.scene.control.Alert.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 
 public class AdminMain implements Initializable
@@ -49,6 +51,9 @@ public class AdminMain implements Initializable
     @FXML
     private BorderPane bp_admin_sub;
     
+    @FXML
+    private ImageView img_web;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -65,6 +70,9 @@ public class AdminMain implements Initializable
             double deltaY = scrollEvent.getDeltaY() * SPEED;
             sp_admin_main.setVvalue(sp_admin_main.getVvalue() - deltaY);
         });
+        /*
+         * Image image = new Image("https://static-whale.pstatic.net/main/img_darkmode_v2@2x.png"); img_web.setImage(image);
+         */
     }
     
     @FXML
