@@ -371,7 +371,14 @@ public class RsvManage implements Initializable
         {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             ReservationDAO rDao = new ReservationDAO();
-            ArrayList<ReservationDTO> r_list = rDao.getRsvList(selectedMem.getId(), selectedMov.getId(), selectedThea.getId(), dateFormat.format(dp_start_date.getValue()) + " 00:00:00.0", dateFormat.format(dp_end_date.getValue()) + " 23:59:00.0");
+            
+            String mem_id = selectedMem == null ? "%" : selectedMem.getId();
+            String mov_id = selectedMov == null ? "%" : selectedMov.getId();
+            String thea_id = selectedThea == null ? "%" : selectedThea.getId();
+            String start_date = dp_start_date.getValue() == null ? "1976-01-01" : dateFormat.format(dp_start_date.getValue());
+            String end_date = dp_end_date.getValue() == null ? "2222-01-01" : dateFormat.format(dp_end_date.getValue());
+            
+            ArrayList<ReservationDTO> r_list = rDao.getRsvList(mem_id, mov_id, thea_id, start_date + " 00:00:00.0", end_date + " 23:59:00.0");
             Iterator<ReservationDTO> r_iter = r_list.iterator();
             ArrayList<CustomDTO> c_list = new ArrayList<CustomDTO>();
             while (r_iter.hasNext())
