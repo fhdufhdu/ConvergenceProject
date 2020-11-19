@@ -1,16 +1,19 @@
 package com.view;
-//
+
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
-public class MovieTable {
 
-	 @FXML
+public class MovieTableManage {
+
+	  @FXML
 	    private BorderPane bp_parent;
 
 	    @FXML
@@ -35,40 +38,49 @@ public class MovieTable {
 	    private Text t_result;
 
 	    @FXML
-	    private Button btn_reservation;
+	    private TextField tf_theater;
 
 	    @FXML
-	    private TableView<?> tv_theater1;
+	    private TextField tf_screen;
 
 	    @FXML
-	    private TableColumn<?, ?> tc_theater1;
+	    private TextField tf_movie;
 
 	    @FXML
-	    private TableView<?> tv_screen1;
+	    private Button btn_add_movie_table;
 
 	    @FXML
-	    private TableColumn<?, ?> tc_screen1;
+	    private Button btn_change_movie_table;
 
 	    @FXML
-	    private TableView<?> tv_movie1;
+	    private Button btn_delete_movie_table;
 
 	    @FXML
-	    private TableColumn<?, ?> tc_movie1;
+	    private Button btn_clear;
 
 	    @FXML
-	    private TableView<?> tv_date1;
+	    private TextField tf_scrren_time;
 
 	    @FXML
-	    private TableColumn<?, ?> tc_date1;
+	    private DatePicker dp_movie;
 
 	    @FXML
-	    private TableView<?> tv_screen_time1;
+	    void addMovieTable(ActionEvent event) {
+
+	    }
 
 	    @FXML
-	    private TableColumn<?, ?> tc_screen_time1;
+	    void changeMovieTable(ActionEvent event) {
+
+	    }
 
 	    @FXML
-	    void getReservation(ActionEvent event) {
+	    void clearTextField(ActionEvent event) {
+
+	    }
+
+	    @FXML
+	    void deleteMovieTable(ActionEvent event) {
 
 	    }
 	    

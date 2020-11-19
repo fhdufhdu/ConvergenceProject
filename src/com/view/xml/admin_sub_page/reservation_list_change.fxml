@@ -13,7 +13,7 @@
    <children>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0">
          <children>
-            <Text layoutX="15.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 리스트">
+            <Text layoutX="16.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 리스트">
                <font>
                   <Font size="25.0" />
                </font>

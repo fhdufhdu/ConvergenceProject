@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="42.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="계좌 관리">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <TableView layoutX="32.0" layoutY="158.0" prefHeight="345.0" prefWidth="372.0">
+        <columns>
+          <TableColumn prefWidth="125.0" text="사용자 ID" />
+          <TableColumn prefWidth="130.0" text="입금&amp;출금" />
+            <TableColumn prefWidth="116.0" text="금액" />
+        </columns>
+      </TableView>
+      <TableView layoutX="435.0" layoutY="158.0" prefHeight="345.0" prefWidth="384.0">
+        <columns>
+          <TableColumn prefWidth="189.0" text="입금&amp;출금" />
+          <TableColumn prefWidth="194.0" text="금액" />
+        </columns>
+      </TableView>
+      <Text layoutX="188.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="사용자">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="597.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관리자">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

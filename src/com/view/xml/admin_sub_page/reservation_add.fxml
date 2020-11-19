@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieAdd">
+   <children>
+    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="910.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Text layoutX="53.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 등록">
+               <font>
+                  <Font name="LG Smart UI Bold" size="25.0" />
+               </font>
+            </Text>
+            <Text layoutX="108.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="좌석">
+               <font>
+                  <Font name="LG Smart UI Light" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="108.0" layoutY="661.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜">
+               <font>
+                  <Font name="LG Smart UI Light" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="469.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시작시간">
+               <font>
+                  <Font name="LG Smart UI Light" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="469.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="가격">
+               <font>
+                  <Font name="LG Smart UI Light" size="20.0" />
+               </font>
+            </Text>
+            <DatePicker fx:id="dp_movie" layoutX="105.0" layoutY="675.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+            <TextField fx:id="tf_end_time" layoutX="469.0" layoutY="675.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+            <TextField fx:id="tf_price" layoutX="469.0" layoutY="513.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+            <Text fx:id="result" layoutX="219.0" layoutY="734.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="359.7599983215332">
+               <font>
+                  <Font name="LG Smart UI Bold" size="15.0" />
+               </font>
+            </Text>
+            <Button layoutX="752.0" layoutY="26.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="등록하기" />
+            <TextField fx:id="tf_seat" layoutX="105.0" layoutY="513.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+            <Text layoutX="469.0" layoutY="662.0" strokeType="OUTSIDE" strokeWidth="0.0" text="종료시간">
+               <font>
+                  <Font name="LG Smart UI Light" size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tf_start_time" layoutX="469.0" layoutY="595.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+            <TableView layoutX="84.0" layoutY="76.0" prefHeight="377.0" prefWidth="743.0">
+              <columns>
+                <TableColumn prefWidth="84.0" text="상영관" />
+                <TableColumn prefWidth="112.0" text="좌석" />
+                  <TableColumn prefWidth="147.0" text="가격" />
+                  <TableColumn prefWidth="165.0" text="날짜" />
+                  <TableColumn prefWidth="125.0" text="시작시간" />
+                  <TableColumn prefWidth="109.0" text="종료시간" />
+              </columns>
+            </TableView>
+            <Text layoutX="108.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영관">
+               <font>
+                  <Font name="LG Smart UI Light" size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tf_seat1" layoutX="105.0" layoutY="597.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
