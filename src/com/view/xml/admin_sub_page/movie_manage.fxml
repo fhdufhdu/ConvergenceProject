@@ -18,17 +18,17 @@
          <center>
             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text focusTraversable="true" layoutX="50.0" layoutY="64.0" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 수정">
+                  <Text focusTraversable="true" layoutX="50.0" layoutY="50.0" pickOnBounds="true" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 관리">
                      <font>
                         <Font name="LG Smart UI Bold" size="25.0" />
                      </font>
                   </Text>
-                  <Text layoutX="73.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 타이틀">
+                  <Text layoutX="73.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 타이틀">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font></Text>
-                  <Button fx:id="btn_search" layoutX="810.0" layoutY="120.0" mnemonicParsing="false" onAction="#getMovieSearch" prefHeight="20.0" prefWidth="50.0" text="검색" />
-                  <TableView id="theater_table" fx:id="tv_movie" editable="true" layoutX="50.0" layoutY="168.0" prefHeight="500.0" prefWidth="810.0">
+                  <Button fx:id="btn_search" layoutX="810.0" layoutY="106.0" mnemonicParsing="false" onAction="#getMovieSearch" prefHeight="20.0" prefWidth="50.0" text="검색" />
+                  <TableView id="theater_table" fx:id="tv_movie" editable="true" layoutX="50.0" layoutY="154.0" prefHeight="500.0" prefWidth="810.0">
                     <columns>
                       <TableColumn fx:id="tc_screening" maxWidth="60.0" prefWidth="60.0" text="상영정보" />
                       <TableColumn fx:id="tc_movie_title" maxWidth="165.0" prefWidth="165.0" text="영화제목" />
@@ -39,42 +39,37 @@
                         <TableColumn fx:id="tc_plot" minWidth="0.0" prefWidth="185.0" text="줄거리" />
                     </columns>
                   </TableView>
-                  <Text fx:id="t_result" layoutX="14.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="269.0">
+                  <Text layoutX="222.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="222.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독">
+                  <Text layoutX="336.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="배우">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="336.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="배우">
+                  <Text layoutX="659.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜 범위">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="659.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜 범위">
+                  <Text layoutX="473.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영여부">
                      <font>
                         <Font name="LG Smart UI Light" size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="473.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영여부">
-                     <font>
-                        <Font name="LG Smart UI Light" size="15.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="tf_title" layoutX="50.0" layoutY="119.0" prefHeight="22.0" prefWidth="117.0" />
-                  <TextField fx:id="tf_director" layoutX="187.0" layoutY="119.0" prefHeight="22.0" prefWidth="95.0" />
-                  <TextField fx:id="tf_actor" layoutX="298.0" layoutY="119.0" prefHeight="22.0" prefWidth="100.0" />
-                  <DatePicker fx:id="dp_start_date" layoutX="591.0" layoutY="119.0" prefHeight="22.0" prefWidth="80.0" />
-                  <DatePicker fx:id="dp_end_date" layoutX="700.0" layoutY="119.0" prefHeight="22.0" prefWidth="80.0" />
-                  <Text layoutX="686.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="~" />
-                  <CheckBox fx:id="cb_close" layoutX="413.0" layoutY="122.0" mnemonicParsing="false" onAction="#selectClose" text="종료" />
-                  <CheckBox fx:id="cb_current" layoutX="468.0" layoutY="122.0" mnemonicParsing="false" onAction="#selectCurrent" text="상영중" />
-                  <CheckBox fx:id="cb_soon" layoutX="536.0" layoutY="122.0" mnemonicParsing="false" onAction="#selectSoon" text="예정" />
-                  <Button fx:id="btn_change" layoutX="760.0" layoutY="686.0" mnemonicParsing="false" onAction="#changeNextMovie" prefHeight="30.0" prefWidth="100.0" text="수정" />
-                  <Button fx:id="btn_delete" layoutX="662.0" layoutY="686.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="30.0" prefWidth="100.0" text="삭제" />
+                  <TextField fx:id="tf_title" layoutX="50.0" layoutY="105.0" prefHeight="22.0" prefWidth="117.0" />
+                  <TextField fx:id="tf_director" layoutX="187.0" layoutY="105.0" prefHeight="22.0" prefWidth="95.0" />
+                  <TextField fx:id="tf_actor" layoutX="298.0" layoutY="105.0" prefHeight="22.0" prefWidth="100.0" />
+                  <DatePicker fx:id="dp_start_date" layoutX="591.0" layoutY="105.0" prefHeight="22.0" prefWidth="80.0" />
+                  <DatePicker fx:id="dp_end_date" layoutX="700.0" layoutY="105.0" prefHeight="22.0" prefWidth="80.0" />
+                  <Text layoutX="686.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="~" />
+                  <CheckBox fx:id="cb_close" layoutX="413.0" layoutY="108.0" mnemonicParsing="false" onAction="#selectClose" text="종료" />
+                  <CheckBox fx:id="cb_current" layoutX="468.0" layoutY="108.0" mnemonicParsing="false" onAction="#selectCurrent" text="상영중" />
+                  <CheckBox fx:id="cb_soon" layoutX="536.0" layoutY="108.0" mnemonicParsing="false" onAction="#selectSoon" text="예정" />
+                  <Button fx:id="btn_change" layoutX="760.0" layoutY="672.0" mnemonicParsing="false" onAction="#changeNextMovie" prefHeight="30.0" prefWidth="100.0" text="수정" />
+                  <Button fx:id="btn_delete" layoutX="662.0" layoutY="672.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="30.0" prefWidth="100.0" text="삭제" />
                </children>
             </AnchorPane>
          </center>

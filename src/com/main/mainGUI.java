@@ -13,12 +13,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class mainGUI extends Application {
+public class mainGUI extends Application
+{
 	private static BufferedReader br;
 	private static BufferedWriter bw;
-
-	public static void main(String args[]) throws Exception {
-		try {
+	
+	public static void main(String args[]) throws Exception
+	{
+		try
+		{
 			DAO.connectDB();
 			String localHostAddress = InetAddress.getLocalHost().getHostAddress();
 			Socket socket = new Socket(localHostAddress, 5000);
@@ -29,49 +32,67 @@ public class mainGUI extends Application {
 			br.close();
 			socket.close();
 			DAO.connectDB();
-		} catch (UnknownHostException e) {
+		}
+		catch (UnknownHostException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
-	public void start(Stage primaryStage) {
-		try {
+	public void start(Stage primaryStage)
+	{
+		try
+		{
 			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
-			//Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/Seat_Choice.fxml"));
+			// Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/admin_sub_page/reservation_manage.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("로그인");
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-
-	public static BufferedReader getBr() {
+	
+	public static BufferedReader getBr()
+	{
 		return br;
 	}
-
-	public static BufferedWriter getBw() {
+	
+	public static BufferedWriter getBw()
+	{
 		return bw;
 	}
-
-	public static void writePacket(String source) throws Exception {
-		try {
+	
+	public static void writePacket(String source) throws Exception
+	{
+		try
+		{
 			bw.write(source + "\n");
 			bw.flush();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-
-	public static String readLine() {
-		try {
+	
+	public static String readLine()
+	{
+		try
+		{
 			return br.readLine();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		return null;

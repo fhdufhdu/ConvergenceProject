@@ -21,25 +21,27 @@ import javafx.application.*;
 import javafx.scene.control.Alert.*;
 import javafx.scene.input.*;
 
-public class Test implements Initializable {
-
+public class Test implements Initializable
+{
+    
     @FXML
     private Text current_time;
-
+    
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources)
+    {
         /*
-         * Date date = new Date(); SimpleDateFormat dateFormat = new
-         * SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+         * Date date = new Date(); SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
          * 
          * //SimpleDateFormat 을 이용해 String 타입으로 가져오기
          * 
          * current_time.setText(dateFormat.format(date));
          */
     }
-
-    void initData(String a) {
+    
+    void initData(String a)
+    {
         current_time.setText(a);
     }
-
+    
 }

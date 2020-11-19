@@ -142,6 +142,34 @@ public class TimeTableDAO extends DAO {
         throw new DAOException("not found result of theaters");
     }
 
+    public TimeTableDTO getTimeTable(String tid) throws DAOException, SQLException {
+        try {
+            String insert_sql = "select * from timetables where id = ?";
+            ps = conn.prepareStatement(insert_sql);
+
+            ps.setString(1, tid);
+
+            rs = ps.executeQuery();
+            rs.next();
+            String id = rs.getString("id");
+            String movie_id = rs.getString("movie_id");
+            String screen_id = rs.getString("screen_id");
+            String start_time = rs.getTimestamp("start_time").toString();
+            String end_time = rs.getTimestamp("end_time").toString();
+            String type = rs.getString("type");
+            int current_rsv = rs.getInt("current_rsv");
+
+            rs.close();
+            ps.close();
+
+            return new TimeTableDTO(id, movie_id, screen_id, start_time, end_time, type, current_rsv);
+        } catch (SQLException sqle) {
+            System.out.println("find error on sql");
+            sqle.printStackTrace();
+        }
+        throw new DAOException("not found result of theaters");
+    }
+
     // 상영 시간표 수정
     public void changeTimeTable(TimeTableDTO elem) throws DAOException, SQLException {
         try {

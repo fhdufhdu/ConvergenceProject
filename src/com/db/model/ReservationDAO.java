@@ -1,6 +1,7 @@
 package com.db.model;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class ReservationDAO extends DAO {
@@ -102,6 +103,38 @@ public class ReservationDAO extends DAO {
             int price = rs.getInt("price");
             String cancel = rs.getString("cancel");
             temp_list.add(new ReservationDTO(id, member_id, time_table_id, screen_row, screen_col, price, cancel));
+        }
+
+        rs.close();
+        ps.close();
+
+        return temp_list;
+    }
+
+    public ArrayList<ReservationDTO> getRsvList(String mem_id, String movie_id, String theater_id, String start_time,
+            String end_time) throws DAOException, SQLException {
+        ArrayList<ReservationDTO> temp_list = new ArrayList<ReservationDTO>();
+        String insert_sql = "select * from reservations where member_id like ? and ttable_id like (select id from timetables where movie_id like ? and start_time between ? and ? and screen_id like (select id from screens where theater_id like ?))";
+        ps = conn.prepareStatement(insert_sql);
+
+        ps.setString(1, mem_id);
+        ps.setString(2, movie_id);
+        ps.setTimestamp(3, Timestamp.valueOf(start_time));
+        ps.setTimestamp(4, Timestamp.valueOf(end_time));
+        ps.setString(5, theater_id);
+
+        System.out.println(mem_id + " / " + movie_id + " / " + start_time + " / " + end_time + " / " + theater_id);
+
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String id = rs.getString("id");
+            String member_id = rs.getString("member_id");
+            String time_table_id = rs.getString("ttable_id");
+            int screen_row = rs.getInt("s_row");
+            int screen_col = rs.getInt("s_col");
+            int price = rs.getInt("price");
+            String type = rs.getString("type");
+            temp_list.add(new ReservationDTO(id, member_id, time_table_id, screen_row, screen_col, price, type));
         }
 
         rs.close();
