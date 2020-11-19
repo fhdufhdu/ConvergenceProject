@@ -92,6 +92,33 @@ public class MemberDAO extends DAO
     }
 
     //사용자 정보 가져오기
+    public MemberDTO getMemberInfo(String mid) throws DAOException, SQLException
+    {
+        String check_sql = "select * from members where id = ?";
+        ps = conn.prepareStatement(check_sql);
+
+        ps.setString(1, mid);
+
+        rs = ps.executeQuery();
+        rs.next();
+        String id = rs.getString("id");
+        String role = rs.getString("role");
+        String password = rs.getString("password");
+        String account = rs.getString("account");
+        if(role.equals("1"))
+        {
+            return new MemberDTO(id, role, password, account);
+        }
+        String name = rs.getString("name");
+        String phone_number = rs.getString("phone_number");
+        Date birth = rs.getDate("birth");
+        String gender = rs.getString("gender");
+        rs.close();
+        ps.close();
+        return new MemberDTO(id, role, password, account, name, phone_number, birth.toString(), gender);
+    }
+
+    //사용자 정보 가져오기
     public ArrayList<MemberDTO> getAllMember() throws DAOException, SQLException
     {
         ArrayList<MemberDTO> result =  new ArrayList<MemberDTO>();

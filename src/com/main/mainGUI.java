@@ -55,7 +55,7 @@ public class mainGUI extends Application {
 		return br;
 	}
 
-	public static BufferedWriter getBw() {
+	public static BufferedWriter getBw() { 
 		return bw;
 	}
 

@@ -5,7 +5,8 @@ import java.sql.Date;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class MovieDTO extends DTO {
+public class MovieDTO extends DTO
+{
     private String id;
     private String title;
     private Date release_date; // date
@@ -17,9 +18,9 @@ public class MovieDTO extends DTO {
     private String director;
     private String actor;
     private int min;
-
-    public MovieDTO(String id, String title, String release_date, String is_current, String plot, String poster_path,
-            String still_cut_path, String trailer_path, String director, String actor, int min) {
+    
+    public MovieDTO(String id, String title, String release_date, String is_current, String plot, String poster_path, String still_cut_path, String trailer_path, String director, String actor, int min)
+    {
         // release_date의 포맷은 "YYYY-MM-DD"
         this.id = id;
         this.title = title;
@@ -33,9 +34,9 @@ public class MovieDTO extends DTO {
         this.actor = actor;
         this.min = min;
     }
-
-    public MovieDTO(String title, String release_date, String is_current, String plot, String poster_path,
-            String still_cut_path, String trailer_path, String director, String actor, int min) {
+    
+    public MovieDTO(String title, String release_date, String is_current, String plot, String poster_path, String still_cut_path, String trailer_path, String director, String actor, int min)
+    {
         // release_date의 포맷은 "YYYY-MM-DD"
         this.title = title;
         this.release_date = Date.valueOf(release_date);
@@ -48,106 +49,133 @@ public class MovieDTO extends DTO {
         this.actor = actor;
         this.min = min;
     }
-
-    public MovieDTO() {
-
+    
+    public MovieDTO()
+    {
+        
     }
-
-    public StringProperty getScreeningProperty() {
-        if (is_current.equals("0")) {
+    
+    public StringProperty getScreeningProperty()
+    {
+        if (is_current.equals("0"))
+        {
             return new SimpleStringProperty("상영종료");
-        } else if (is_current.equals("1")) {
+        } else if (is_current.equals("1"))
+        {
             return new SimpleStringProperty("상영중");
-        } else {
+        } else
+        {
             return new SimpleStringProperty("상영예정");
         }
     }
-
-    public String getId() {
+    
+    public String getId()
+    {
         return id;
     }
-
-    public void setId(String id) {
+    
+    public void setId(String id)
+    {
         this.id = id;
     }
-
-    public String getTitle() {
+    
+    public String getTitle()
+    {
         return title;
     }
-
-    public void setTitle(String title) {
+    
+    public void setTitle(String title)
+    {
         this.title = title;
     }
-
-    public Date getReleaseDate() {
+    
+    public Date getReleaseDate()
+    {
         return release_date;
     }
-
-    public void setReleaseDate(String release_date) {
+    
+    public void setReleaseDate(String release_date)
+    {
         this.release_date = Date.valueOf(release_date);
     }
-
-    public String getIsCurrent() {
+    
+    public String getIsCurrent()
+    {
         return is_current;
     }
-
-    public void setIsCurrent(String is_current) {
+    
+    public void setIsCurrent(String is_current)
+    {
         this.is_current = is_current;
     }
-
-    public String getPlot() {
+    
+    public String getPlot()
+    {
         return plot;
     }
-
-    public void setPlot(String plot) {
+    
+    public void setPlot(String plot)
+    {
         this.plot = plot;
     }
-
-    public String getPosterPath() {
+    
+    public String getPosterPath()
+    {
         return poster_path;
     }
-
-    public void setPosterPath(String poster_path) {
+    
+    public void setPosterPath(String poster_path)
+    {
         this.poster_path = poster_path;
     }
-
-    public String getStillCutPath() {
+    
+    public String getStillCutPath()
+    {
         return still_cut_path;
     }
-
-    public void setStillCutPath(String still_cut_path) {
+    
+    public void setStillCutPath(String still_cut_path)
+    {
         this.still_cut_path = still_cut_path;
     }
-
-    public String getTrailerPath() {
+    
+    public String getTrailerPath()
+    {
         return trailer_path;
     }
-
-    public void setTrailerPath(String trailer_path) {
+    
+    public void setTrailerPath(String trailer_path)
+    {
         this.trailer_path = trailer_path;
     }
-
-    public String getDirector() {
+    
+    public String getDirector()
+    {
         return director;
     }
-
-    public void setDirector(String director) {
+    
+    public void setDirector(String director)
+    {
         this.director = director;
     }
-
-    public String getActor() {
+    
+    public String getActor()
+    {
         return actor;
     }
-
-    public void setActor(String actor) {
+    
+    public void setActor(String actor)
+    {
         this.actor = actor;
     }
-
-    public int getMin() {
+    
+    public int getMin()
+    {
         return min;
     }
-
-    public void setMin(int min) {
+    
+    public void setMin(int min)
+    {
         this.min = min;
     }
 }

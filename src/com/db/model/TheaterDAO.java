@@ -120,6 +120,46 @@ public class TheaterDAO extends DAO {
         return temp_list;
     }
 
+    public TheaterDTO getTheater(String theater_name) throws DAOException, SQLException {
+        String insert_sql = "select * from theaters where name = ?";
+        ps = conn.prepareStatement(insert_sql);
+
+        ps.setString(1, theater_name);
+
+        rs = ps.executeQuery();
+        rs.next();
+        String id = rs.getString("id");
+        String name = rs.getString("name");
+        String address = rs.getString("address");
+        int total_screen = rs.getInt("total_screen");
+        int total_seats = rs.getInt("total_seat");
+
+        rs.close();
+        ps.close();
+
+        return new TheaterDTO(id, name, address, total_screen, total_seats);
+    }
+
+    public TheaterDTO getTheaterElem(String tid) throws DAOException, SQLException {
+        String insert_sql = "select * from theaters where id = ?";
+        ps = conn.prepareStatement(insert_sql);
+
+        ps.setString(1, tid);
+
+        rs = ps.executeQuery();
+        rs.next();
+        String id = rs.getString("id");
+        String name = rs.getString("name");
+        String address = rs.getString("address");
+        int total_screen = rs.getInt("total_screen");
+        int total_seats = rs.getInt("total_seat");
+
+        rs.close();
+        ps.close();
+
+        return new TheaterDTO(id, name, address, total_screen, total_seats);
+    }
+
     // 선택한 영화관의 정보 수정
     public void changeTheater(TheaterDTO mt) throws DAOException, SQLException {
         String insert_sql = "update theaters set name = ?, address = ?, total_screen = ?, total_seat = ? where id = ?";
