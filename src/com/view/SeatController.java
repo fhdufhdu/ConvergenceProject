@@ -98,7 +98,7 @@ public class SeatController implements Initializable
                 else if (i != 0 && j == 0)
                 {
                     tb_arr[i][j].setDisable(true);
-                    tb_arr[i][j].setText(Character.toString(64 + i));
+                    tb_arr[i][j].setText(Character.toString((char) (64 + i)));
                     tb_arr[i][j].setStyle("-fx-font-size: 8;-fx-background-color: transparent;");
                 }
                 tb_arr[i][j].setMaxSize(10, 10);
@@ -152,7 +152,7 @@ public class SeatController implements Initializable
             {
                 if (tb_arr[i][j].isSelected())
                 {
-                    result_list.add(Character.toString(64 + i) + Integer.toString(j));
+                    result_list.add(Character.toString((char) (64 + i)) + Integer.toString(j));
                 }
             }
         }
