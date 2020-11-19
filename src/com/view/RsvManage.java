@@ -29,12 +29,12 @@ public class RsvManage implements Initializable
     private ObservableList<MovieDTO> movie_title_list;
     private ObservableList<TheaterDTO> theater_list;
     
-    private ObservableList<CustomDTO> cus_list;
+    private ObservableList<CustomDTO> custom_list;
     
     private MemberDTO selectedMem;
     private MovieDTO selectedMov;
     private TheaterDTO selectedThea;
-    private CustomDTO table_row_data;
+    private CustomDTO selectedCustom;
     
     @FXML
     private TableView<CustomDTO> tv_reservation;
@@ -327,7 +327,7 @@ public class RsvManage implements Initializable
     {
         try
         {
-            cus_list = FXCollections.observableArrayList();
+            custom_list = FXCollections.observableArrayList();
             
             // 리스트 초기화
             initList();
@@ -346,7 +346,7 @@ public class RsvManage implements Initializable
             tc_price.setCellValueFactory(cellData -> cellData.getValue().getPrice());
             
             // 테이블 뷰와 리스트를 연결
-            tv_reservation.setItems(cus_list);
+            tv_reservation.setItems(custom_list);
             
             // 테이블 뷰 row 선택 시 발생하는 이벤트 지정
             tv_reservation.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CustomDTO>()
@@ -354,8 +354,8 @@ public class RsvManage implements Initializable
                 @Override
                 public void changed(ObservableValue<? extends CustomDTO> observable, CustomDTO oldValue, CustomDTO newValue)
                 {
-                    table_row_data = tv_reservation.getSelectionModel().getSelectedItem();
-                    System.out.println(table_row_data.getRsv().getId());
+                    selectedCustom = tv_reservation.getSelectionModel().getSelectedItem();
+                    System.out.println(selectedCustom.getRsv().getId());
                 }
             });
         }
@@ -378,7 +378,7 @@ public class RsvManage implements Initializable
             {
                 c_list.add(new CustomDTO(r_iter.next()));
             }
-            cus_list.addAll(c_list);
+            custom_list.addAll(c_list);
         }
         catch (Exception e)
         {
