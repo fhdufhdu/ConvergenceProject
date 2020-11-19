@@ -58,8 +58,8 @@ public class SeatController implements Initializable
          */
         
         ArrayList<ButtonBar> bar_list = new ArrayList<ButtonBar>();
-        row = 10;
-        col = 20;
+        row = 7;
+        col = 8;
         tb_arr = new ToggleButton[row + 1][col + 1];
         
         for (int i = 0; i < row + 1; i++)
