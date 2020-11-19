@@ -96,7 +96,7 @@ public class AdminMain implements Initializable
     @FXML
     void menuRsvAdd(ActionEvent event)
     {
-        
+        loadPage("reservation_add");
     }
     
     @FXML

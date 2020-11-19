@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
@@ -12,15 +13,144 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="910.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieAdd">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="910.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.RsvAdd">
    <children>
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="910.0" style="-fx-background-color: #ffffff;">
          <children>
+            <TableView fx:id="rsv_table" layoutX="20.0" layoutY="157.0" prefHeight="377.0" prefWidth="870.0">
+              <columns>
+                <TableColumn prefWidth="84.0" text="상영관" />
+                <TableColumn prefWidth="112.0" text="좌석" />
+                  <TableColumn prefWidth="147.0" text="가격" />
+                  <TableColumn prefWidth="165.0" text="날짜" />
+                  <TableColumn prefWidth="125.0" text="시작시간" />
+                  <TableColumn prefWidth="109.0" text="종료시간" />
+              </columns>
+            </TableView>
             <Text layoutX="53.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매정보 등록">
                <font>
                   <Font name="LG Smart UI Bold" size="25.0" />
                </font>
             </Text>
+            <Text layoutX="38.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화관 선택">
+               <font>
+                  <Font name="LG Smart UI Light" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="151.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영관 선택">
+               <font>
+                  <Font name="LG Smart UI Light" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="272.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="영화 선택">
+               <font>
+                  <Font name="LG Smart UI Light" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="386.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="날짜 선택">
+               <font>
+                  <Font name="LG Smart UI Light" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="545.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시작시간 선택">
+               <font>
+                  <Font name="LG Smart UI Light" size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="btn_search_rsv" layoutX="774.0" layoutY="107.0" mnemonicParsing="false" onAction="#searchRsv" text="예매내역 검색하기" />
+            <TextField fx:id="tf_theater" editable="false" layoutX="20.0" layoutY="107.0" minHeight="0.0" minWidth="100.0" onMouseClicked="#clickedTfTheater" prefWidth="100.0" />
+            <ListView fx:id="lv_theater" layoutX="20.0" layoutY="129.0" maxHeight="0.0" maxWidth="100.0" minHeight="0.0" minWidth="100.0" onMouseClicked="#clickedLvTheater" prefHeight="130.0" prefWidth="100.0" />
+            <TextField fx:id="tf_screen" editable="false" layoutX="134.0" layoutY="107.0" onMouseClicked="#clickedTfScreen" prefWidth="100.0" />
+            <ListView fx:id="lv_screen" layoutX="134.0" layoutY="129.0" maxHeight="0.0" maxWidth="100.0" minHeight="0.0" minWidth="100.0" onMouseClicked="#clickedLvScreen" prefHeight="130.0" prefWidth="100.0" />
+            <TextField fx:id="tf_movie" editable="false" layoutX="248.0" layoutY="107.0" onMouseClicked="#clickedTfMovie" prefWidth="100.0" />
+            <ListView fx:id="lv_movie" layoutX="248.0" layoutY="129.0" maxHeight="0.0" maxWidth="100.0" minHeight="0.0" minWidth="100.0" onMouseClicked="#clickedLvMovie" prefHeight="130.0" prefWidth="100.0" />
+            <DatePicker fx:id="dp_start_date" layoutX="362.0" layoutY="107.0" prefWidth="100.0" />
+            <MenuButton fx:id="mb_meridiem" layoutX="488.0" layoutY="107.0" mnemonicParsing="false" text="오전/오후">
+              <items>
+                <MenuItem mnemonicParsing="false" text="오전" />
+                <MenuItem mnemonicParsing="false" text="오후" />
+              </items>
+            </MenuButton>
+            <MenuButton fx:id="mb_hours" layoutX="583.0" layoutY="107.0" mnemonicParsing="false" text="시">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="1" />
+                  <MenuItem mnemonicParsing="false" text="2" />
+                  <MenuItem mnemonicParsing="false" text="3" />
+                  <MenuItem mnemonicParsing="false" text="4" />
+                  <MenuItem mnemonicParsing="false" text="5" />
+                  <MenuItem mnemonicParsing="false" text="6" />
+                  <MenuItem mnemonicParsing="false" text="7" />
+                  <MenuItem mnemonicParsing="false" text="8" />
+                  <MenuItem mnemonicParsing="false" text="9" />
+                  <MenuItem mnemonicParsing="false" text="10" />
+                  <MenuItem mnemonicParsing="false" text="11" />
+                  <MenuItem mnemonicParsing="false" text="12" />
+               </items>
+            </MenuButton>
+            <MenuButton fx:id="mb_minutes" layoutX="637.0" layoutY="107.0" mnemonicParsing="false" text="분">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="1" />
+                  <MenuItem mnemonicParsing="false" text="2" />
+                  <MenuItem mnemonicParsing="false" text="3" />
+                  <MenuItem mnemonicParsing="false" text="4" />
+                  <MenuItem mnemonicParsing="false" text="5" />
+                  <MenuItem mnemonicParsing="false" text="6" />
+                  <MenuItem mnemonicParsing="false" text="7" />
+                  <MenuItem mnemonicParsing="false" text="8" />
+                  <MenuItem mnemonicParsing="false" text="9" />
+                  <MenuItem mnemonicParsing="false" text="10" />
+                  <MenuItem mnemonicParsing="false" text="11" />
+                  <MenuItem mnemonicParsing="false" text="12" />
+                  <MenuItem mnemonicParsing="false" text="13" />
+                  <MenuItem mnemonicParsing="false" text="14" />
+                  <MenuItem mnemonicParsing="false" text="15" />
+                  <MenuItem mnemonicParsing="false" text="16" />
+                  <MenuItem mnemonicParsing="false" text="17" />
+                  <MenuItem mnemonicParsing="false" text="18" />
+                  <MenuItem mnemonicParsing="false" text="19" />
+                  <MenuItem mnemonicParsing="false" text="20" />
+                  <MenuItem mnemonicParsing="false" text="21" />
+                  <MenuItem mnemonicParsing="false" text="22" />
+                  <MenuItem mnemonicParsing="false" text="23" />
+                  <MenuItem mnemonicParsing="false" text="24" />
+                  <MenuItem mnemonicParsing="false" text="25" />
+                  <MenuItem mnemonicParsing="false" text="26" />
+                  <MenuItem mnemonicParsing="false" text="27" />
+                  <MenuItem mnemonicParsing="false" text="28" />
+                  <MenuItem mnemonicParsing="false" text="29" />
+                  <MenuItem mnemonicParsing="false" text="30" />
+                  <MenuItem mnemonicParsing="false" text="31" />
+                  <MenuItem mnemonicParsing="false" text="32" />
+                  <MenuItem mnemonicParsing="false" text="33" />
+                  <MenuItem mnemonicParsing="false" text="34" />
+                  <MenuItem mnemonicParsing="false" text="35" />
+                  <MenuItem mnemonicParsing="false" text="36" />
+                  <MenuItem mnemonicParsing="false" text="37" />
+                  <MenuItem mnemonicParsing="false" text="38" />
+                  <MenuItem mnemonicParsing="false" text="39" />
+                  <MenuItem mnemonicParsing="false" text="40" />
+                  <MenuItem mnemonicParsing="false" text="41" />
+                  <MenuItem mnemonicParsing="false" text="42" />
+                  <MenuItem mnemonicParsing="false" text="43" />
+                  <MenuItem mnemonicParsing="false" text="44" />
+                  <MenuItem mnemonicParsing="false" text="45" />
+                  <MenuItem mnemonicParsing="false" text="46" />
+                  <MenuItem mnemonicParsing="false" text="47" />
+                  <MenuItem mnemonicParsing="false" text="48" />
+                  <MenuItem mnemonicParsing="false" text="49" />
+                  <MenuItem mnemonicParsing="false" text="50" />
+                  <MenuItem mnemonicParsing="false" text="51" />
+                  <MenuItem mnemonicParsing="false" text="52" />
+                  <MenuItem mnemonicParsing="false" text="53" />
+                  <MenuItem mnemonicParsing="false" text="54" />
+                  <MenuItem mnemonicParsing="false" text="55" />
+                  <MenuItem mnemonicParsing="false" text="56" />
+                  <MenuItem mnemonicParsing="false" text="57" />
+                  <MenuItem mnemonicParsing="false" text="58" />
+                  <MenuItem mnemonicParsing="false" text="59" />
+                  <MenuItem mnemonicParsing="false" text="60" />
+               </items>
+            </MenuButton>
             <Text layoutX="113.0" layoutY="582.0" strokeType="OUTSIDE" strokeWidth="0.0" text="좌석">
                <font>
                   <Font name="LG Smart UI Light" size="20.0" />
@@ -49,23 +179,13 @@
                   <Font name="LG Smart UI Bold" size="15.0" />
                </font>
             </Text>
-            <Button layoutX="752.0" layoutY="26.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="등록하기" />
+            <Button layoutX="702.0" layoutY="830.0" mnemonicParsing="false" onAction="#addMovie" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #dddddd; -fx-border-radius: 0;" text="등록하기" />
             <Text layoutX="472.0" layoutY="754.0" strokeType="OUTSIDE" strokeWidth="0.0" text="종료시간">
                <font>
                   <Font name="LG Smart UI Light" size="20.0" />
                </font>
             </Text>
             <TextField fx:id="tf_start_time" layoutX="472.0" layoutY="687.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
-            <TableView layoutX="20.0" layoutY="143.0" prefHeight="377.0" prefWidth="870.0">
-              <columns>
-                <TableColumn prefWidth="84.0" text="상영관" />
-                <TableColumn prefWidth="112.0" text="좌석" />
-                  <TableColumn prefWidth="147.0" text="가격" />
-                  <TableColumn prefWidth="165.0" text="날짜" />
-                  <TableColumn prefWidth="125.0" text="시작시간" />
-                  <TableColumn prefWidth="109.0" text="종료시간" />
-              </columns>
-            </TableView>
             <Text layoutX="111.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영관">
                <font>
                   <Font name="LG Smart UI Light" size="20.0" />
@@ -73,31 +193,6 @@
             </Text>
             <TextField fx:id="tf_seat1" layoutX="108.0" layoutY="689.0" prefHeight="35.0" prefWidth="330.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0; -fx-border-color: #dddddd; -fx-border-radius: 0;" />
             <Button layoutX="111.0" layoutY="608.0" mnemonicParsing="false" text="좌석 선택" />
-            <MenuButton fx:id="mb_select_theater" layoutX="20.0" layoutY="96.0" mnemonicParsing="false" text="영화관 선택">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-            </MenuButton>
-            <MenuButton fx:id="mb_select_screen" layoutX="140.0" layoutY="96.0" mnemonicParsing="false" text="상영관 선택">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
-            <Button fx:id="btn_search_rsv" layoutX="774.0" layoutY="96.0" mnemonicParsing="false" text="예매내역 검색하기" />
-            <MenuButton fx:id="mb_select_movie" layoutX="260.0" layoutY="96.0" mnemonicParsing="false" text="영화선택">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
-            <MenuButton fx:id="mb_start_time" layoutX="359.0" layoutY="96.0" mnemonicParsing="false" text="시작시간 선택">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
          </children>
       </AnchorPane>
    </children>
