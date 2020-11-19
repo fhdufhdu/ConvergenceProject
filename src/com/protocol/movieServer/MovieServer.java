@@ -128,20 +128,14 @@ public class MovieServer extends Thread
 									Iterator<ScreenDTO> tIter = tlist.iterator();
 									ScreenDTO sDto;
 									
-									if (tIter != null)
+									if(tDao.)
+									while (tIter.hasNext())
 									{
-										while (tIter.hasNext())
-										{
-											sDto = tIter.next();
-											if (tIter.hasNext())
-												writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/0");
-											else
-												writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/1");
-										}
-									}
-									else
-									{
-										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_VIEW + "/3");
+										sDto = tIter.next();
+										if (tIter.hasNext())
+											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/0");
+										else
+											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/1");
 									}
 									break;
 								}
