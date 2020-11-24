@@ -107,10 +107,7 @@ public class ScreenManage
 						case "1":
 						{
 							// 값 추가 후 각 테이블 및 리스트 초기화
-							screen_list.clear();
-							tv_screen.getItems().clear();
 							initList();
-							tv_screen.setItems(screen_list);
 							
 							// text field 초기화
 							clearText();
@@ -118,7 +115,7 @@ public class ScreenManage
 						}
 						case "2":
 						{
-							t_result.setText("상영관 등록 실패!");
+							mainGUI.alert("오류", "상영관 등록 실패!");
 							return;
 						}
 					}
@@ -128,7 +125,7 @@ public class ScreenManage
 		catch (DAOException e)
 		{
 			// 값의 중복 발생시
-			t_result.setText(err_dao);
+			mainGUI.alert("수정오류", err_dao);
 			e.printStackTrace();
 		}
 		catch (SQLException e)
@@ -139,7 +136,7 @@ public class ScreenManage
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
-			t_result.setText(err_type);
+			mainGUI.alert("수정오류", err_type);
 			e.printStackTrace();
 		}
 	}
@@ -152,7 +149,7 @@ public class ScreenManage
 			// 테이블 값이 선택되어 있는지 확인
 			if (tv_screen.getSelectionModel().isEmpty())
 			{
-				alert("수정오류", "수정할 데이터를 선택해주세요");
+				mainGUI.alert("수정오류", "수정할 데이터를 선택해주세요");
 				return;
 			}
 			
@@ -177,17 +174,14 @@ public class ScreenManage
 					{
 						case "1":
 						{
-							screen_list.clear();
-							tv_screen.getItems().clear();
 							initList();
-							tv_screen.setItems(screen_list);
 							
 							clearText();
 							return;
 						}
 						case "2":
 						{
-							t_result.setText("상영관 수정 실패!");
+							mainGUI.alert("오류", "상영관 수정 실패");
 							return;
 						}
 					}
@@ -197,7 +191,7 @@ public class ScreenManage
 		catch (DAOException e)
 		{
 			// 값의 중복 발생시
-			t_result.setText(err_dao);
+			mainGUI.alert("수정오류", err_dao);
 			e.printStackTrace();
 		}
 		catch (SQLException e)
@@ -208,7 +202,7 @@ public class ScreenManage
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
-			t_result.setText(err_type);
+			mainGUI.alert("수정오류", err_type);
 			e.printStackTrace();
 		}
 	}
@@ -226,12 +220,12 @@ public class ScreenManage
 		{
 			if (tv_screen.getSelectionModel().isEmpty())
 			{
-				alert("삭제오류", "삭제할 데이터를 선택해주세요");
+				mainGUI.alert("삭제오류", "삭제할 데이터를 선택해주세요");
 				return;
 			}
 			
 			// 삭제할 것인지 재 확인
-			ButtonType btnType = confirm("삭제확인", "정말로 삭제하시겠습니까?");
+			ButtonType btnType = mainGUI.confirm("삭제확인", "정말로 삭제하시겠습니까?");
 			if (btnType != ButtonType.OK)
 			{
 				return;
@@ -255,19 +249,15 @@ public class ScreenManage
 					{
 						case "1":
 						{
-							t_result.setText("삭제되었습니다");
-							
-							screen_list.clear();
-							tv_screen.getItems().clear();
+							mainGUI.alert("삭제완료", "삭제되었습니다");
 							initList();
-							tv_screen.setItems(screen_list);
 							
 							clearText();
 							return;
 						}
 						case "2":
 						{
-							t_result.setText("상영관 삭제 실패!");
+							mainGUI.alert("오류", "상영관 삭제 실패!");
 							return;
 						}
 					}
@@ -277,7 +267,7 @@ public class ScreenManage
 		catch (DAOException e)
 		{
 			// 값의 중복 발생시
-			t_result.setText(err_dao);
+			mainGUI.alert("수정오류", err_dao);
 			e.printStackTrace();
 		}
 		catch (SQLException e)
@@ -288,7 +278,7 @@ public class ScreenManage
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
-			t_result.setText(err_type);
+			mainGUI.alert("수정오류", err_type);
 			e.printStackTrace();
 		}
 	}
@@ -298,6 +288,8 @@ public class ScreenManage
 	{
 		try
 		{
+			screen_list.clear();
+			
 			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_SCREEN_VIEW + "/" + theater.getId());
 			
 			while (true)
@@ -334,12 +326,12 @@ public class ScreenManage
 						}
 						case "2":
 						{
-							t_result.setText("상영관 리스트가 없습니다.");
+							mainGUI.alert("오류", "상영관 리스트가 없습니다");
 							return;
 						}
 						case "3":
 						{
-							t_result.setText("상영관 리스트 요청 실패했습니다.");
+							mainGUI.alert("오류", "상영관 리스트 요청 실패했습니다");
 							return;
 						}
 					}
@@ -348,7 +340,7 @@ public class ScreenManage
 		}
 		catch (Exception e)
 		{
-			t_result.setText("상영관 리스트 요청 실패했습니다.");
+			mainGUI.alert("오류", "상영관 리스트 요청 실패했습니다.");
 			e.printStackTrace();
 		}
 	}
@@ -406,25 +398,4 @@ public class ScreenManage
 		tf_col.clear();
 		t_result.setText("");
 	}
-	
-	private void alert(String head, String msg)
-	{
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("경고");
-		alert.setHeaderText(head);
-		alert.setContentText(msg);
-		
-		alert.showAndWait(); // Alert창 보여주기
-	}
-	
-	private ButtonType confirm(String head, String msg)
-	{
-		Alert confirm = new Alert(AlertType.CONFIRMATION);
-		confirm.setTitle("확인");
-		confirm.setHeaderText(head);
-		confirm.setContentText(msg);
-		return confirm.showAndWait().get();
-		
-	}
-	
 }
