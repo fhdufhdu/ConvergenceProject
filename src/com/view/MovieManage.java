@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import com.db.model.DAOException;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.main.mainGUI;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -22,8 +23,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -144,6 +143,7 @@ public class MovieManage implements Initializable
 					table_row_data = tv_movie.getSelectionModel().getSelectedItem();
 				}
 			});
+			
 		}
 		catch (Exception e)
 		{
@@ -199,7 +199,7 @@ public class MovieManage implements Initializable
 		{
 			if (tv_movie.getSelectionModel().isEmpty())
 			{
-				alert("오류", "데이터를 선택해주세요");
+				mainGUI.alert("오류", "데이터를 선택해주세요");
 				return;
 			}
 			FXMLLoader loader = new FXMLLoader(TheaterManage.class.getResource("./xml/admin_sub_page/movie_change.fxml"));
@@ -211,7 +211,7 @@ public class MovieManage implements Initializable
 		}
 		catch (Exception e)
 		{
-			alert("오류", "창 로딩 실패");
+			mainGUI.alert("오류", "창 로딩 실패");
 			e.printStackTrace();
 		}
 	}
@@ -223,12 +223,12 @@ public class MovieManage implements Initializable
 		{
 			if (tv_movie.getSelectionModel().isEmpty())
 			{
-				alert("삭제오류", "삭제할 데이터를 선택해주세요");
+				mainGUI.alert("삭제오류", "삭제할 데이터를 선택해주세요");
 				return;
 			}
 			
 			// 삭제할 것인지 재 확인
-			ButtonType btnType = confirm("삭제확인", "정말로 삭제하시겠습니까?");
+			ButtonType btnType = mainGUI.confirm("삭제확인", "정말로 삭제하시겠습니까?");
 			if (btnType != ButtonType.OK)
 			{
 				return;
@@ -280,24 +280,4 @@ public class MovieManage implements Initializable
 			
 		}
 	}
-	
-	private void alert(String head, String msg)
-	{
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("경고");
-		alert.setHeaderText(head);
-		alert.setContentText(msg);
-		
-		alert.showAndWait(); // Alert창 보여주기
-	}
-	
-	private ButtonType confirm(String head, String msg)
-	{
-		Alert confirm = new Alert(AlertType.CONFIRMATION);
-		confirm.setTitle("확인");
-		confirm.setHeaderText(head);
-		confirm.setContentText(msg);
-		return confirm.showAndWait().get();
-	}
-	
 }
