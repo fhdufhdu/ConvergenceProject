@@ -249,6 +249,7 @@ public class RsvManage implements Initializable
         // 필드에 값이 없다면 리스트뷰 감추기
         if (tf_member_id.getText().equals(""))
         {
+            selectedMem = null;
             lv_member.getItems().clear();
             lv_member.setMaxHeight(0);
             return;
@@ -281,6 +282,7 @@ public class RsvManage implements Initializable
         // 필드에 값이 없다면 리스트뷰 감추기
         if (tf_movie_name.getText().equals(""))
         {
+            selectedMov = null;
             lv_movie.getItems().clear();
             lv_movie.setMaxHeight(0);
             return;
@@ -313,6 +315,7 @@ public class RsvManage implements Initializable
         // 필드에 값이 없다면 리스트뷰 감추기
         if (tf_theater_name.getText().equals(""))
         {
+            selectedThea = null;
             lv_theater.getItems().clear();
             lv_theater.setMaxHeight(0);
             return;
