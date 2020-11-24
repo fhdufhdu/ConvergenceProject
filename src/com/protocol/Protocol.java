@@ -12,9 +12,11 @@ public class Protocol
 	public static final String PT_REQ_RENEWAL = "6"; // 갱신 요청
 	public static final String PT_RES_RENEWAL = "7"; // 갱신 요청 응답
 	
-	// 프로토콜 타입의 코드에 관한 변수
+	// 회원가입
 	public static final String CS_REQ_SIGNUP = "6-0"; // 회원가입 요청
 	public static final String SC_RES_SIGNUP = "7-0"; // 회원가입 요청 응답
+	
+	// 영화관 관리
 	public static final String CS_REQ_THEATER_VIEW = "4-0"; // 영화관 리스트 요청
 	public static final String SC_RES_THEATER_VIEW = "5-0"; // 영화관 리스트 요청 응답
 	public static final String CS_REQ_THEATER_ADD = "6-4"; // 영화관 등록 요청
@@ -23,6 +25,8 @@ public class Protocol
 	public static final String SC_RES_THEATER_DELETE = "7-A"; // 영화관 삭제 요청 응답
 	public static final String CS_REQ_THEATER_CHANGE = "6-6"; // 영화관 수정 요청
 	public static final String SC_RES_THEATER_CHANGE = "7-B"; // 영화관 수정 요청 응답
+	
+	// 상영관 관리
 	public static final String CS_REQ_SCREEN_VIEW = "4-11"; // 상영관 리스트 요청
 	public static final String SC_RES_SCREEN_VIEW = "5-22"; // 상영관 리스트 요청 응답
 	public static final String CS_REQ_SCREEN_ADD = "6-A"; // 상영관 등록 요청
@@ -31,6 +35,8 @@ public class Protocol
 	public static final String SC_RES_SCREEN_CHANGE = "7-16"; // 상영관 수정 요청 응답
 	public static final String CS_REQ_SCREEN_DELETE = "6-C"; // 상영관 삭제 요청
 	public static final String SC_RES_SCREEN_DELETE = "7-18"; // 상영관 삭제 요청
+	
+	// 영화 관리
 	public static final String CS_REQ_MOVIE_VIEW = "4-D"; // 영화 정보 요청
 	public static final String SC_RES_MOVIE_VIEW = "5-1A"; // 영화 정보 요청 읃답
 	public static final String CS_REQ_MOVIE_ADD = "6-D"; // 영화 등록 요청
@@ -39,4 +45,37 @@ public class Protocol
 	public static final String SC_RES_MOVIE_CHANGE = "7-1C"; // 영화 수정 요청 응답
 	public static final String CS_REQ_MOVIE_DELETE = "6-F"; // 영화 삭제 요청
 	public static final String SC_RES_MOVIE_DELETE = "7-1E"; // 영화 삭제 요청 응답
+	
+	// 예매정보 관리
+	// 관리자가 등록하는 예매정보 필요
+	public static final String CS_REQ_ADMINRESERVATION_VIEW = "4-F"; // 관리자 예매 내역 요청
+	public static final String SC_RES_ADMINRESERVATION_VIEW = "5-1E"; // 관리자 예매 내역 요청 응답
+	
+	// 상영시간표 관리
+	public static final String CS_REQ_ADMINTIMETABLE_VIEW = "4-10"; // 관리자 상영시간표 요청
+	public static final String SC_RES_ADMINTIMETABLE_VIEW = "5-20"; // 관리자 상영시간표 요청 응답
+	public static final String CS_REQ_TIMETABLE_ADD = "6-7"; // 상영시간표 등록 요청
+	public static final String SC_RES_TIMETABLE_ADD = "7-E"; // 상영시간표 등록 요청 응답
+	public static final String CS_REQ_TIMETABLE_CHANGE = "6-8"; // 상영시간표 수정 요청
+	public static final String SC_RES_TIMETABLE_CHANGE = "7-10"; // 상영시간표 수정 요청 응답
+	public static final String CS_REQ_TIMETABLE_DELETE = "6-9"; // 상영시간표 삭제 요청
+	public static final String SC_RES_TIMETALBE_DELETE = "7-12"; // 상영시간표 삭제 요청 응답
+	
+	// 통계정보
+	public static final String CS_REQ_STATISTICS_VIEW = "4-9"; // 통계정보 요청
+	public static final String SC_RES_STATISTICS_VIEW = "5-12"; // 통계정보 요청 응답
+	
+	// 수입계좌 관리
+	public static final String CS_REQ_ACCOUNT_VIEW = "4-B"; // 수입계좌 정보 요청
+	public static final String SC_RES_ACCOUNT_VIEW = "5-16"; // 수입계좌 정보 요청 응답
+	public static final String CS_REQ_ACCOUNT_CHANGE = "6-12"; // 수입계좌 수정 요청
+	public static final String SC_RES_ACCOUNT_CHANGE = "7-24"; // 수입계좌 수정 요청 응답
+	
+	// 가격정보 수정
+	public static final String CS_REQ_PRICE_VIEW = "4-C"; // 시간대별 가격 정보 요청
+	public static final String SC_RES_PRICE_VIEW = "5-18"; // 시간대별 가격 정보 요청 승인
+	public static final String CS_REQ_PRIVE_CHANGE = "6-13"; // 시간대별 가격 정보 요청
+	public static final String SC_RES_PRICE_CHANGE = "7-26"; // 시간대별 가격 정보 요청 승인
+	
+	
 }
