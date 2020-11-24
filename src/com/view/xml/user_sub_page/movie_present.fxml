@@ -15,16 +15,17 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresent">
    <children>
-      <Text layoutX="60.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영예정작" textAlignment="CENTER" wrappingWidth="189.0">
+      <Text layoutX="57.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="현재상영작" textAlignment="CENTER" wrappingWidth="189.0">
          <font>
             <Font name="LG Smart UI Bold" size="30.0" />
          </font>
       </Text>
       <ImageView fitHeight="174.0" fitWidth="189.0" layoutX="104.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true" />
-      <GridPane layoutX="83.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="469.0" prefHeight="487.0" prefWidth="555.0">
+      <GridPane layoutX="81.0" layoutY="94.0" maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="700.0" prefHeight="614.0" prefWidth="708.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="107.0" />
-          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="447.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="155.0" />
+          <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="447.0" minWidth="10.0" prefWidth="265.0" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="469.0" minWidth="10.0" prefWidth="288.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="151.0" vgrow="SOMETIMES" />
@@ -33,43 +34,46 @@
           <RowConstraints maxHeight="153.0" minHeight="0.0" prefHeight="151.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="149.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fitHeight="149.0" fitWidth="191.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../Desktop/picture/2.PNG" />
+               </image>
+            </ImageView>
+            <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1">
+               <children>
+                  <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
+                  <Button layoutX="11.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
+                  <TextField layoutX="10.0" layoutY="25.0" prefHeight="47.0" prefWidth="176.0" promptText="영화제목" />
+               </children>
+            </AnchorPane>
+            <ImageView fitHeight="149.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../../../../../../../Desktop/picture/movieee.PNG" />
                </image>
             </ImageView>
             <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
-                  <Button layoutX="30.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
-                  <TextField layoutX="29.0" layoutY="28.0" prefHeight="47.0" prefWidth="200.0" promptText="영화제목" />
+                  <Button layoutX="13.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
+                  <TextField layoutX="11.0" layoutY="25.0" prefHeight="47.0" prefWidth="183.0" promptText="영화제목" />
                </children>
             </AnchorPane>
             <ImageView fitHeight="149.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
-                  <Image url="@../../../../../../../Desktop/picture/movieee.PNG" />
+                  <Image url="@../../../../../../../Desktop/picture/캡처.PNG" />
                </image>
             </ImageView>
             <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
-                  <Button layoutX="30.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
-                  <TextField layoutX="29.0" layoutY="28.0" prefHeight="47.0" prefWidth="200.0" promptText="영화제목" />
-               </children>
-            </AnchorPane>
-            <ImageView fitHeight="149.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
-               <image>
-                  <Image url="@../../../../../../../Desktop/picture/캡처.PNG" />
-               </image>
-            </ImageView>
-            <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <children>
-                  <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
-                  <Button layoutX="30.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
-                  <TextField layoutX="29.0" layoutY="28.0" prefHeight="47.0" prefWidth="200.0" promptText="영화제목" />
+                  <Button layoutX="15.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
+                  <TextField layoutX="13.0" layoutY="26.0" prefHeight="47.0" prefWidth="200.0" promptText="영화제목" />
                </children>
             </AnchorPane>
          </children>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
       </GridPane>
    </children>
    <padding>
