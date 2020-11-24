@@ -3,7 +3,7 @@ package com.view;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 
 public class MovieTableManage {
 
-	  	@FXML
+	 @FXML
 	    private BorderPane bp_parent;
 
 	    @FXML
@@ -29,22 +29,13 @@ public class MovieTableManage {
 	    private TableColumn<?, ?> tc_movie;
 
 	    @FXML
-	    private TableColumn<?, ?> tc_date;
+	    private TableColumn<?, ?> tc_start_time;
 
 	    @FXML
-	    private TableColumn<?, ?> tc_screen_time;
+	    private TableColumn<?, ?> tc_end_time;
 
 	    @FXML
 	    private Text t_result;
-
-	    @FXML
-	    private TextField tf_theater;
-
-	    @FXML
-	    private TextField tf_screen;
-
-	    @FXML
-	    private TextField tf_movie;
 
 	    @FXML
 	    private Button btn_add_movie_table;
@@ -59,10 +50,19 @@ public class MovieTableManage {
 	    private Button btn_clear;
 
 	    @FXML
-	    private TextField tf_scrren_time;
+	    private MenuButton mb_theater;
 
 	    @FXML
-	    private DatePicker dp_movie;
+	    private MenuButton mb_screen;
+
+	    @FXML
+	    private TextField tf_movie;
+
+	    @FXML
+	    private TextField tf_start_time;
+
+	    @FXML
+	    private TextField tf_end_time;
 
 	    @FXML
 	    void addMovieTable(ActionEvent event) {

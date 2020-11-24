@@ -54,12 +54,12 @@
       <Button fx:id="btn_image" layoutX="146.0" layoutY="146.0" mnemonicParsing="false" onAction="#getPosterPath" text="이미지 파일 경로" />
       <Hyperlink fx:id="link_trailer" layoutX="121.0" layoutY="559.0" onAction="#getTrailerPath" text="&quot;트레일러 링크&quot;" />
       <Button fx:id="btn_image2" layoutX="124.0" layoutY="624.0" mnemonicParsing="false" onAction="#getPosterPath2" text="이미지 파일 경로" />
-      <Button fx:id="btn_image3" layoutX="471.0" layoutY="623.0" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 파일 경로" />
-      <Button fx:id="btn_image4" layoutX="298.0" layoutY="623.0" mnemonicParsing="false" onAction="#getPosterPath4" text="이미지 파일 경로" />
-      <TextField layoutX="318.0" layoutY="53.0" prefHeight="47.0" prefWidth="231.0" promptText="제목" />
-      <TextField layoutX="373.0" layoutY="116.0" prefHeight="29.0" prefWidth="135.0" promptText="개봉일자" />
-      <TextField layoutX="355.0" layoutY="161.0" prefHeight="29.0" prefWidth="135.0" promptText="감독" />
-      <TextField layoutX="355.0" layoutY="209.0" prefHeight="29.0" prefWidth="268.0" promptText="출연배우" />
+      <Button fx:id="btn_image3" layoutX="318.0" layoutY="623.0" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 파일 경로" />
+      <Button fx:id="btn_image4" layoutX="509.0" layoutY="623.0" mnemonicParsing="false" onAction="#getPosterPath4" text="이미지 파일 경로" />
+      <TextField fx:id="tf_movie" layoutX="318.0" layoutY="53.0" prefHeight="47.0" prefWidth="231.0" promptText="제목" />
+      <TextField fx:id="tf_start_date" layoutX="373.0" layoutY="116.0" prefHeight="29.0" prefWidth="135.0" promptText="개봉일자" />
+      <TextField fx:id="tf_director" layoutX="355.0" layoutY="161.0" prefHeight="29.0" prefWidth="135.0" promptText="감독" />
+      <TextField fx:id="tf_actor" layoutX="355.0" layoutY="209.0" prefHeight="29.0" prefWidth="268.0" promptText="출연배우" />
       <Text layoutX="318.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일">
          <font>
             <Font size="17.0" />
@@ -75,7 +75,7 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Button layoutX="658.0" layoutY="207.0" mnemonicParsing="false" text="예매하기" />
+      <Button fx:id="btn_reservation" layoutX="658.0" layoutY="207.0" mnemonicParsing="false" onAction="#getReservation" text="예매하기" />
    </children>
    <padding>
       <Insets bottom="20.0" />
