@@ -16,12 +16,12 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Text layoutX="92.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매 정보">
+      <Text layoutX="92.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매 정보">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
-      <TableView fx:id="tv_reservation" layoutX="92.0" layoutY="100.0" prefHeight="200.0" prefWidth="728.0">
+      <TableView fx:id="tv_reservation" layoutX="92.0" layoutY="82.0" prefHeight="200.0" prefWidth="728.0">
         <columns>
           <TableColumn fx:id="tc_theater" prefWidth="120.0" text="영화관" />
           <TableColumn fx:id="tc_movie" prefWidth="186.0" text="영화" />
@@ -32,16 +32,25 @@
             <TableColumn fx:id="tc_price" minWidth="0.0" prefWidth="100.0" text="가격" />
         </columns>
       </TableView>
-      <Text layoutX="92.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="신용카드 정보">
+      <Text layoutX="164.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="은행">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
-      <TextField fx:id="tf_card_number" layoutX="92.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <TextField fx:id="tf_card_number2" layoutX="201.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <TextField fx:id="tf_card_number3" layoutX="310.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <TextField fx:id="tf_card_number4" layoutX="419.0" layoutY="355.0" prefHeight="29.0" prefWidth="100.0" />
-      <Button fx:id="btn_payment" layoutX="740.0" layoutY="384.0" mnemonicParsing="false" onAction="#getPayment" text="결제하기" />
+      <TextField fx:id="tf_bank" layoutX="208.0" layoutY="303.0" prefHeight="29.0" prefWidth="130.0" />
+      <TextField fx:id="tf_account_num" layoutX="208.0" layoutY="338.0" prefHeight="29.0" prefWidth="191.0" />
+      <Button fx:id="btn_payment" layoutX="740.0" layoutY="377.0" mnemonicParsing="false" onAction="#getPayment" text="결제하기" />
+      <Text layoutX="130.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="계좌번호" wrappingWidth="73.37891787290573">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="96.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" text="계좌비밀번호" wrappingWidth="109.37891787290573">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="tf_secret_num" layoutX="208.0" layoutY="377.0" prefHeight="29.0" prefWidth="100.0" />
    </children>
    <padding>
       <Insets bottom="20.0" />

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.ReservationCancel">
    <children>
       <Text layoutX="64.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="예매 관리" textAlignment="CENTER" wrappingWidth="150.0">
          <font>
@@ -17,12 +17,12 @@
       </Text>
       <TableView fx:id="tv_reservation" layoutX="87.0" layoutY="111.0" prefHeight="200.0" prefWidth="770.0">
         <columns>
-          <TableColumn fx:id="tc_theater" prefWidth="121.0" text="영화관" />
-          <TableColumn fx:id="tc_movie" minWidth="0.0" prefWidth="172.0" text="영화" />
-            <TableColumn fx:id="tc_screen" prefWidth="98.0" text="상영관" />
-            <TableColumn fx:id="tc_date" prefWidth="105.0" text="날짜" />
-            <TableColumn fx:id="tc_movie_time" prefWidth="198.0" text="상영시간" />
-            <TableColumn fx:id="tc_seat" prefWidth="75.0" text="좌석" />
+          <TableColumn fx:id="tc_movie" prefWidth="203.0" text="영화" />
+          <TableColumn fx:id="tc_theater" minWidth="0.0" prefWidth="152.0" text="영화관" />
+            <TableColumn fx:id="tc_screen" prefWidth="97.0" text="상영관" />
+            <TableColumn fx:id="tc_date" prefWidth="118.0" text="날짜" />
+            <TableColumn fx:id="tc_movie_time" prefWidth="118.0" text="상영시간" />
+            <TableColumn fx:id="tc_seat" prefWidth="81.0" text="좌석" />
         </columns>
       </TableView>
       <Button fx:id="btn_cancel" layoutX="807.0" layoutY="333.0" mnemonicParsing="false" onAction="#getCancel" text="취소" />

@@ -486,9 +486,10 @@ public class TheaterManage implements Initializable
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_ADD))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_THEATER_ADD))
 				{
 					String result = packetArr[2];
 					switch (result)
@@ -543,9 +544,10 @@ public class TheaterManage implements Initializable
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_CHANGE))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_THEATER_CHANGE))
 				{
 					String result = packetArr[2];
 					switch (result)
@@ -607,9 +609,10 @@ public class TheaterManage implements Initializable
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_DELETE))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_THEATER_DELETE))
 				{
 					String result = packetArr[2];
 					switch (result)
@@ -701,24 +704,32 @@ public class TheaterManage implements Initializable
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
 				{
 					String result = packetArr[2];
-					String id = packetArr[3];
-					String name = packetArr[4];
-					String address = packetArr[5];
-					String screen = packetArr[6];
-					String seat = packetArr[7];
-					String last = packetArr[8];
+					
 					switch (result)
 					{
 						case "1":
 						{
-							theater_list.add(new TheaterDTO(id, name, address, Integer.parseInt(screen), Integer.parseInt(seat)));
-							break;
+							String theaterList = packetArr[3];
+							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("/"); // 영화관 별 정보 분할
+								String id = infoArr[0];
+								String name = infoArr[1];
+								String address = infoArr[2];
+								String screen = infoArr[3];
+								String seat = infoArr[4];
+								
+								theater_list.add(new TheaterDTO(id, name, address, Integer.parseInt(screen), Integer.parseInt(seat)));
+							}
+							return;
 						}
 						case "2":
 						{
@@ -726,8 +737,6 @@ public class TheaterManage implements Initializable
 							return;
 						}
 					}
-					if (last.equals("1"))
-						break;
 				}
 			}
 		}
