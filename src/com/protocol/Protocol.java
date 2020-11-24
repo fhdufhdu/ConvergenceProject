@@ -31,4 +31,12 @@ public class Protocol
 	public static final String SC_RES_SCREEN_CHANGE = "7-16"; // 상영관 수정 요청 응답
 	public static final String CS_REQ_SCREEN_DELETE = "6-C"; // 상영관 삭제 요청
 	public static final String SC_RES_SCREEN_DELETE = "7-18"; // 상영관 삭제 요청
+	public static final String CS_REQ_MOVIE_VIEW = "4-D"; // 영화 정보 요청
+	public static final String SC_RES_MOVIE_VIEW = "5-1A"; // 영화 정보 요청 읃답
+	public static final String CS_REQ_MOVIE_ADD = "6-D"; // 영화 등록 요청
+	public static final String SC_RES_MOVIE_ADD = "7-1A"; // 영화 등록 요청 응답
+	public static final String CS_REQ_MOVIE_CHANGE = "6-E"; // 영화 수정 요청
+	public static final String SC_RES_MOVIE_CHANGE = "7-1C"; // 영화 수정 요청 응답
+	public static final String CS_REQ_MOVIE_DELETE = "6-F"; // 영화 삭제 요청
+	public static final String SC_RES_MOVIE_DELETE = "7-1E"; // 영화 삭제 요청 응답
 }
