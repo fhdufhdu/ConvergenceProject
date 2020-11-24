@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 
 public class MovieTableManage {
 
-	  @FXML
+	  	@FXML
 	    private BorderPane bp_parent;
 
 	    @FXML
