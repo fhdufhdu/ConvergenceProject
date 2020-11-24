@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,63 +15,81 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresentDetail">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieFutureDetail">
    <children>
-      <Text layoutX="395.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
+      <Text layoutX="405.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <TabPane fx:id="tabpane_detail" layoutX="88.0" layoutY="372.0" prefHeight="379.0" prefWidth="469.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabpane_detail" layoutX="121.0" layoutY="253.0" prefHeight="278.0" prefWidth="618.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="tab_plot" text="줄거리">
             <content>
               <AnchorPane fx:id="tab_plot1" minHeight="0.0" minWidth="0.0" prefHeight="225.0" prefWidth="350.0">
                      <children>
-                        <TextArea fx:id="ta_plot" layoutX="14.0" layoutY="7.0" prefHeight="320.0" prefWidth="444.0" text="마이 드림 이즈 커리어우먼”&#10;1995년, 토익 600점만 넘기면 대리가 될 수 있다!&#10;&#10;입사 8년차 동기인 말단 여직원들이 ‘삼진그룹 &#10;영어토익반’에 모인다!" />
+                        <TextArea fx:id="ta_plot" layoutX="14.0" layoutY="7.0" prefHeight="223.0" prefWidth="444.0" text="마이 드림 이즈 커리어우먼”&#10;1995년, 토익 600점만 넘기면 대리가 될 수 있다!&#10;&#10;입사 8년차 동기인 말단 여직원들이 ‘삼진그룹 &#10;영어토익반’에 모인다!" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tab_review" text="평점&amp;관람평(n개)">
+          <Tab fx:id="tap_review" text="평점&amp;관람평(n개)">
             <content>
-              <AnchorPane fx:id="tab_review1" minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="433.0">
+              <AnchorPane fx:id="tap_review1" minHeight="0.0" minWidth="0.0" prefHeight="258.0" prefWidth="469.0">
                      <children>
-                        <Text layoutX="19.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="별점:" wrappingWidth="45.000002950429916" />
-                        <TextField fx:id="tf_review_score" layoutX="58.0" layoutY="18.0" prefHeight="29.0" prefWidth="73.0" promptText="0~10" />
-                        <TextArea fx:id="ta_review" layoutX="58.0" layoutY="55.0" prefHeight="150.0" prefWidth="321.0" />
-                        <Text layoutX="4.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="관람평:" wrappingWidth="59.99999773129821" />
-                        <Button fx:id="btn_add" layoutX="390.0" layoutY="176.0" mnemonicParsing="false" onAction="#addReview" text="등록" />
-                        <TableView fx:id="tv_review" layoutX="4.0" layoutY="218.0" prefHeight="117.0" prefWidth="458.0">
+                        <TableView fx:id="tv_review" layoutX="6.0" layoutY="78.0" prefHeight="152.0" prefWidth="607.0">
                           <columns>
-                            <TableColumn fx:id="tc_client" prefWidth="100.0" text="작성자" />
-                            <TableColumn fx:id="tc_review_score" prefWidth="50.0" text="별점" />
-                              <TableColumn fx:id="tc_review_date" prefWidth="94.0" text="작성일" />
-                              <TableColumn fx:id="tc_review" prefWidth="317.0" text="리뷰내용" />
+                            <TableColumn fx:id="tc_reviewer" prefWidth="100.0" text="작성자" />
+                            <TableColumn fx:id="tc_review_score" prefWidth="59.0" text="별점" />
+                              <TableColumn fx:id="tc_review_date" prefWidth="85.0" text="작성일" />
+                              <TableColumn fx:id="tc_review" prefWidth="362.0" text="리뷰내용" />
                           </columns>
                         </TableView>
+                        <MenuButton layoutX="14.0" layoutY="25.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="70.0" text="평점">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </MenuButton>
+                        <TextField layoutX="93.0" layoutY="25.0" prefHeight="39.0" prefWidth="424.0" promptText="관람평을 작성하세요" />
+                        <Button layoutX="526.0" layoutY="26.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="88.0" text="관람평 작성">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Text layoutX="625.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
-      <Text layoutX="614.0" layoutY="652.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
-      <Button fx:id="btn_image" layoutX="88.0" layoutY="223.0" mnemonicParsing="false" onAction="#getPosterPath" text="이미지 파일 경로" />
-      <TableView fx:id="tv_movie" layoutX="268.0" layoutY="126.0" prefHeight="200.0" prefWidth="570.0">
-        <columns>
-          <TableColumn fx:id="tc_title" prefWidth="117.0" text="영화제목" />
-          <TableColumn fx:id="tc_actor" prefWidth="83.0" text="출연배우" />
-            <TableColumn fx:id="tc_director" prefWidth="86.0" text="감독" />
-            <TableColumn fx:id="tc_start_date" prefWidth="108.0" text="개봉일" />
-            <TableColumn fx:id="tc_plot" prefWidth="175.0" text="줄거리" />
-        </columns>
-      </TableView>
-      <Hyperlink fx:id="link_trailer" layoutX="696.0" layoutY="633.0" onAction="#getTrailerPath" text="&quot;트레일러 링크&quot;" />
-      <Button fx:id="btn_image2" layoutX="698.0" layoutY="475.0" mnemonicParsing="false" onAction="#getPosterPath2" text="이미지 파일 경로" />
-      <Button fx:id="btn_image3" layoutX="698.0" layoutY="514.0" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 파일 경로" />
-      <Button fx:id="btn_image4" layoutX="698.0" layoutY="554.0" mnemonicParsing="false" onAction="#getPosterPath4" text="이미지 파일 경로" />
+      <Text layoutX="124.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷" />
+      <Text layoutX="124.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="트레일러" />
+      <Button fx:id="btn_image" layoutX="146.0" layoutY="146.0" mnemonicParsing="false" onAction="#getPosterPath" text="이미지 파일 경로" />
+      <Hyperlink fx:id="link_trailer" layoutX="121.0" layoutY="559.0" onAction="#getTrailerPath" text="&quot;트레일러 링크&quot;" />
+      <Button fx:id="btn_image2" layoutX="124.0" layoutY="624.0" mnemonicParsing="false" onAction="#getPosterPath2" text="이미지 파일 경로" />
+      <Button fx:id="btn_image3" layoutX="471.0" layoutY="623.0" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 파일 경로" />
+      <Button fx:id="btn_image4" layoutX="298.0" layoutY="623.0" mnemonicParsing="false" onAction="#getPosterPath4" text="이미지 파일 경로" />
+      <TextField layoutX="318.0" layoutY="53.0" prefHeight="47.0" prefWidth="231.0" promptText="제목" />
+      <TextField layoutX="373.0" layoutY="116.0" prefHeight="29.0" prefWidth="135.0" promptText="개봉일자" />
+      <TextField layoutX="355.0" layoutY="161.0" prefHeight="29.0" prefWidth="135.0" promptText="감독" />
+      <TextField layoutX="355.0" layoutY="209.0" prefHeight="29.0" prefWidth="269.0" promptText="출연배우" />
+      <Text layoutX="318.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="개봉일">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="318.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="감독" wrappingWidth="35.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="318.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="출연" wrappingWidth="34.99999791383743">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Button layoutX="658.0" layoutY="206.0" mnemonicParsing="false" text="예매하기" />
    </children>
    <padding>
       <Insets bottom="20.0" />
