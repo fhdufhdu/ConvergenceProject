@@ -1,5 +1,4 @@
 package com.view;
-//iab
 
 import java.io.File;
 import java.nio.file.Files;
@@ -9,13 +8,12 @@ import java.time.format.DateTimeFormatter;
 import com.db.model.DAOException;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.main.mainGUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -131,7 +129,7 @@ public class MovieChange
             MovieDAO mDao = new MovieDAO();
             mDao.changeMovie(currentMov);
             
-            alert("수정완료", "수정완료 되었습니다!");
+            mainGUI.alert("수정완료", "수정완료 되었습니다!");
             
             FXMLLoader loader = new FXMLLoader(TheaterManage.class.getResource("./xml/admin_sub_page/movie_manage.fxml"));
             Parent root = (Parent) loader.load();
@@ -139,15 +137,15 @@ public class MovieChange
         }
         catch (NumberFormatException e)
         {
-            alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
+            mainGUI.alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
         }
         catch (DAOException e)
         {
-            alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
+            mainGUI.alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
         }
         catch (SQLException e)
         {
-            alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
+            mainGUI.alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
         }
         catch (Exception e)
         {
@@ -211,15 +209,5 @@ public class MovieChange
             e.printStackTrace();
         }
         return null;
-    }
-    
-    private void alert(String head, String msg)
-    {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("경고");
-        alert.setHeaderText(head);
-        alert.setContentText(msg);
-        
-        alert.showAndWait(); // Alert창 보여주기
     }
 }

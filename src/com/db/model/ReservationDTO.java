@@ -1,91 +1,146 @@
 package com.db.model;
 
-public class ReservationDTO extends DTO {
+import java.sql.Timestamp;
+
+public class ReservationDTO extends DTO
+{
     private String id;
-    private String member_id;
-    private String time_table_id;
-    private int screen_row;
-    private int screen_col;
+    private String memberId;
+    private String timeTableId;
+    private int screenRow;
+    private int screenCol;
     private int price; // 자동 결정 되게 하기
-    private String cancel;
-
-    public ReservationDTO(String id, String member_id, String time_table_id, int screen_row, int screen_col, int price,
-            String cancel) {
+    private String type;
+    private Timestamp rsvTime;
+    private String account;
+    private String bank;
+    
+    public ReservationDTO(String id, String memberId, String timeTableId, int screenRow, int screenCol, int price, String type, Timestamp rsvTime, String account, String bank)
+    {
         this.id = id;
-        this.member_id = member_id;
-        this.time_table_id = time_table_id;
-        this.screen_row = screen_row;
-        this.screen_col = screen_col;
+        this.memberId = memberId;
+        this.timeTableId = timeTableId;
+        this.screenRow = screenRow;
+        this.screenCol = screenCol;
         this.price = price;
-        this.cancel = cancel;
+        this.type = type;
+        this.rsvTime = rsvTime;
+        this.account = account;
+        this.bank = bank;
     }
-
-    public ReservationDTO(String member_id, String time_table_id, int screen_row, int screen_col, String cancel) {
-        this.member_id = member_id;
-        this.time_table_id = time_table_id;
-        this.screen_row = screen_row;
-        this.screen_col = screen_col;
-        this.cancel = cancel;
+    
+    public ReservationDTO(String id, String memberId, String timeTableId, int screenRow, int screenCol, int price, String type, String rsvTime, String account, String bank)
+    {
+        this.id = id;
+        this.memberId = memberId;
+        this.timeTableId = timeTableId;
+        this.screenRow = screenRow;
+        this.screenCol = screenCol;
+        this.price = price;
+        this.type = type;
+        this.rsvTime = Timestamp.valueOf(rsvTime);
+        this.account = account;
+        this.bank = bank;
     }
-
-    public ReservationDTO() {
-
-    }
-
-    public String getId() {
+    
+    public String getId()
+    {
         return id;
     }
-
-    public void setId(String id) {
+    
+    public void setId(String id)
+    {
         this.id = id;
     }
-
-    public String getMemberId() {
-        return member_id;
+    
+    public String getMemberId()
+    {
+        return memberId;
     }
-
-    public void setMemberId(String member_id) {
-        this.member_id = member_id;
+    
+    public void setMemberId(String memberId)
+    {
+        this.memberId = memberId;
     }
-
-    public String getTimeTableId() {
-        return time_table_id;
+    
+    public String getTimeTableId()
+    {
+        return timeTableId;
     }
-
-    public void setTimeTableId(String time_table_id) {
-        this.time_table_id = time_table_id;
+    
+    public void setTimeTableId(String timeTableId)
+    {
+        this.timeTableId = timeTableId;
     }
-
-    public int getScreenRow() {
-        return screen_row;
+    
+    public int getScreenRow()
+    {
+        return screenRow;
     }
-
-    public void setScreenRow(int screen_row) {
-        this.screen_row = screen_row;
+    
+    public void setScreenRow(int screenRow)
+    {
+        this.screenRow = screenRow;
     }
-
-    public int getScreenCol() {
-        return screen_col;
+    
+    public int getScreenCol()
+    {
+        return screenCol;
     }
-
-    public void setScreenCol(int screen_col) {
-        this.screen_col = screen_col;
+    
+    public void setScreenCol(int screenCol)
+    {
+        this.screenCol = screenCol;
     }
-
-    public int getPrice() {
+    
+    public int getPrice()
+    {
         return price;
     }
-
-    public void setPrice(int price) {
+    
+    public void setPrice(int price)
+    {
         this.price = price;
     }
-
-    public String getCancel() {
-        return cancel;
+    
+    public String getType()
+    {
+        return type;
     }
-
-    public void setCancel(String cancel) {
-        this.cancel = cancel;
+    
+    public void setType(String type)
+    {
+        this.type = type;
     }
-
+    
+    public Timestamp getRsvTime()
+    {
+        return rsvTime;
+    }
+    
+    public void setRsvTime(Timestamp rsvTime)
+    {
+        this.rsvTime = rsvTime;
+    }
+    
+    public String getAccount()
+    {
+        return account;
+    }
+    
+    public void setAccount(String account)
+    {
+        this.account = account;
+    }
+    
+    public String getBank()
+    {
+        return bank;
+    }
+    
+    public void setBank(String bank)
+    {
+        this.bank = bank;
+    }
+    
 }

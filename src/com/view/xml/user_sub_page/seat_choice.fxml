@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" minHeight="250.0" minWidth="500.0" prefHeight="250.0" prefWidth="50.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.SeatController">
+<AnchorPane fx:id="root" minHeight="250.0" minWidth="500.0" prefHeight="250.0" prefWidth="50.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.SeatController">
    <children>
       <Text layoutX="41.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="좌석 선택">
          <font>
@@ -26,6 +26,6 @@
             <Font name="LG Smart UI Light" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="btn_select" layoutX="403.0" layoutY="71.0" mnemonicParsing="false" onAction="#btn_action" text="선택하기" />
+      <Button fx:id="btn_select" layoutX="403.0" layoutY="71.0" mnemonicParsing="false" onAction="#close" text="선택하기" />
    </children>
 </AnchorPane>

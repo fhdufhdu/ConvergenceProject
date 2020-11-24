@@ -15,6 +15,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class mainGUI extends Application
@@ -100,5 +103,25 @@ public class mainGUI extends Application
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static void alert(String head, String msg)
+	{
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("경고");
+		alert.setHeaderText(head);
+		alert.setContentText(msg);
+		
+		alert.showAndWait(); // Alert창 보여주기
+	}
+	
+	public static ButtonType confirm(String head, String msg)
+	{
+		Alert confirm = new Alert(AlertType.CONFIRMATION);
+		confirm.setTitle("확인");
+		confirm.setHeaderText(head);
+		confirm.setContentText(msg);
+		return confirm.showAndWait().get();
+		
 	}
 }

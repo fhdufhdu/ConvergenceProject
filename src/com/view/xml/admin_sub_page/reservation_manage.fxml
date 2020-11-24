@@ -64,6 +64,7 @@
             <Font name="LG Smart UI Light" size="15.0" />
          </font>
       </Text>
+      <Button layoutX="840.0" layoutY="534.0" mnemonicParsing="false" onAction="#deleteRsv" text="삭제" />
    </children>
    <padding>
       <Insets bottom="30.0" />

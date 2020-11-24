@@ -9,11 +9,10 @@ import com.db.model.DAOException;
 import com.db.model.DTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.main.mainGUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -73,7 +72,7 @@ public class MovieAdd
             // 입력 필드 모두 채웠는지 확인
             if (is_current == null || tf_title.getText().equals("") || dp_release_date.getValue() == null || tf_director.getText().equals("") || ta_actor.getText().equals("") || tf_min.getText().equals("") || tf_poster.getText().equals("") || tf_stillcut.getText().equals("") || tf_trailer.getText().equals("") || ta_plot.getText().equals(""))
             {
-                alert("입력오류", "모든 필드를 채워주세요!");
+                mainGUI.alert("입력오류", "모든 필드를 채워주세요!");
             }
             
             // DTO에 데이터 삽입
@@ -87,15 +86,15 @@ public class MovieAdd
         }
         catch (NumberFormatException e)
         {
-            alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
+            mainGUI.alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
         }
         catch (DAOException e)
         {
-            alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
+            mainGUI.alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
         }
         catch (SQLException e)
         {
-            alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
+            mainGUI.alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
         }
     }
     
@@ -158,15 +157,4 @@ public class MovieAdd
         }
         return null;
     }
-    
-    private void alert(String head, String msg)
-    {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("경고");
-        alert.setHeaderText(head);
-        alert.setContentText(msg);
-        
-        alert.showAndWait(); // Alert창 보여주기
-    }
-    
 }

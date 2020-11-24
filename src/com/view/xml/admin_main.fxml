@@ -54,13 +54,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <MenuButton mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="상영시간표">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="등록" />
-                              <MenuItem mnemonicParsing="false" text="수정" />
-                              <MenuItem mnemonicParsing="false" text="삭제" />
-                           </items>
-                        </MenuButton>
+                        <Button mnemonicParsing="false" onAction="#menuTimeTableManage" style="-fx-background-color: transparent;" text="상영시간표" />
                      </graphic>
                   </Menu>
                   <Menu mnemonicParsing="false">
@@ -70,12 +64,12 @@
                   </Menu>
                   <Menu fx:id="m_admin_account" mnemonicParsing="false" onAction="#menuAdminAccount">
                      <graphic>
-                        <Button mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="수입 계좌 관리" />
+                        <Button mnemonicParsing="false" onAction="#menuAdminAccount" prefHeight="15.0" style="-fx-background-color: transparent;" text="수입 계좌 관리" />
                      </graphic>
                   </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <Button mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="가격정보 수정" />
+                        <Button mnemonicParsing="false" onAction="#menuPriceChange" prefHeight="15.0" style="-fx-background-color: transparent;" text="가격정보 수정" />
                      </graphic>
                   </Menu>
                </menus>

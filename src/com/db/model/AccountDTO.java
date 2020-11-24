@@ -2,23 +2,35 @@ package com.db.model;
 
 public class AccountDTO
 {
-    private String Account;
+    private String account;
+    private String bank;
     private int money;
     
-    public AccountDTO(String Account, int money)
+    public AccountDTO(String account, String bank, int money)
     {
-        this.Account = Account;
+        this.account = account;
+        this.bank = bank;
         this.money = money;
     }
     
     public String getAccount()
     {
-        return Account;
+        return account;
     }
     
-    public void setAccount(String Account)
+    public void setAccount(String account)
     {
-        this.Account = Account;
+        this.account = account;
+    }
+    
+    public String getBank()
+    {
+        return bank;
+    }
+    
+    public void setBank(String bank)
+    {
+        this.bank = bank;
     }
     
     public int getMoney()
@@ -30,4 +42,5 @@ public class AccountDTO
     {
         this.money = money;
     }
+    
 }

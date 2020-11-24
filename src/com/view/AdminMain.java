@@ -67,7 +67,13 @@ public class AdminMain implements Initializable
     @FXML
     void menuAdminAccount(ActionEvent event)
     {
-        
+        loadPage("account_manage");
+    }
+    
+    @FXML
+    void menuPriceChange(ActionEvent event)
+    {
+        loadPage("price_change");
     }
     
     @FXML
@@ -98,6 +104,12 @@ public class AdminMain implements Initializable
     void menuTheaterManage(ActionEvent event)
     {
         loadPage("theater_manage");
+    }
+    
+    @FXML
+    void menuTimeTableManage(ActionEvent event)
+    {
+        loadPage("movie_table_manage");
     }
     
     // 각 파일이름에 해당하는 뷰 불러오기
