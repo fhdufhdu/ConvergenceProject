@@ -1,15 +1,25 @@
 package com.protocol.movieServer;
 
-import java.net.*;
-import java.io.*;
-import java.sql.*;
-import java.text.SimpleDateFormat;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.sql.Date;
-import com.db.model.*;
-import com.main.mainGUI;
-import com.protocol.*;
+
+import com.db.model.DAO;
+import com.db.model.DAOException;
+import com.db.model.DTO;
+import com.db.model.MemberDAO;
+import com.db.model.MemberDTO;
+import com.db.model.ScreenDAO;
+import com.db.model.ScreenDTO;
+import com.db.model.TheaterDAO;
+import com.db.model.TheaterDTO;
+import com.protocol.Protocol;
 
 public class MovieServer extends Thread
 {

@@ -1,25 +1,31 @@
 package com.view;
 
-import java.net.*;
-import java.util.*;
-import java.lang.*;
-import java.time.format.*;
-import java.sql.*;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.ResourceBundle;
 
-import com.db.model.*;
+import com.db.model.MovieDAO;
+import com.db.model.MovieDTO;
+import com.db.model.ScreenDAO;
+import com.db.model.ScreenDTO;
+import com.db.model.TheaterDAO;
+import com.db.model.TheaterDTO;
 
-import javafx.beans.value.*;
-import javafx.collections.*;
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
-import javafx.stage.*;
-import javafx.application.*;
-import javafx.scene.control.Alert.*;
-import javafx.scene.input.*;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 public class RsvAdd implements Initializable
 {

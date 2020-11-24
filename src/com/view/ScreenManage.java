@@ -1,27 +1,28 @@
 package com.view;
 
-import java.net.*;
-import java.util.*;
-import java.lang.*;
-import java.time.format.*;
-import java.sql.*;
+import java.sql.SQLException;
 
-import com.db.model.*;
+import com.db.model.DAOException;
+import com.db.model.ScreenDTO;
+import com.db.model.TheaterDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
-import javafx.beans.value.*;
-import javafx.collections.*;
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
-import javafx.stage.*;
-import javafx.application.*;
-import javafx.scene.control.Alert.*;
-import javafx.scene.input.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 public class ScreenManage
 {
@@ -97,7 +98,7 @@ public class ScreenManage
                 String packetArr[] = packet.split("/");
                 String packetType = packetArr[1];
                 
-                if (packetType.equals(Protocol.SC_RES_THEATER_ADD))
+                if (packetType.equals(Protocol.SC_RES_SCREEN_ADD))
                 {
                     String result = packetArr[2];
                     switch (result)
@@ -167,7 +168,7 @@ public class ScreenManage
                 String packetArr[] = packet.split("/");
                 String packetType = packetArr[1];
                 
-                if (packetType.equals(Protocol.SC_RES_THEATER_CHANGE))
+                if (packetType.equals(Protocol.SC_RES_SCREEN_CHANGE))
                 {
                     String result = packetArr[2];
                     switch (result)
@@ -244,7 +245,7 @@ public class ScreenManage
                 String packetArr[] = packet.split("/");
                 String packetType = packetArr[1];
                 
-                if (packetType.equals(Protocol.SC_RES_THEATER_DELETE))
+                if (packetType.equals(Protocol.SC_RES_SCREEN_DELETE))
                 {
                     String result = packetArr[2];
                     switch (result)
@@ -305,19 +306,21 @@ public class ScreenManage
                 if (packetCode.equals(Protocol.SC_RES_SCREEN_VIEW))
                 {
                     String result = packetArr[2];
-                    String id = packetArr[3];
-                    String theater_id = packetArr[4];
-                    String name = packetArr[5];
-                    String capacity = packetArr[6];
-                    String row = packetArr[7];
-                    String col = packetArr[8];
-                    String last = packetArr[9];
                     
                     switch (result)
                     {
                         case "1":
                         {
+                            String id = packetArr[3];
+                            String theater_id = packetArr[4];
+                            String name = packetArr[5];
+                            String capacity = packetArr[6];
+                            String row = packetArr[7];
+                            String col = packetArr[8];
+                            String last = packetArr[9];
                             screen_list.add(new ScreenDTO(id, theater_id, name, Integer.valueOf(capacity), Integer.valueOf(row), Integer.valueOf(col)));
+                            if (last.equals("1"))
+                                return;
                             break;
                         }
                         case "2":
@@ -331,8 +334,6 @@ public class ScreenManage
                             return;
                         }
                     }
-                    if (last.equals("1"))
-                        break;
                 }
             }
         }
