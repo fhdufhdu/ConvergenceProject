@@ -15,6 +15,8 @@ import com.db.model.DAOException;
 import com.db.model.DTO;
 import com.db.model.MemberDAO;
 import com.db.model.MemberDTO;
+import com.db.model.MovieDAO;
+import com.db.model.MovieDTO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
@@ -345,6 +347,40 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_DELETE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_MOVIE_ADD:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화 등록 요청을 보냈습니다.");
+									String title = packetArr[2];
+									String release_date = packetArr[3];
+									String is_current = packetArr[4];
+									String plot = packetArr[5];
+									String poster = packetArr[6];
+									String stillCut = packetArr[7];
+									String trailer = packetArr[8];
+									String director = packetArr[9];
+									String actor = packetArr[10];
+									String min = packetArr[11];
+									
+									// DTO에 데이터 삽입
+									MovieDAO mDao = new MovieDAO();
+									MovieDTO mDto = new MovieDTO(DTO.EMPTY_ID, title, release_date, is_current, plot, poster, stillCut, trailer, director, actor, Integer.valueOf(min));
+									// DAO에서 영화 추가
+									mDao.addMovie(mDto);
+									
+									System.out.println("영화관 등록 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_ADD + "/1");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_ADD + "/2");
 									break;
 								}
 							}
