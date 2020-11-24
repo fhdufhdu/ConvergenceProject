@@ -48,9 +48,11 @@ public class Protocol
 	public static final String SC_RES_MOVIE_DELETE = "7-1E"; // 영화 삭제 요청 응답
 	
 	// 예매정보 관리
-	// 관리자가 등록하는 예매정보 필요
+	// UI 완성되면 프로토콜 추가, 수정
 	public static final String CS_REQ_ADMINRESERVATION_VIEW = "4-F"; // 관리자 예매 내역 요청
 	public static final String SC_RES_ADMINRESERVATION_VIEW = "5-1E"; // 관리자 예매 내역 요청 응답
+	public static final String CS_REQ_ADMINRESERVATION_ADD = "6-14"; // 관리자 예매 요청
+	public static final String SC_RES_ADMINRESERVATION_ADD = "7-28"; // 관리자 예매 요청 응답
 	
 	// 상영시간표 관리
 	public static final String CS_REQ_ADMINTIMETABLE_VIEW = "4-10"; // 관리자 상영시간표 요청
@@ -79,9 +81,10 @@ public class Protocol
 	public static final String SC_RES_PRICE_CHANGE = "7-26"; // 시간대별 가격 정보 요청 응답
 	
 	// 사용자
-	// 영화관 조회 프로토콜 관리자와 동일
+	// 영화관 조회는 관리자 프로토콜과 동일
 	
 	// 영화
+	// 영화 검색은 관리자 프로토콜과 동일
 	public static final String CS_REQ_MOVIEPRESENT_VIEW = "4-4"; // 현재상영작 정보 요청
 	public static final String SC_RES_MOVIEPRESENT_VIEW = "5-8"; // 현재상영작 정보 요청 응답
 	public static final String CS_REQ_MOVIEFUTURE_VIEW = "4-5"; // 상영예정작 정보 요청
