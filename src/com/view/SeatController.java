@@ -1,29 +1,24 @@
 package com.view;
 
-import java.net.*;
-import java.util.*;
-import java.lang.*;
-import java.time.format.*;
-import java.sql.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ResourceBundle;
 
-import com.db.model.*;
-
-import javafx.beans.value.*;
-import javafx.collections.*;
-import javafx.event.*;
-import javafx.fxml.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.*;
-import javafx.stage.*;
-import javafx.application.*;
-import javafx.scene.control.Alert.*;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.input.*;
+import javafx.scene.text.Text;
 
 public class SeatController implements Initializable
 {

@@ -1,5 +1,10 @@
 package com.view;
 
+import java.io.IOException;
+
+import com.main.mainGUI;
+import com.protocol.Protocol;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,18 +17,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.sun.javafx.sg.prism.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Socket;
-
-import com.db.model.*;
-import com.main.mainGUI;
-import com.protocol.Protocol;
 
 public class Login
 {

@@ -1,27 +1,26 @@
 package com.view;
 
-import java.net.*;
-import java.nio.file.Files;
-import java.util.*;
 import java.io.File;
-import java.lang.*;
-import java.time.format.*;
-import java.sql.*;
+import java.nio.file.Files;
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
-import com.db.model.*;
+import com.db.model.DAOException;
+import com.db.model.DTO;
+import com.db.model.MovieDAO;
+import com.db.model.MovieDTO;
 
-import javafx.beans.value.*;
-import javafx.collections.*;
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
-import javafx.stage.*;
-import javafx.application.*;
-import javafx.scene.control.Alert.*;
-import javafx.scene.input.*;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class MovieAdd
 {
