@@ -1,6 +1,7 @@
 package com.view;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.ResourceBundle;
 import com.db.model.DAOException;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.db.model.ScreenDTO;
+import com.main.mainGUI;
+import com.protocol.Protocol;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -111,14 +115,7 @@ public class MovieManage implements Initializable
 			movie_list = FXCollections.observableArrayList();
 			
 			// 리스트 초기화
-			info = new HashMap<String, String>();
-			info.put("title", "%");
-			info.put("start_date", "1976-01-01");
-			info.put("end_date", "2222-01-01");
-			info.put("is_current", "%");
-			info.put("director", "%");
-			info.put("actor", "%");
-			initList(info);
+			initList();
 			
 			// 테이블 뷰 초기화
 			tv_movie.getItems().clear();
@@ -164,7 +161,7 @@ public class MovieManage implements Initializable
 		info.put("actor", tf_actor.getText());
 		
 		tv_movie.getItems().clear();
-		initList(info);
+		// initList(info);
 		tv_movie.setItems(movie_list);
 	}
 	
@@ -217,7 +214,7 @@ public class MovieManage implements Initializable
 	}
 	
 	@FXML // 영화 삭제
-	void deleteMovie(ActionEvent event)
+	void deleteMovie(ActionEvent event) throws Exception
 	{
 		try
 		{
@@ -235,13 +232,37 @@ public class MovieManage implements Initializable
 			}
 			
 			String id = table_row_data.getId();
-			MovieDAO mDao = new MovieDAO();
-			mDao.removeMovie(table_row_data.getId());
 			
-			movie_list.clear();
-			tv_movie.getItems().clear();
-			initList(info);
-			tv_movie.setItems(movie_list);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_MOVIE_DELETE + "/" + id);
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("/");
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_MOVIE_DELETE))
+				{
+					String result = packetArr[2];
+					switch (result)
+					{
+						case "1":
+						{
+							movie_list.clear();
+							tv_movie.getItems().clear();
+							initList();
+							tv_movie.setItems(movie_list);
+							return;
+						}
+						case "2":
+						{
+							t_result.setText("영화 삭제 실패!");
+							return;
+						}
+					}
+				}
+			}
 		}
 		catch (DAOException e)
 		{
@@ -263,16 +284,62 @@ public class MovieManage implements Initializable
 	}
 	
 	// 테이블뷰에 들어갈 리스트 초기화
-	private void initList(HashMap<String, String> info)
+	private void initList()
 	{
 		try
 		{
-			MovieDAO tDao = new MovieDAO();
-			ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
-			Iterator<MovieDTO> tIter = tlist.iterator();
-			while (tIter.hasNext())
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW);
+			
+			while (true)
 			{
-				movie_list.add(tIter.next());
+				
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_MOVIE_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String movieList = packetArr[3];
+							String listArr[] = movieList.split(","); // 각 영화별로 리스트 분할
+							
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("/"); // 영화 별 정보 분할
+								String id = infoArr[0];
+								String title = infoArr[1];
+								String release_date = infoArr[2];
+								String is_current = infoArr[3];
+								String plot = infoArr[4];
+								String poster_path = infoArr[5];
+								String stillCut_path = infoArr[6];
+								String trailer_path = infoArr[7];
+								String director = infoArr[8];
+								String actor = infoArr[9];
+								int min = Integer.parseInt(infoArr[10]);
+								
+								movie_list.add(new MovieDTO(id, title, release_date, is_current, plot, poster_path, stillCut_path, trailer_path, director, actor, min));
+							}
+							return;
+						}
+						case "2":
+						{
+							t_result.setText("영화 리스트가 없습니다.");
+							return;
+						}
+						case "3":
+						{
+							t_result.setText("영화 리스트 요청 실패했습니다.");
+							return;
+						}
+					}
+				}
 			}
 		}
 		catch (Exception e)

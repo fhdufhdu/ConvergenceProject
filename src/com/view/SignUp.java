@@ -94,9 +94,10 @@ public class SignUp
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_SIGNUP))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_SIGNUP))
 				{
 					String result = packetArr[2];
 					switch (result)
