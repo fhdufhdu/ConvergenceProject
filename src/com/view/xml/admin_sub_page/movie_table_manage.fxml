@@ -28,8 +28,8 @@
                       <TableColumn fx:id="tc_theater" prefWidth="117.0" text="영화관" />
                       <TableColumn fx:id="tc_screen" prefWidth="150.0" text="상영관" />
                         <TableColumn fx:id="tc_movie" minWidth="0.0" prefWidth="203.0" text="영화" />
-                        <TableColumn fx:id="tc_date" prefWidth="132.0" text="시작시간" />
-                        <TableColumn fx:id="tc_screen_time" prefWidth="119.0" text="종료시간" />
+                        <TableColumn fx:id="tc_start_time" prefWidth="132.0" text="시작시간" />
+                        <TableColumn fx:id="tc_end_time" prefWidth="119.0" text="종료시간" />
                     </columns>
                   </TableView>
                   <Text fx:id="t_result" layoutX="14.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="269.0">
@@ -41,13 +41,13 @@
                   <Button fx:id="btn_change_movie_table" layoutX="554.0" layoutY="577.0" mnemonicParsing="false" onAction="#changeMovieTable" prefHeight="30.0" prefWidth="110.0" text="수정" />
                   <Button fx:id="btn_delete_movie_table" layoutX="444.0" layoutY="577.0" mnemonicParsing="false" onAction="#deleteMovieTable" prefHeight="30.0" prefWidth="110.0" text="삭제" />
                   <Button fx:id="btn_clear" layoutX="361.0" layoutY="187.0" mnemonicParsing="false" onAction="#clearTextField" prefHeight="30.0" prefWidth="102.0" text="모두지우기" />
-                  <MenuButton layoutX="53.0" layoutY="69.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="125.0" text="영화관">
+                  <MenuButton fx:id="mb_theater" layoutX="53.0" layoutY="69.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="125.0" text="영화관">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
-                  <MenuButton layoutX="192.0" layoutY="68.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="125.0" text="상영관">
+                  <MenuButton fx:id="mb_screen" layoutX="192.0" layoutY="68.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="125.0" text="상영관">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Action 1" />
                         <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -58,28 +58,28 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="90.0" layoutY="113.0" prefHeight="29.0" prefWidth="228.0" />
+                  <TextField fx:id="tf_movie" layoutX="90.0" layoutY="113.0" prefHeight="29.0" prefWidth="228.0" />
                   <Text layoutX="53.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="시작시간">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="126.0" layoutY="151.0" prefHeight="29.0" prefWidth="191.0" />
+                  <TextField fx:id="tf_start_time" layoutX="126.0" layoutY="151.0" prefHeight="29.0" prefWidth="191.0" />
                   <Text layoutX="53.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="종료시간">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="126.0" layoutY="187.0" prefHeight="29.0" prefWidth="191.0" />
+                  <TextField fx:id="tf_end_time" layoutX="126.0" layoutY="187.0" prefHeight="29.0" prefWidth="191.0" />
                </children>
                <BorderPane.margin>
-                  <Insets bottom="20.0" />
+                  <Insets />
                </BorderPane.margin>
             </AnchorPane>
          </center>
       </BorderPane>
    </children>
    <padding>
-      <Insets bottom="30.0" />
+      <Insets bottom="20.0" />
    </padding>
 </AnchorPane>

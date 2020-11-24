@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresent">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MovieFuture">
    <children>
       <Text layoutX="57.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상영예정작" textAlignment="CENTER" wrappingWidth="189.0">
          <font>
@@ -34,42 +33,30 @@
           <RowConstraints maxHeight="153.0" minHeight="0.0" prefHeight="151.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="149.0" fitWidth="191.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../Desktop/picture/2.PNG" />
-               </image>
-            </ImageView>
             <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1">
                <children>
                   <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
-                  <Button layoutX="11.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
-                  <TextField layoutX="10.0" layoutY="25.0" prefHeight="47.0" prefWidth="176.0" promptText="영화제목" />
+                  <Button fx:id="btn_detail" layoutX="11.0" layoutY="95.0" mnemonicParsing="false" onAction="#getDetail" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
+                  <TextField fx:id="tf_movie" layoutX="10.0" layoutY="25.0" prefHeight="47.0" prefWidth="176.0" promptText="영화제목" />
                </children>
             </AnchorPane>
-            <ImageView fitHeight="149.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-               <image>
-                  <Image url="@../../../../../../../Desktop/picture/movieee.PNG" />
-               </image>
-            </ImageView>
             <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
-                  <Button layoutX="13.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
-                  <TextField layoutX="11.0" layoutY="25.0" prefHeight="47.0" prefWidth="183.0" promptText="영화제목" />
+                  <Button fx:id="btn_detail2" layoutX="13.0" layoutY="95.0" mnemonicParsing="false" onAction="#getDetail2" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
+                  <TextField fx:id="tf_movie2" layoutX="11.0" layoutY="25.0" prefHeight="47.0" prefWidth="183.0" promptText="영화제목" />
                </children>
             </AnchorPane>
-            <ImageView fitHeight="149.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
-               <image>
-                  <Image url="@../../../../../../../Desktop/picture/캡처.PNG" />
-               </image>
-            </ImageView>
             <AnchorPane prefHeight="147.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <ButtonBar buttonOrder="" layoutX="7.0" layoutY="7.0" prefHeight="40.0" prefWidth="200.0" />
-                  <Button layoutX="15.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
-                  <TextField layoutX="13.0" layoutY="26.0" prefHeight="47.0" prefWidth="200.0" promptText="영화제목" />
+                  <Button fx:id="btn_detail3" layoutX="15.0" layoutY="95.0" mnemonicParsing="false" onAction="#getDetail3" prefHeight="35.0" prefWidth="80.0" text="상세정보" />
+                  <TextField fx:id="tf_movie3" layoutX="13.0" layoutY="26.0" prefHeight="47.0" prefWidth="200.0" promptText="영화제목" />
                </children>
             </AnchorPane>
+            <Button fx:id="btn_image" mnemonicParsing="false" onAction="#getPosterPath" text="이미지 경로" />
+            <Button fx:id="btn_image2" mnemonicParsing="false" onAction="#getPosterPath2" text="이미지 경로" GridPane.rowIndex="1" />
+            <Button fx:id="btn_image3" mnemonicParsing="false" onAction="#getPosterPath3" text="이미지 경로" GridPane.rowIndex="2" />
          </children>
          <padding>
             <Insets bottom="20.0" />
