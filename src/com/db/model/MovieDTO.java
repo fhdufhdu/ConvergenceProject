@@ -9,42 +9,42 @@ public class MovieDTO extends DTO
 {
     private String id;
     private String title;
-    private Date release_date; // date
-    private String is_current;
+    private Date releaseDate; // date
+    private String isCurrent;
     private String plot;
-    private String poster_path;
-    private String still_cut_path;
-    private String trailer_path;
+    private String posterPath;
+    private String stillCutPath;
+    private String trailerPath;
     private String director;
     private String actor;
     private int min;
     
-    public MovieDTO(String id, String title, String release_date, String is_current, String plot, String poster_path, String still_cut_path, String trailer_path, String director, String actor, int min)
+    public MovieDTO(String id, String title, String releaseDate, String isCurrent, String plot, String posterPath, String stillCutPath, String trailerPath, String director, String actor, int min)
     {
-        // release_date의 포맷은 "YYYY-MM-DD"
+        // releaseDate의 포맷은 "YYYY-MM-DD"
         this.id = id;
         this.title = title;
-        this.release_date = Date.valueOf(release_date);
-        this.is_current = is_current;
+        this.releaseDate = Date.valueOf(releaseDate);
+        this.isCurrent = isCurrent;
         this.plot = plot;
-        this.poster_path = poster_path;
-        this.still_cut_path = still_cut_path;
-        this.trailer_path = trailer_path;
+        this.posterPath = posterPath;
+        this.stillCutPath = stillCutPath;
+        this.trailerPath = trailerPath;
         this.director = director;
         this.actor = actor;
         this.min = min;
     }
     
-    public MovieDTO(String title, String release_date, String is_current, String plot, String poster_path, String still_cut_path, String trailer_path, String director, String actor, int min)
+    public MovieDTO(String title, String releaseDate, String isCurrent, String plot, String posterPath, String stillCutPath, String trailerPath, String director, String actor, int min)
     {
-        // release_date의 포맷은 "YYYY-MM-DD"
+        // releaseDate의 포맷은 "YYYY-MM-DD"
         this.title = title;
-        this.release_date = Date.valueOf(release_date);
-        this.is_current = is_current;
+        this.releaseDate = Date.valueOf(releaseDate);
+        this.isCurrent = isCurrent;
         this.plot = plot;
-        this.poster_path = poster_path;
-        this.still_cut_path = still_cut_path;
-        this.trailer_path = trailer_path;
+        this.posterPath = posterPath;
+        this.stillCutPath = stillCutPath;
+        this.trailerPath = trailerPath;
         this.director = director;
         this.actor = actor;
         this.min = min;
@@ -57,13 +57,15 @@ public class MovieDTO extends DTO
     
     public StringProperty getScreeningProperty()
     {
-        if (is_current.equals("0"))
+        if (isCurrent.equals("0"))
         {
             return new SimpleStringProperty("상영종료");
-        } else if (is_current.equals("1"))
+        }
+        else if (isCurrent.equals("1"))
         {
             return new SimpleStringProperty("상영중");
-        } else
+        }
+        else
         {
             return new SimpleStringProperty("상영예정");
         }
@@ -91,22 +93,22 @@ public class MovieDTO extends DTO
     
     public Date getReleaseDate()
     {
-        return release_date;
+        return releaseDate;
     }
     
-    public void setReleaseDate(String release_date)
+    public void setReleaseDate(String releaseDate)
     {
-        this.release_date = Date.valueOf(release_date);
+        this.releaseDate = Date.valueOf(releaseDate);
     }
     
     public String getIsCurrent()
     {
-        return is_current;
+        return isCurrent;
     }
     
-    public void setIsCurrent(String is_current)
+    public void setIsCurrent(String isCurrent)
     {
-        this.is_current = is_current;
+        this.isCurrent = isCurrent;
     }
     
     public String getPlot()
@@ -121,32 +123,32 @@ public class MovieDTO extends DTO
     
     public String getPosterPath()
     {
-        return poster_path;
+        return posterPath;
     }
     
-    public void setPosterPath(String poster_path)
+    public void setPosterPath(String posterPath)
     {
-        this.poster_path = poster_path;
+        this.posterPath = posterPath;
     }
     
     public String getStillCutPath()
     {
-        return still_cut_path;
+        return stillCutPath;
     }
     
-    public void setStillCutPath(String still_cut_path)
+    public void setStillCutPath(String stillCutPath)
     {
-        this.still_cut_path = still_cut_path;
+        this.stillCutPath = stillCutPath;
     }
     
     public String getTrailerPath()
     {
-        return trailer_path;
+        return trailerPath;
     }
     
-    public void setTrailerPath(String trailer_path)
+    public void setTrailerPath(String trailerPath)
     {
-        this.trailer_path = trailer_path;
+        this.trailerPath = trailerPath;
     }
     
     public String getDirector()

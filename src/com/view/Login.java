@@ -93,7 +93,6 @@ public class Login
 					 * 
 					 * mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "/" + id + "/" + passwd); return;
 					 */
-					
 					case Protocol.PT_RES_LOGIN:
 						String result = packetArr[1];
 						switch (result)
