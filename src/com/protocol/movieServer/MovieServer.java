@@ -498,6 +498,7 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
+
 							case Protocol.CS_REQ_PRICE_CHANGE:
 							{
 								try
