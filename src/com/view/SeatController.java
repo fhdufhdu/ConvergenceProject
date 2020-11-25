@@ -2,8 +2,14 @@ package com.view;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+
+import com.db.model.ReservationDAO;
+import com.db.model.ReservationDTO;
+import com.db.model.ScreenDTO;
+import com.db.model.TimeTableDTO;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class SeatController implements Initializable
 {
@@ -41,25 +48,23 @@ public class SeatController implements Initializable
     private Text selected_seat;
     
     private ToggleButton[][] tb_arr;
+    private ArrayList<String> seat_list;
     
     private int row;
     private int col;
     
-    @Override
-    public void initialize(URL location, ResourceBundle resources)
+    public void initData(ScreenDTO screen, TimeTableDTO timetable)
     {
-        /*
-         * ArrayList<ButtonBar> a = new ArrayList<ButtonBar>(); ArrayList<Button> b = new ArrayList<Button>(); a.add(new ButtonBar()); a.add(new ButtonBar()); a.add(new ButtonBar()); b.add(new Button("1")); b.add(new Button("2")); b.add(new Button("3")); ButtonBar.setButtonData(b.get(0), ButtonData.APPLY); ButtonBar.setButtonData(b.get(1), ButtonData.APPLY); ButtonBar.setButtonData(b.get(2), ButtonData.APPLY); a.get(0).getButtons().addAll(b); vbox.getChildren().addAll(a.get(0));
-         */
+        row = screen.getMaxRow();
+        col = screen.getMaxCol();
+        
+        System.out.println(row + "/" + col);
         
         ArrayList<ButtonBar> bar_list = new ArrayList<ButtonBar>();
-        row = 7;
-        col = 8;
         tb_arr = new ToggleButton[row + 1][col + 1];
         
         for (int i = 0; i < row + 1; i++)
         {
-            bar_list.add(new ButtonBar());
             for (int j = 0; j < col + 1; j++)
             {
                 tb_arr[i][j] = new ToggleButton();
@@ -97,6 +102,29 @@ public class SeatController implements Initializable
                     tb_arr[i][j].setStyle("-fx-font-size: 8;-fx-background-color: transparent;");
                 }
                 tb_arr[i][j].setMaxSize(10, 10);
+            }
+        }
+        
+        ReservationDAO rDao = new ReservationDAO();
+        try
+        {
+            Iterator<ReservationDTO> r_iter = rDao.getRsvListFromTT(timetable.getId()).iterator();
+            while (r_iter.hasNext())
+            {
+                ReservationDTO rDto = r_iter.next();
+                tb_arr[rDto.getScreenRow() + 1][rDto.getScreenCol() + 1].setDisable(true);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        for (int i = 0; i < row + 1; i++)
+        {
+            bar_list.add(new ButtonBar());
+            for (int j = 0; j < col + 1; j++)
+            {
                 ButtonBar.setButtonData(tb_arr[i][j], ButtonData.APPLY);
                 bar_list.get(i).getButtons().addAll(tb_arr[i][j]);
             }
@@ -130,12 +158,20 @@ public class SeatController implements Initializable
         screen_shape.setLayoutX(root_width / 2 - screen_shape.getWidth() / 2);
         screen_text.setLayoutX(root_width / 2 - screen_text.getWrappingWidth() / 2);
         btn_select.setLayoutX(root_width - 90);
+        
+    }
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        
     }
     
     @FXML
-    void btn_action(ActionEvent event)
+    void close(ActionEvent event)
     {
-        checkSelected();
+        Stage stage = (Stage) btn_select.getScene().getWindow();
+        stage.close();
     }
     
     private ArrayList<String> checkSelected()
@@ -152,5 +188,24 @@ public class SeatController implements Initializable
             }
         }
         return result_list;
+    }
+    
+    public ArrayList<ArrayList<Integer>> getSelected()
+    {
+        ArrayList<ArrayList<Integer>> seat_list = new ArrayList<ArrayList<Integer>>();
+        seat_list.add(new ArrayList<Integer>());
+        seat_list.add(new ArrayList<Integer>());
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (tb_arr[i][j].isSelected())
+                {
+                    seat_list.get(0).add(i - 1);
+                    seat_list.get(1).add(j - 1);
+                }
+            }
+        }
+        return seat_list;
     }
 }

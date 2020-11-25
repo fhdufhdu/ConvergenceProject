@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import com.db.model.DAO;
@@ -110,20 +111,24 @@ public class MovieServer extends Thread
 									ArrayList<TheaterDTO> tlist = tDao.getTheaterList();
 									Iterator<TheaterDTO> tIter = tlist.iterator();
 									TheaterDTO tDto;
+									String theaterList = ""; // 영화관리스트 정보를 모두 담을 문자열
+									
 									while (tIter.hasNext())
 									{
 										tDto = tIter.next();
 										if (tIter.hasNext())
-											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_THEATER_VIEW + "/1/" + tDto.getId() + "/" + tDto.getName() + "/" + tDto.getAddress() + "/" + tDto.getTotalScreen() + "/" + tDto.getTotalSeats() + "/0");
+											theaterList += tDto.getId() + "/" + tDto.getName() + "/" + tDto.getAddress() + "/" + tDto.getTotalScreen() + "/" + tDto.getTotalSeats() + ",";
 										else
-											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_THEATER_VIEW + "/1/" + tDto.getId() + "/" + tDto.getName() + "/" + tDto.getAddress() + "/" + tDto.getTotalScreen() + "/" + tDto.getTotalSeats() + "/1");
+											theaterList += tDto.getId() + "/" + tDto.getName() + "/" + tDto.getAddress() + "/" + tDto.getTotalScreen() + "/" + tDto.getTotalSeats();
 									}
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATER_VIEW + "!1!" + theaterList);
+									System.out.println("영화관 리스트 전송 성공");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_THEATER_VIEW + "/2");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATER_VIEW + "!2");
 									break;
 								}
 							}
@@ -138,25 +143,72 @@ public class MovieServer extends Thread
 									ScreenDAO sDao = new ScreenDAO();
 									ArrayList<ScreenDTO> slist = sDao.getScreenList(id);
 									Iterator<ScreenDTO> sIter = slist.iterator();
+									String screenList = ""; // 상영관 리스트 모두 담을 문자열
 									
 									if (sIter.hasNext() == false)
 									{
-										writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/2");
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_SCREEN_VIEW + "!2");
 									}
 									
 									while (sIter.hasNext())
 									{
 										ScreenDTO sDto = sIter.next();
 										if (sIter.hasNext())
-											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/0");
+											screenList += sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + ",";
 										else
-											writePacket(Protocol.PT_RES_VIEW + "/" + Protocol.SC_RES_SCREEN_VIEW + "/1/" + sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + "/1");
+											screenList += sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol();
 									}
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_SCREEN_VIEW + "!1!" + screenList);
+									System.out.println("상영관 리스트 전송 성공");
+									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_VIEW + "/3");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_SCREEN_VIEW + "!3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_MOVIE_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화 리스트 요청을 보냈습니다.");
+									HashMap<String, String> info = new HashMap<String, String>();
+									info.put("title", "%");
+									info.put("start_date", "1976-01-01");
+									info.put("end_date", "2222-01-01");
+									info.put("is_current", "%");
+									info.put("director", "%");
+									info.put("actor", "%");
+									
+									MovieDAO tDao = new MovieDAO();
+									ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
+									Iterator<MovieDTO> tIter = tlist.iterator();
+									String movieList = ""; // 영화 리스트 모두 담을 문자열
+									
+									if (tIter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!2");
+									}
+									
+									while (tIter.hasNext())
+									{
+										MovieDTO mDto = tIter.next();
+										if (tIter.hasNext())
+											movieList += mDto.getId() + "/" + mDto.getTitle() + "/" + mDto.getReleaseDate() + "/" + mDto.getIsCurrent() + "/" + mDto.getPlot() + "/" + mDto.getPosterPath() + "/" + mDto.getStillCutPath() + "/" + mDto.getTrailerPath() + "/" + mDto.getDirector() + "/" + mDto.getActor() + "/" + Integer.toString(mDto.getMin()) + ",";
+										else
+											movieList += mDto.getId() + "/" + mDto.getTitle() + "/" + mDto.getReleaseDate() + "/" + mDto.getIsCurrent() + "/" + mDto.getPlot() + "/" + mDto.getPosterPath() + "/" + mDto.getStillCutPath() + "/" + mDto.getTrailerPath() + "/" + mDto.getDirector() + "/" + mDto.getActor() + "/" + Integer.toString(mDto.getMin());
+									}
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!1!" + movieList);
+									System.out.println("영화 리스트 전송 성공");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!3");
 									break;
 								}
 							}
@@ -184,6 +236,7 @@ public class MovieServer extends Thread
 									
 									MemberDAO signUpDAO = new MemberDAO();
 									signUpDAO.addMember(new MemberDTO(signUp_id, role, signUp_password, null, name, phone_number, birth, gender));
+									System.out.println("회원가입 성공");
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SIGNUP + "/1");
 									break;
 								}
@@ -373,7 +426,7 @@ public class MovieServer extends Thread
 									// DAO에서 영화 추가
 									mDao.addMovie(mDto);
 									
-									System.out.println("영화관 등록 성공");
+									System.out.println("영화 등록 성공");
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_ADD + "/1");
 									break;
 								}
@@ -381,6 +434,25 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_ADD + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_MOVIE_DELETE:
+							{
+								try {
+									System.out.println("클라이언트가 영화 삭제 요청을 보냈습니다.");
+									String id = packetArr[2];
+									
+									MovieDAO mDao = new MovieDAO();
+									mDao.removeMovie(id);
+									
+									System.out.println("영화 삭제 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/1");
+									break;
+								}catch(Exception e) {
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/2");
 									break;
 								}
 							}

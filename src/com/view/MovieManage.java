@@ -1,6 +1,7 @@
 package com.view;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.ResourceBundle;
 import com.db.model.DAOException;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.db.model.ScreenDTO;
+import com.main.mainGUI;
+import com.protocol.Protocol;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -22,8 +26,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -111,14 +113,7 @@ public class MovieManage implements Initializable
 			movie_list = FXCollections.observableArrayList();
 			
 			// 리스트 초기화
-			info = new HashMap<String, String>();
-			info.put("title", "%");
-			info.put("start_date", "1976-01-01");
-			info.put("end_date", "2222-01-01");
-			info.put("is_current", "%");
-			info.put("director", "%");
-			info.put("actor", "%");
-			initList(info);
+			initList();
 			
 			// 테이블 뷰 초기화
 			tv_movie.getItems().clear();
@@ -144,6 +139,7 @@ public class MovieManage implements Initializable
 					table_row_data = tv_movie.getSelectionModel().getSelectedItem();
 				}
 			});
+			
 		}
 		catch (Exception e)
 		{
@@ -164,7 +160,7 @@ public class MovieManage implements Initializable
 		info.put("actor", tf_actor.getText());
 		
 		tv_movie.getItems().clear();
-		initList(info);
+		// initList(info);
 		tv_movie.setItems(movie_list);
 	}
 	
@@ -199,7 +195,7 @@ public class MovieManage implements Initializable
 		{
 			if (tv_movie.getSelectionModel().isEmpty())
 			{
-				alert("오류", "데이터를 선택해주세요");
+				mainGUI.alert("오류", "데이터를 선택해주세요");
 				return;
 			}
 			FXMLLoader loader = new FXMLLoader(TheaterManage.class.getResource("./xml/admin_sub_page/movie_change.fxml"));
@@ -211,37 +207,61 @@ public class MovieManage implements Initializable
 		}
 		catch (Exception e)
 		{
-			alert("오류", "창 로딩 실패");
+			mainGUI.alert("오류", "창 로딩 실패");
 			e.printStackTrace();
 		}
 	}
 	
 	@FXML // 영화 삭제
-	void deleteMovie(ActionEvent event)
+	void deleteMovie(ActionEvent event) throws Exception
 	{
 		try
 		{
 			if (tv_movie.getSelectionModel().isEmpty())
 			{
-				alert("삭제오류", "삭제할 데이터를 선택해주세요");
+				mainGUI.alert("삭제오류", "삭제할 데이터를 선택해주세요");
 				return;
 			}
 			
 			// 삭제할 것인지 재 확인
-			ButtonType btnType = confirm("삭제확인", "정말로 삭제하시겠습니까?");
+			ButtonType btnType = mainGUI.confirm("삭제확인", "정말로 삭제하시겠습니까?");
 			if (btnType != ButtonType.OK)
 			{
 				return;
 			}
 			
 			String id = table_row_data.getId();
-			MovieDAO mDao = new MovieDAO();
-			mDao.removeMovie(table_row_data.getId());
 			
-			movie_list.clear();
-			tv_movie.getItems().clear();
-			initList(info);
-			tv_movie.setItems(movie_list);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_MOVIE_DELETE + "/" + id);
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("/");
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_MOVIE_DELETE))
+				{
+					String result = packetArr[2];
+					switch (result)
+					{
+						case "1":
+						{
+							movie_list.clear();
+							tv_movie.getItems().clear();
+							initList();
+							tv_movie.setItems(movie_list);
+							return;
+						}
+						case "2":
+						{
+							t_result.setText("영화 삭제 실패!");
+							return;
+						}
+					}
+				}
+			}
 		}
 		catch (DAOException e)
 		{
@@ -263,16 +283,62 @@ public class MovieManage implements Initializable
 	}
 	
 	// 테이블뷰에 들어갈 리스트 초기화
-	private void initList(HashMap<String, String> info)
+	private void initList()
 	{
 		try
 		{
-			MovieDAO tDao = new MovieDAO();
-			ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
-			Iterator<MovieDTO> tIter = tlist.iterator();
-			while (tIter.hasNext())
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW);
+			
+			while (true)
 			{
-				movie_list.add(tIter.next());
+				
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_MOVIE_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String movieList = packetArr[3];
+							String listArr[] = movieList.split(","); // 각 영화별로 리스트 분할
+							
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("/"); // 영화 별 정보 분할
+								String id = infoArr[0];
+								String title = infoArr[1];
+								String release_date = infoArr[2];
+								String is_current = infoArr[3];
+								String plot = infoArr[4];
+								String poster_path = infoArr[5];
+								String stillCut_path = infoArr[6];
+								String trailer_path = infoArr[7];
+								String director = infoArr[8];
+								String actor = infoArr[9];
+								int min = Integer.parseInt(infoArr[10]);
+								
+								movie_list.add(new MovieDTO(id, title, release_date, is_current, plot, poster_path, stillCut_path, trailer_path, director, actor, min));
+							}
+							return;
+						}
+						case "2":
+						{
+							t_result.setText("영화 리스트가 없습니다.");
+							return;
+						}
+						case "3":
+						{
+							t_result.setText("영화 리스트 요청 실패했습니다.");
+							return;
+						}
+					}
+				}
 			}
 		}
 		catch (Exception e)
@@ -280,24 +346,4 @@ public class MovieManage implements Initializable
 			
 		}
 	}
-	
-	private void alert(String head, String msg)
-	{
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("경고");
-		alert.setHeaderText(head);
-		alert.setContentText(msg);
-		
-		alert.showAndWait(); // Alert창 보여주기
-	}
-	
-	private ButtonType confirm(String head, String msg)
-	{
-		Alert confirm = new Alert(AlertType.CONFIRMATION);
-		confirm.setTitle("확인");
-		confirm.setHeaderText(head);
-		confirm.setContentText(msg);
-		return confirm.showAndWait().get();
-	}
-	
 }

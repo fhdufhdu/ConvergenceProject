@@ -18,7 +18,7 @@
 //import javafx.scene.text.*;
 //import javafx.stage.*;
 //import javafx.application.*;
-//import javafx.scene.control.Alert.*;
+//import javafx.scene.control.mainGUI.alert.*;
 //import javafx.scene.input.*;
 //
 //public class TheaterManage implements Initializable {
@@ -168,7 +168,7 @@
 //            //테이블 값이 선택되어 있는지 확인
 //            if (tv_theater.getSelectionModel().isEmpty()) 
 //            {
-//                alert("수정오류", "수정할 데이터를 선택해주세요");
+//                mainGUI.alert("수정오류", "수정할 데이터를 선택해주세요");
 //                return;
 //            }
 //            TheaterDAO tDao = new TheaterDAO();
@@ -209,7 +209,7 @@
 //        {
 //            if (tv_theater.getSelectionModel().isEmpty()) 
 //            {
-//                alert("삭제오류", "삭제할 데이터를 선택해주세요");
+//                mainGUI.alert("삭제오류", "삭제할 데이터를 선택해주세요");
 //                return;
 //            }
 //
@@ -265,7 +265,7 @@
 //        {
 //            if (tv_theater.getSelectionModel().isEmpty()) 
 //            {
-//                alert("오류", "데이터를 선택해주세요");
+//                mainGUI.alert("오류", "데이터를 선택해주세요");
 //                return;
 //            }
 //            FXMLLoader loader = new FXMLLoader(TheaterManage.class.getResource("./xml/admin_sub_page/screen_manage.fxml"));
@@ -295,19 +295,19 @@
 //        }
 //    }
 //
-//    private void alert(String head, String msg) 
+//    private void mainGUI.alert(String head, String msg) 
 //    {
-//		Alert alert = new Alert(AlertType.WARNING);
-//		alert.setTitle("경고");
-//		alert.setHeaderText(head);
-//		alert.setContentText(msg);
+//		mainGUI.alert mainGUI.alert = new mainGUI.alert(mainGUI.alertType.WARNING);
+//		mainGUI.alert.setTitle("경고");
+//		mainGUI.alert.setHeaderText(head);
+//		mainGUI.alert.setContentText(msg);
 //		
-//		alert.showAndWait(); //Alert창 보여주기
+//		mainGUI.alert.showAndWait(); //mainGUI.alert창 보여주기
 //    }
 //
 //    private ButtonType confirm(String head, String msg) 
 //    {
-//		Alert confirm = new Alert(AlertType.CONFIRMATION);
+//		mainGUI.alert confirm = new mainGUI.alert(mainGUI.alertType.CONFIRMATION);
 //		confirm.setTitle("확인");
 //		confirm.setHeaderText(head);
 //		confirm.setContentText(msg);
@@ -363,8 +363,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
@@ -439,9 +437,6 @@ public class TheaterManage implements Initializable
 			// 리스트 초기화
 			initList();
 			
-			// 테이블 뷰 초기화
-			tv_theater.getItems().clear();
-			
 			// 각 테이블뷰 컬럼에 어떠한 값이 들어갈 것인지 세팅
 			tc_name.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
 			tc_address.setCellValueFactory(cellData -> cellData.getValue().getAddressProperty());
@@ -491,25 +486,22 @@ public class TheaterManage implements Initializable
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_ADD))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_THEATER_ADD))
 				{
 					String result = packetArr[2];
 					switch (result)
 					{
 						case "1":
 							// 값 추가 후 각 테이블 및 리스트 초기화
-							theater_list.clear();
-							tv_theater.getItems().clear();
 							initList();
-							tv_theater.setItems(theater_list);
-							
 							// text field 초기화
 							clearText();
 							return;
 						case "2":
-							t_result.setText("영화관 등록 실패!");
+							mainGUI.alert("경고", "영화관 등록 실패");
 							return;
 					}
 				}
@@ -518,13 +510,13 @@ public class TheaterManage implements Initializable
 		catch (DAOException e)
 		{
 			// 값의 중복 발생시
-			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
+			mainGUI.alert("경고", "영화관 이름 및 주소가 중복됩니다!");
 			e.printStackTrace();
 		}
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
-			t_result.setText("총 상영관, 총 좌석에는 숫자만 입력해주세요!");
+			mainGUI.alert("경고", "총 상영관, 총 좌석에는 숫자만 입력해주세요!");
 			e.printStackTrace();
 		}
 	}
@@ -537,7 +529,7 @@ public class TheaterManage implements Initializable
 			// 테이블 값이 선택되어 있는지 확인
 			if (tv_theater.getSelectionModel().isEmpty())
 			{
-				alert("수정오류", "수정할 데이터를 선택해주세요");
+				mainGUI.alert("수정오류", "수정할 데이터를 선택해주세요");
 				return;
 			}
 			String id = table_row_data.getId();
@@ -552,23 +544,21 @@ public class TheaterManage implements Initializable
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_CHANGE))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_THEATER_CHANGE))
 				{
 					String result = packetArr[2];
 					switch (result)
 					{
 						case "1":
-							theater_list.clear();
-							tv_theater.getItems().clear();
 							initList();
-							tv_theater.setItems(theater_list);
 							
 							clearText();
 							return;
 						case "2":
-							t_result.setText("영화관 수정 실패!");
+							mainGUI.alert("경고", "영화관 수정 실패!");
 							return;
 					}
 				}
@@ -577,7 +567,7 @@ public class TheaterManage implements Initializable
 		catch (DAOException e)
 		{
 			// 값의 중복 발생시
-			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
+			mainGUI.alert("경고", "영화관 이름 및 주소가 중복됩니다!");
 			e.printStackTrace();
 		}
 		catch (SQLException e)
@@ -588,7 +578,7 @@ public class TheaterManage implements Initializable
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
-			t_result.setText("총 상영관, 총 좌석에는 숫자만 입력해주세요!");
+			mainGUI.alert("경고", "총 상영관, 총 좌석에는 숫자만 입력해주세요!");
 			e.printStackTrace();
 		}
 	}
@@ -600,12 +590,12 @@ public class TheaterManage implements Initializable
 		{
 			if (tv_theater.getSelectionModel().isEmpty())
 			{
-				alert("삭제오류", "삭제할 데이터를 선택해주세요");
+				mainGUI.alert("삭제오류", "삭제할 데이터를 선택해주세요");
 				return;
 			}
 			
 			// 삭제할 것인지 재 확인
-			ButtonType btnType = confirm("삭제확인", "정말로 삭제하시겠습니까?");
+			ButtonType btnType = mainGUI.confirm("삭제확인", "정말로 삭제하시겠습니까?");
 			if (btnType != ButtonType.OK)
 			{
 				return;
@@ -619,25 +609,22 @@ public class TheaterManage implements Initializable
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_THEATER_DELETE))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_THEATER_DELETE))
 				{
 					String result = packetArr[2];
 					switch (result)
 					{
 						case "1":
-							t_result.setText("삭제되었습니다");
-							
-							theater_list.clear();
-							tv_theater.getItems().clear();
+							mainGUI.alert("삭제완료", "삭제 완료 되었습니다");
 							initList();
-							tv_theater.setItems(theater_list);
 							
 							clearText();
 							return;
 						case "2":
-							t_result.setText("영화관 삭제 실패!");
+							mainGUI.alert("경고", "영화관 삭제 실패!");
 							return;
 					}
 				}
@@ -646,7 +633,7 @@ public class TheaterManage implements Initializable
 		catch (DAOException e)
 		{
 			// 값의 중복 발생시
-			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
+			mainGUI.alert("경고", "영화관 이름 및 주소가 중복됩니다!");
 			e.printStackTrace();
 		}
 		catch (SQLException e)
@@ -657,7 +644,7 @@ public class TheaterManage implements Initializable
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
-			t_result.setText("총 상영관, 총 좌석에는 숫자만 입력해주세요!");
+			mainGUI.alert("경고", "총 상영관, 총 좌석에는 숫자만 입력해주세요!");
 			e.printStackTrace();
 		}
 	}
@@ -677,7 +664,7 @@ public class TheaterManage implements Initializable
 		{
 			if (tv_theater.getSelectionModel().isEmpty())
 			{
-				alert("오류", "데이터를 선택해주세요");
+				mainGUI.alert("오류", "데이터를 선택해주세요");
 				return;
 			}
 			FXMLLoader loader = new FXMLLoader(TheaterManage.class.getResource("./xml/admin_sub_page/screen_manage.fxml"));
@@ -692,13 +679,13 @@ public class TheaterManage implements Initializable
 		catch (DAOException e)
 		{
 			// 여긴 중복 발생
-			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
+			mainGUI.alert("오류", "영화관 이름 및 주소가 중복됩니다!");
 			e.printStackTrace();
 		}
 		catch (NumberFormatException e)
 		{
 			// 여긴 타입 안맞을때
-			t_result.setText("총 상영관, 총 좌석에는 숫자만 입력해주세요!");
+			mainGUI.alert("오류", "총 상영관, 총 좌석에는 숫자만 입력해주세요!");
 			e.printStackTrace();
 		}
 		catch (Exception e)
@@ -707,53 +694,42 @@ public class TheaterManage implements Initializable
 		}
 	}
 	
-	private void alert(String head, String msg)
-	{
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("경고");
-		alert.setHeaderText(head);
-		alert.setContentText(msg);
-		
-		alert.showAndWait(); // Alert창 보여주기
-	}
-	
-	private ButtonType confirm(String head, String msg)
-	{
-		Alert confirm = new Alert(AlertType.CONFIRMATION);
-		confirm.setTitle("확인");
-		confirm.setHeaderText(head);
-		confirm.setContentText(msg);
-		return confirm.showAndWait().get();
-		
-	}
-	
 	private void initList()
 	{
 		try
 		{
+			theater_list.clear();
 			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_THEATER_VIEW);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
 				{
 					String result = packetArr[2];
-					String id = packetArr[3];
-					String name = packetArr[4];
-					String address = packetArr[5];
-					String screen = packetArr[6];
-					String seat = packetArr[7];
-					String last = packetArr[8];
+					
 					switch (result)
 					{
 						case "1":
 						{
-							theater_list.add(new TheaterDTO(id, name, address, Integer.parseInt(screen), Integer.parseInt(seat)));
-							break;
+							String theaterList = packetArr[3];
+							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("/"); // 영화관 별 정보 분할
+								String id = infoArr[0];
+								String name = infoArr[1];
+								String address = infoArr[2];
+								String screen = infoArr[3];
+								String seat = infoArr[4];
+								
+								theater_list.add(new TheaterDTO(id, name, address, Integer.parseInt(screen), Integer.parseInt(seat)));
+							}
+							return;
 						}
 						case "2":
 						{
@@ -761,8 +737,6 @@ public class TheaterManage implements Initializable
 							return;
 						}
 					}
-					if (last.equals("1"))
-						break;
 				}
 			}
 		}
