@@ -38,7 +38,7 @@ public class mainGUI extends Application
 			bw.close();
 			br.close();
 			socket.close();
-			DAO.connectDB();
+			DAO.connectDB(); // closeDB 아닌가요??
 		}
 		catch (UnknownHostException e)
 		{
