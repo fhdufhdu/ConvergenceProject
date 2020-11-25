@@ -497,30 +497,7 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
-							case Protocol.CS_REQ_PRICE_CHANGE:
-							{
-								try
-								{
-									System.out.println("클라이언트가 가격 정보 수정 요청을 보냈습니다.");
-									System.out.println(packetArr[2] + packetArr[3] + packetArr[4]);
-									String morning = packetArr[2];
-									String afternoon = packetArr[3];
-									String night = packetArr[4];
-									
-									ChargeDAO cDao = new ChargeDAO();
-						            cDao.changeCharge(new ChargeDTO("1", Integer.valueOf(morning)));
-						            cDao.changeCharge(new ChargeDTO("2", Integer.valueOf(afternoon)));
-						            cDao.changeCharge(new ChargeDTO("3", Integer.valueOf(night)));
-						            System.out.println("가격정보 수정 성공");
-						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/1");
-								}
-								catch(Exception e)
-								{
-									e.printStackTrace();
-									System.out.println("가격정보 수정 실패");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/2");
-								}
-							}
+							
 							case Protocol.CS_REQ_MOVIE_CHANGE:
 							{
 								try
@@ -549,6 +526,33 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_PRICE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 가격 정보 수정 요청을 보냈습니다.");
+									System.out.println(packetArr[2] + packetArr[3] + packetArr[4]);
+									String morning = packetArr[2];
+									String afternoon = packetArr[3];
+									String night = packetArr[4];
+									
+									ChargeDAO cDao = new ChargeDAO();
+						            cDao.changeCharge(new ChargeDTO("1", Integer.valueOf(morning)));
+						            cDao.changeCharge(new ChargeDTO("2", Integer.valueOf(afternoon)));
+						            cDao.changeCharge(new ChargeDTO("3", Integer.valueOf(night)));
+						            System.out.println("가격정보 수정 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/1");
+						            break;
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+									System.out.println("가격정보 수정 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/2");
 									break;
 								}
 							}
