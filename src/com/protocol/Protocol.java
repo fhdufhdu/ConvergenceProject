@@ -76,7 +76,7 @@ public class Protocol
 	// 가격정보 수정
 	public static final String CS_REQ_PRICE_VIEW = "4-C"; // 시간대별 가격 정보 요청
 	public static final String SC_RES_PRICE_VIEW = "5-18"; // 시간대별 가격 정보 요청 응답
-	public static final String CS_REQ_PRIVE_CHANGE = "6-13"; // 시간대별 가격 정보 요청
+	public static final String CS_REQ_PRICE_CHANGE = "6-13"; // 시간대별 가격 정보 요청
 	public static final String SC_RES_PRICE_CHANGE = "7-26"; // 시간대별 가격 정보 요청 응답
 	
 	// 사용자

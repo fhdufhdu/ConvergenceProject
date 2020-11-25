@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.db.model.ChargeDAO;
 import com.db.model.ChargeDTO;
 import com.main.mainGUI;
+import com.protocol.Protocol;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,32 +32,50 @@ public class PriceChange implements Initializable
     {
         try
         {
-            ChargeDAO cDao = new ChargeDAO();
-            ArrayList<ChargeDTO> cList = cDao.getChargeList();
-            Iterator<ChargeDTO> cIter = cList.iterator();
+        	mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_PRICE_VIEW);
             
-            while (cIter.hasNext())
-            {
-                ChargeDTO temp = cIter.next();
-                switch (temp.getType())
-                {
-                    case "1":
-                    {
-                        tf_morning.setText(Integer.toString(temp.getPrice()));
-                        break;
-                    }
-                    case "2":
-                    {
-                        tf_afternoon.setText(Integer.toString(temp.getPrice()));
-                        break;
-                    }
-                    case "3":
-                    {
-                        tf_night.setText(Integer.toString(temp.getPrice()));
-                        break;
-                    }
-                }
-            }
+        	String packet = mainGUI.readLine();
+        	String packetArr[] = packet.split("!");
+        	String packetType = packetArr[0];
+        	String packetCode = packetArr[1];
+        	
+        	if(packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_PRICE_VIEW))
+        	{
+        		String result = packetArr[2];
+        		switch(result) 
+        		{
+        		case "1":
+        			String priceArr[] = packetArr[3].split(",");
+        			for(String priceInfo : priceArr) 
+        			{
+        				String priceList[] = priceInfo.split("/");
+        				String priceType = priceList[0];
+        				String price = priceList[1];
+        				switch (priceType)
+                        {
+                            case "1":
+                            {
+                                tf_morning.setText(price);
+                                break;
+                            }
+                            case "2":
+                            {
+                                tf_afternoon.setText(price);
+                                break;
+                            }
+                            case "3":
+                            {
+                                tf_night.setText(price);
+                                break;
+                            }
+                        }
+        			}
+        			break;
+        		case "2":
+        			System.out.println("가격정보 요청에 실패하였습니다.");
+        			break;
+        		}
+        	}
         }
         catch (Exception e)
         {
@@ -75,12 +94,28 @@ public class PriceChange implements Initializable
                 mainGUI.alert("경고", "모든 데이터를 입력해주세요");
                 return;
             }
-            ChargeDAO cDao = new ChargeDAO();
-            cDao.changeCharge(new ChargeDTO("1", Integer.valueOf(tf_morning.getText())));
-            cDao.changeCharge(new ChargeDTO("2", Integer.valueOf(tf_afternoon.getText())));
-            cDao.changeCharge(new ChargeDTO("3", Integer.valueOf(tf_night.getText())));
+            String morning = tf_morning.getText();
+            String afternoon = tf_afternoon.getText();
+            String night = tf_night.getText();
             
-            mainGUI.alert("수정 완료", "데이터 수정 완료");
+            mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_PRICE_CHANGE + "/" + morning + "/" + afternoon + "/" + night);
+            
+            String packet = mainGUI.readLine();
+            String packetArr[] = packet.split("/");
+            String packetType = packetArr[0];
+            String packetCode = packetArr[1];
+            if(packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_PRICE_CHANGE))
+            {
+            	String result = packetArr[2];
+            	switch(result) {
+            		case "1":
+                        mainGUI.alert("수정 완료", "데이터 수정 완료");
+            			break;
+            		case "2":
+						mainGUI.alert("경고", "가격정보 수정 실패!");
+            			break;
+            	}
+            }
         }
         catch (Exception e)
         {

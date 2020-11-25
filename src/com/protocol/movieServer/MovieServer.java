@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.db.model.ChargeDAO;
+import com.db.model.ChargeDTO;
 import com.db.model.DAO;
 import com.db.model.DAOException;
 import com.db.model.DTO;
@@ -209,6 +211,42 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!3");
+									break;
+								}
+							}
+							case Protocol.CS_REQ_PRICE_VIEW:
+							{
+								try
+								{
+									ChargeDAO cDao = new ChargeDAO();
+						            ArrayList<ChargeDTO> cList = cDao.getChargeList();
+						            Iterator<ChargeDTO> cIter = cList.iterator();
+						            String priceList = "";
+						            
+						            if (cIter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
+									}
+						            
+						            while (cIter.hasNext())
+						            {
+						                ChargeDTO temp = cIter.next();
+						                String priceType = temp.getType();
+						                String price = Integer.toString(temp.getPrice());
+						                if(cIter.hasNext())
+						                	priceList += priceType + "/" + price + ",";
+						                else
+						                	priceList += priceType + "/" + price;
+						                
+						            }
+						            writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!1!" + priceList);
+									System.out.println("가격 정보 전송 성공");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
 									break;
 								}
 							}
@@ -453,6 +491,32 @@ public class MovieServer extends Thread
 								}catch(Exception e) {
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_PRICE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 가격 정보 수정 요청을 보냈습니다.");
+									System.out.println(packetArr[2] + packetArr[3] + packetArr[4]);
+									String morning = packetArr[2];
+									String afternoon = packetArr[3];
+									String night = packetArr[4];
+									
+									ChargeDAO cDao = new ChargeDAO();
+						            cDao.changeCharge(new ChargeDTO("1", Integer.valueOf(morning)));
+						            cDao.changeCharge(new ChargeDTO("2", Integer.valueOf(afternoon)));
+						            cDao.changeCharge(new ChargeDTO("3", Integer.valueOf(night)));
+						            System.out.println("가격정보 수정 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/1");
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+									System.out.println("가격정보 수정 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/2");
 									break;
 								}
 							}
