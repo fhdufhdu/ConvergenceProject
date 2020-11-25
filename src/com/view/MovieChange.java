@@ -111,7 +111,7 @@ public class MovieChange
     
     @FXML
     void changeMovie(ActionEvent event)
-    {
+    { 
         try
         {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
