@@ -112,19 +112,7 @@ public class MovieChange
 	void changeMovie(ActionEvent event)
 	{
 		try
-		{
-			// // 각 필드들이 비어있는 지 판단한 후 데이터 집어넣음
-			// currentMov.setIsCurrent(is_current == null ? currentMov.getIsCurrent() : is_current);
-			// currentMov.setTitle(tf_title.getText().equals("") ? currentMov.getTitle() : tf_title.getText());
-			// currentMov.setReleaseDate(dp_release_date.getValue() == null ? currentMov.getReleaseDate().toString() : dateFormat.format(dp_release_date.getValue()));
-			// currentMov.setDirector(tf_director.getText().equals("") ? currentMov.getDirector() : tf_director.getText());
-			// currentMov.setActor(ta_actor.getText().equals("") ? currentMov.getActor() : tf_trailer.getText());
-			// currentMov.setMin(tf_min.getText().equals("") ? currentMov.getMin() : Integer.valueOf(tf_min.getText()));
-			// currentMov.setPosterPath(tf_poster.getText().equals("") ? currentMov.getPosterPath() : tf_poster.getText());
-			// currentMov.setStillCutPath(tf_stillcut.getText().equals("") ? currentMov.getStillCutPath() : tf_stillcut.getText());
-			// currentMov.setTrailerPath(tf_trailer.getText().equals("") ? currentMov.getTrailerPath() : tf_trailer.getText());
-			// currentMov.setPlot(ta_plot.getText().equals("") ? currentMov.getPlot() : ta_plot.getText());
-			
+		{	
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String id = currentMov.getId();
 			String title = tf_title.getText().equals("") ? currentMov.getTitle() : tf_title.getText();
