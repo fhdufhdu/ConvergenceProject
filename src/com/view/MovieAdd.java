@@ -105,7 +105,7 @@ public class MovieAdd
 							mainGUI.alert("등록완료", "등록완료 되었습니다!");
 							return;
 						case "2":
-							mainGUI.alert("등록완료", "등록완료 되었습니다!");
+							mainGUI.alert("등록실패", "등록실패 되었습니다!");
 							return;
 					}
 				}
