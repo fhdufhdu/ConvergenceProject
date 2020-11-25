@@ -176,12 +176,12 @@ public class MovieServer extends Thread
 								{
 									System.out.println("클라이언트가 영화 리스트 요청을 보냈습니다.");
 									HashMap<String, String> info = new HashMap<String, String>();
-									info.put("title", "%");
-									info.put("start_date", "1976-01-01");
-									info.put("end_date", "2222-01-01");
-									info.put("is_current", "%");
-									info.put("director", "%");
-									info.put("actor", "%");
+									info.put("title", packetArr[2]);
+									info.put("start_date", packetArr[3]);
+									info.put("end_date", packetArr[4]);
+									info.put("is_current", packetArr[5]);
+									info.put("director", packetArr[6]);
+									info.put("actor", packetArr[7]);
 									
 									MovieDAO tDao = new MovieDAO();
 									ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
@@ -440,7 +440,8 @@ public class MovieServer extends Thread
 							
 							case Protocol.CS_REQ_MOVIE_DELETE:
 							{
-								try {
+								try
+								{
 									System.out.println("클라이언트가 영화 삭제 요청을 보냈습니다.");
 									String id = packetArr[2];
 									
@@ -450,9 +451,43 @@ public class MovieServer extends Thread
 									System.out.println("영화 삭제 성공");
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/1");
 									break;
-								}catch(Exception e) {
+								}
+								catch (Exception e)
+								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_MOVIE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화 수정 요청을 보냈습니다.");
+									 // 각 필드들이 비어있는 지 판단한 후 데이터 집어넣음
+									MovieDAO mDao = new MovieDAO();
+									MovieDTO mDto = mDao.getMovie(packetArr[2]);
+									mDto.setTitle(packetArr[3]);
+									mDto.setReleaseDate(packetArr[4]);
+									mDto.setIsCurrent(packetArr[5]);
+									mDto.setPlot(packetArr[6]);
+									mDto.setPosterPath(packetArr[7]);
+									mDto.setStillCutPath(packetArr[8]);
+									mDto.setTrailerPath(packetArr[9]);
+									mDto.setDirector(packetArr[10]);
+									mDto.setActor(packetArr[11]);
+									mDto.setMin(Integer.parseInt(packetArr[12]));
+						            
+						            mDao.changeMovie(mDto);
+						            System.out.println("영화 수정 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/1");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/2");
 									break;
 								}
 							}

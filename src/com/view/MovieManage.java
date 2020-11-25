@@ -42,7 +42,6 @@ public class MovieManage implements Initializable
 	private ObservableList<MovieDTO> movie_list;
 	private MovieDTO table_row_data;
 	private String is_current;
-	private HashMap<String, String> info;
 	
 	@FXML
 	private BorderPane bp_parent;
@@ -113,7 +112,7 @@ public class MovieManage implements Initializable
 			movie_list = FXCollections.observableArrayList();
 			
 			// 리스트 초기화
-			initList();
+			initList("%", "1976-01-01", "2222-01-01", "%", "%", "%");
 			
 			// 테이블 뷰 초기화
 			tv_movie.getItems().clear();
@@ -148,19 +147,19 @@ public class MovieManage implements Initializable
 	}
 	
 	@FXML // 해당하는 영화 검색
-	void getMovieSearch(ActionEvent event)
+	void getMovieSearch(ActionEvent event) throws Exception
 	{
-		info = new HashMap<String, String>();
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		info.put("title", tf_title.getText());
-		info.put("start_date", dateFormat.format(dp_start_date.getValue()));
-		info.put("end_date", dateFormat.format(dp_end_date.getValue()));
-		info.put("is_current", is_current);
-		info.put("director", tf_director.getText());
-		info.put("actor", tf_actor.getText());
+		
+		String title = tf_title.getText().equals("") ? "%" : tf_title.getText();
+		String start_date = dp_start_date.getValue() == null ? "1976-01-01" : dp_start_date.getValue().format(dateFormat);
+		String end_date = dp_end_date.getValue() == null ? "2222-01-01" : dp_end_date.getValue().format(dateFormat);
+		String current = is_current == null ? "%" : is_current;
+		String director = tf_director.getText().equals("") ? "%" : tf_director.getText();
+		String actor = tf_actor.getText().equals("") ? "%" : tf_actor.getText();
 		
 		tv_movie.getItems().clear();
-		// initList(info);
+		initList(title, start_date, end_date, current, director, actor);
 		tv_movie.setItems(movie_list);
 	}
 	
@@ -250,7 +249,7 @@ public class MovieManage implements Initializable
 						{
 							movie_list.clear();
 							tv_movie.getItems().clear();
-							initList();
+							initList("%", "1976-01-01", "2222-01-01", "%", "%", "%");
 							tv_movie.setItems(movie_list);
 							return;
 						}
@@ -283,11 +282,11 @@ public class MovieManage implements Initializable
 	}
 	
 	// 테이블뷰에 들어갈 리스트 초기화
-	private void initList()
+	private void initList(String title, String start_date, String end_date, String is_current, String director, String actor)
 	{
 		try
 		{
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW + "/" + title + "/" + start_date + "/" + end_date + "/" + is_current + "/" + director + "/" + actor);
 			
 			while (true)
 			{
@@ -311,19 +310,19 @@ public class MovieManage implements Initializable
 							for (String listInfo : listArr)
 							{
 								String infoArr[] = listInfo.split("/"); // 영화 별 정보 분할
-								String id = infoArr[0];
-								String title = infoArr[1];
-								String release_date = infoArr[2];
-								String is_current = infoArr[3];
-								String plot = infoArr[4];
-								String poster_path = infoArr[5];
-								String stillCut_path = infoArr[6];
-								String trailer_path = infoArr[7];
-								String director = infoArr[8];
-								String actor = infoArr[9];
-								int min = Integer.parseInt(infoArr[10]);
+								String mv_id = infoArr[0];
+								String mv_title = infoArr[1];
+								String mv_release_date = infoArr[2];
+								String mv_is_current = infoArr[3];
+								String mv_plot = infoArr[4];
+								String mv_poster_path = infoArr[5];
+								String mv_stillCut_path = infoArr[6];
+								String mv_trailer_path = infoArr[7];
+								String mv_director = infoArr[8];
+								String mv_actor = infoArr[9];
+								int mv_min = Integer.parseInt(infoArr[10]);
 								
-								movie_list.add(new MovieDTO(id, title, release_date, is_current, plot, poster_path, stillCut_path, trailer_path, director, actor, min));
+								movie_list.add(new MovieDTO(mv_id, mv_title, mv_release_date, mv_is_current, mv_plot, mv_poster_path, mv_stillCut_path, mv_trailer_path, mv_director, mv_actor, mv_min));
 							}
 							return;
 						}

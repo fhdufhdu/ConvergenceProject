@@ -153,7 +153,6 @@ public class RsvAdd implements Initializable
     @FXML
     private TextField tf_account;
     
-    @FXML
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
