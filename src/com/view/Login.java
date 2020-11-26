@@ -127,7 +127,7 @@ public class Login
 	private void startWindow(String path, String title) throws Exception
 	{
 		Parent root = FXMLLoader.load(Login.class.getResource(path));
-		Scene scene = new Scene(root, 1000, 666);
+		Scene scene = new Scene(root);
 		Stage primaryStage = (Stage) btn_login.getScene().getWindow();
 		primaryStage.setTitle(title);
 		primaryStage.setResizable(false);
