@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.db.model.ChargeDAO;
+import com.db.model.ChargeDTO;
 import com.db.model.DAO;
 import com.db.model.DAOException;
 import com.db.model.DTO;
@@ -176,12 +178,12 @@ public class MovieServer extends Thread
 								{
 									System.out.println("클라이언트가 영화 리스트 요청을 보냈습니다.");
 									HashMap<String, String> info = new HashMap<String, String>();
-									info.put("title", "%");
-									info.put("start_date", "1976-01-01");
-									info.put("end_date", "2222-01-01");
-									info.put("is_current", "%");
-									info.put("director", "%");
-									info.put("actor", "%");
+									info.put("title", packetArr[2]);
+									info.put("start_date", packetArr[3]);
+									info.put("end_date", packetArr[4]);
+									info.put("is_current", packetArr[5]);
+									info.put("director", packetArr[6]);
+									info.put("actor", packetArr[7]);
 									
 									MovieDAO tDao = new MovieDAO();
 									ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
@@ -209,6 +211,42 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!3");
+									break;
+								}
+							}
+							case Protocol.CS_REQ_PRICE_VIEW:
+							{
+								try
+								{
+									ChargeDAO cDao = new ChargeDAO();
+						            ArrayList<ChargeDTO> cList = cDao.getChargeList();
+						            Iterator<ChargeDTO> cIter = cList.iterator();
+						            String priceList = "";
+						            
+						            if (cIter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
+									}
+						            
+						            while (cIter.hasNext())
+						            {
+						                ChargeDTO temp = cIter.next();
+						                String priceType = temp.getType();
+						                String price = Integer.toString(temp.getPrice());
+						                if(cIter.hasNext())
+						                	priceList += priceType + "/" + price + ",";
+						                else
+						                	priceList += priceType + "/" + price;
+						                
+						            }
+						            writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!1!" + priceList);
+									System.out.println("가격 정보 전송 성공");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
 									break;
 								}
 							}
@@ -440,7 +478,8 @@ public class MovieServer extends Thread
 							
 							case Protocol.CS_REQ_MOVIE_DELETE:
 							{
-								try {
+								try
+								{
 									System.out.println("클라이언트가 영화 삭제 요청을 보냈습니다.");
 									String id = packetArr[2];
 									
@@ -450,9 +489,70 @@ public class MovieServer extends Thread
 									System.out.println("영화 삭제 성공");
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/1");
 									break;
-								}catch(Exception e) {
+								}
+								catch (Exception e)
+								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_MOVIE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화 수정 요청을 보냈습니다.");
+									 // 각 필드들이 비어있는 지 판단한 후 데이터 집어넣음
+									MovieDAO mDao = new MovieDAO();
+									MovieDTO mDto = mDao.getMovie(packetArr[2]);
+									mDto.setTitle(packetArr[3]);
+									mDto.setReleaseDate(packetArr[4]);
+									mDto.setIsCurrent(packetArr[5]);
+									mDto.setPlot(packetArr[6]);
+									mDto.setPosterPath(packetArr[7]);
+									mDto.setStillCutPath(packetArr[8]);
+									mDto.setTrailerPath(packetArr[9]);
+									mDto.setDirector(packetArr[10]);
+									mDto.setActor(packetArr[11]);
+									mDto.setMin(Integer.parseInt(packetArr[12]));
+						            
+						            mDao.changeMovie(mDto);
+						            System.out.println("영화 수정 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/1");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_PRICE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 가격 정보 수정 요청을 보냈습니다.");
+									System.out.println(packetArr[2] + packetArr[3] + packetArr[4]);
+									String morning = packetArr[2];
+									String afternoon = packetArr[3];
+									String night = packetArr[4];
+									
+									ChargeDAO cDao = new ChargeDAO();
+						            cDao.changeCharge(new ChargeDTO("1", Integer.valueOf(morning)));
+						            cDao.changeCharge(new ChargeDTO("2", Integer.valueOf(afternoon)));
+						            cDao.changeCharge(new ChargeDTO("3", Integer.valueOf(night)));
+						            System.out.println("가격정보 수정 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/1");
+						            break;
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+									System.out.println("가격정보 수정 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/2");
 									break;
 								}
 							}

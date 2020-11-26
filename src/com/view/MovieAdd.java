@@ -93,23 +93,23 @@ public class MovieAdd
 			{
 				String packet = mainGUI.readLine();
 				String packetArr[] = packet.split("/");
-				String packetType = packetArr[1];
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.SC_RES_MOVIE_ADD))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_MOVIE_ADD))
 				{
 					String pakcet_result = packetArr[2];
 					switch (pakcet_result)
 					{
 						case "1":
-							result.setText("영화관 등록 성공!");
+							mainGUI.alert("등록완료", "등록완료 되었습니다!");
 							return;
 						case "2":
-							result.setText("영화관 등록 실패!");
+							mainGUI.alert("등록실패", "등록실패 되었습니다!");
 							return;
 					}
 				}
 			}
-			
 		}
 		catch (NumberFormatException e)
 		{

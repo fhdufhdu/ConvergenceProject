@@ -469,7 +469,7 @@ public class TheaterManage implements Initializable
 		}
 	}
 	
-	// 상영관 추가
+	// 영화관 추가
 	@FXML
 	void addTheater(ActionEvent event) throws Exception
 	{
