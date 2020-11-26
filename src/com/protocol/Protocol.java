@@ -17,6 +17,10 @@ public class Protocol
 	public static final String SC_RES_SIGNUP = "7-0"; // 회원가입 요청 응답
 	
 	// 관리자
+	//회원 관리
+	public static final String CS_REQ_MEMBER_VIEW = "4-20"; // 회원 정보 요청
+	public static final String SC_RES_MEMBER_VIEW = "5-40"; // 회원 정보 요청 응답
+	
 	// 영화관 관리
 	public static final String CS_REQ_THEATER_VIEW = "4-8"; // 영화관 정보 요청
 	public static final String SC_RES_THEATER_VIEW = "5-10"; // 영화관 정보 요청 응답
