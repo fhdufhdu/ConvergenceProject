@@ -745,7 +745,7 @@ public class RsvAdd implements Initializable
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.CS_REQ_ADMINTIMETABLE_VIEW))
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ADMINTIMETABLE_VIEW))
 				{
 					String result = packetArr[2];
 					
