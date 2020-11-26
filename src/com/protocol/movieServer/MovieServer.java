@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.db.model.AccountDAO;
+import com.db.model.AccountDTO;
 import com.db.model.ChargeDAO;
 import com.db.model.ChargeDTO;
 import com.db.model.DAO;
@@ -211,6 +213,29 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_ACCOUNT_VIEW :
+							{
+								try
+								{
+									System.out.println("클라이언트가 계좌 정보 요청을 보냈습니다.");
+									AccountDAO aDao = new AccountDAO();
+						            AccountDTO aDto = aDao.getAdminAccount("admin");
+						            
+						            String account = aDto.getAccount();
+						            String bank = aDto.getBank();
+						            
+						            System.out.println("클라이언트에게 계좌 정보를 보냅니다.");
+						            writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ACCOUNT_VIEW + "!1!" + account + "!" + bank);
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ACCOUNT_VIEW + "!2");
 									break;
 								}
 							}
@@ -524,6 +549,29 @@ public class MovieServer extends Thread
 						            break;
 								}
 							}
+							
+							case Protocol.CS_REQ_ACCOUNT_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 수입계좌 정보 수정 요청을 보냈습니다.");
+									String bank = packetArr[2];
+									String account = packetArr[3];
+						            AccountDAO aDao = new AccountDAO();
+						            aDao.changeAccountInfo("admin", bank, account);
+						            System.out.println("수입계좌 정보 수정 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/1");
+									break;
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+									System.out.println("수입계좌 수정 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/2");
+									break;
+								}
+							}
+							
 							case Protocol.CS_REQ_MOVIE_CHANGE:
 							{
 								try
