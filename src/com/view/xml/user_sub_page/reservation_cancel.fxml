@@ -21,7 +21,7 @@
           <TableColumn fx:id="tc_theater" minWidth="0.0" prefWidth="152.0" text="영화관" />
             <TableColumn fx:id="tc_screen" prefWidth="97.0" text="상영관" />
             <TableColumn fx:id="tc_date" prefWidth="118.0" text="날짜" />
-            <TableColumn fx:id="tc_movie_time" prefWidth="118.0" text="상영시간" />
+            <TableColumn fx:id="tc_start_time" prefWidth="118.0" text="상영시간" />
             <TableColumn fx:id="tc_seat" prefWidth="81.0" text="좌석" />
         </columns>
       </TableView>
