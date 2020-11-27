@@ -51,7 +51,6 @@ public class RsvManage implements Initializable
     private ObservableList<MemberDTO> member_id_list;
     private ObservableList<MovieDTO> movie_title_list;
     private ObservableList<TheaterDTO> theater_list;
-    
     private ObservableList<CustomDTO> custom_list;
     
     private MemberDTO selectedMem;

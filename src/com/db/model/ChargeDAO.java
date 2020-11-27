@@ -25,7 +25,6 @@ public class ChargeDAO extends DAO {
         ps.setString(2, charge.getType());
 
         int r = ps.executeUpdate();
-        System.out.println("변경된 row : " + r);
 
         ps.close();
     }

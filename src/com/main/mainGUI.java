@@ -38,7 +38,7 @@ public class mainGUI extends Application
 			bw.close();
 			br.close();
 			socket.close();
-			DAO.connectDB();
+			DAO.connectDB(); // closeDB 아닌가요??
 		}
 		catch (UnknownHostException e)
 		{
@@ -56,7 +56,7 @@ public class mainGUI extends Application
 		try
 		{
 			Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/login.fxml"));
-			// Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/seat_choice.fxml"));
+			// Parent root = FXMLLoader.load(mainGUI.class.getResource("../view/xml/user_sub_page/theater_search.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("로그인");
 			primaryStage.setResizable(false);

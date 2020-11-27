@@ -115,10 +115,10 @@ public class TimeTableDAO extends DAO
             rs.close();
             ps.close();
             
-            if (temp_list.size() == 0)
-            {
-                throw new DAOException("EMPTY_LIST");
-            }
+//            if (temp_list.size() == 0)
+//            {
+//                throw new DAOException("EMPTY_LIST");
+//            }
             
             return temp_list;
         }

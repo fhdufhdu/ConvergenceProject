@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="910.0" minHeight="450.0" minWidth="910.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.AccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="910.0" minHeight="475.0" minWidth="910.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.AccountController">
    <children>
       <Text layoutX="50.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="계좌 관리">
          <font>
@@ -27,24 +27,6 @@
             <Font name="LG Smart UI SemiBold" size="20.0" />
          </font>
       </Text>
-<<<<<<< HEAD
-=======
-      <TableView fx:id="tv_account" layoutX="213.0" layoutY="95.0" prefHeight="254.0" prefWidth="484.0">
-        <columns>
-          <TableColumn fx:id="tc_bank" prefWidth="123.0" text="은행" />
-          <TableColumn fx:id="tc_account_num" prefWidth="226.0" text="계좌번호" />
-            <TableColumn fx:id="tc_money" prefWidth="134.0" text="잔액" />
-        </columns>
-      </TableView>
-      <MenuButton fx:id="mb_bank" layoutX="213.0" layoutY="363.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="123.0" text="은행">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
-      <TextField fx:id="tf_bank" layoutX="338.0" layoutY="363.0" prefHeight="29.0" prefWidth="226.0" promptText="계좌번호" />
-      <Button fx:id="btn_change" layoutX="647.0" layoutY="363.0" mnemonicParsing="false" onAction="#getChange" text="수정" />
->>>>>>> cc3e30f96426ae1b733899e3b94e22ac8c3859eb
    </children>
    <padding>
       <Insets bottom="20.0" />
