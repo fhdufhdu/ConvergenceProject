@@ -93,7 +93,6 @@ public class TimeTableDAO extends DAO
             ArrayList<TimeTableDTO> temp_list = new ArrayList<TimeTableDTO>();
             String insert_sql = "select * from timetables where movie_id like ? and screen_id like ? and start_time >= ? and end_time <= ?";
             ps = conn.prepareStatement(insert_sql);
-            System.out.println(elem.getMovieId() + "/" + elem.getScreenId() + "/" + elem.getStartTime() + "/" + elem.getEndTime());
             ps.setString(1, elem.getMovieId());
             ps.setString(2, elem.getScreenId());
             ps.setTimestamp(3, elem.getStartTime());
@@ -114,11 +113,6 @@ public class TimeTableDAO extends DAO
             
             rs.close();
             ps.close();
-            
-//            if (temp_list.size() == 0)
-//            {
-//                throw new DAOException("EMPTY_LIST");
-//            }
             
             return temp_list;
         }
@@ -241,11 +235,8 @@ public class TimeTableDAO extends DAO
         try
         {
             String insert_sql = "delete from timetables where id = ?";
-            
             ps = conn.prepareStatement(insert_sql);
-            
             ps.setString(1, ttid);
-            
             int r = ps.executeUpdate();
             System.out.println("변경된 row : " + r);
             
@@ -256,6 +247,10 @@ public class TimeTableDAO extends DAO
         {
             System.out.println("find error on sql");
             sqle.printStackTrace();
+        }
+        catch(Exception e)
+        {
+        	e.printStackTrace();
         }
     }
 }
