@@ -252,6 +252,7 @@ public class MovieServer extends Thread
 						            if (cIter.hasNext() == false)
 									{
 										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
+										break;
 									}
 						            
 						            while (cIter.hasNext())
@@ -273,6 +274,46 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_THEATERMENU_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화관 메뉴를 요청하였습니다.");
+									TheaterDAO tDao = new TheaterDAO();
+									ArrayList<TheaterDTO>theater_list = tDao.getTheaterList();
+						            Iterator<TheaterDTO> tIter = theater_list.iterator();
+						            String theaterMenuList = "";
+						            
+						            if(tIter.hasNext() == false) 
+						            {
+						            	writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW+ "!2");
+						            }
+						            
+						            while(tIter.hasNext())
+						            {
+						            	TheaterDTO temp = tIter.next();
+						            	String id = temp.getId();
+						            	String name = temp.getName();
+						            	String address = temp.getAddress();
+						            	String total_screen = Integer.toString(temp.getTotalScreen());
+						            	String total_seats = Integer.toString(temp.getTotalSeats());
+						            	if(tIter.hasNext())
+						            		theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats + ",";
+						            	else
+						            		theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats;
+						            }
+						            
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW+ "!1!" + theaterMenuList);
+									System.out.println("영화관 메뉴 전송 성공");
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW+ "!2");
 									break;
 								}
 							}
