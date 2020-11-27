@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +22,7 @@ import com.db.model.MemberDAO;
 import com.db.model.MemberDTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.db.model.ReservationDAO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
@@ -283,9 +286,9 @@ public class MovieServer extends Thread
 									{
 										TimeTableDTO tbDto = t_iter.next();
 										if (t_iter.hasNext())
-											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" +tbDto.getStartTime()+ "/"+ tbDto.getEndTime() + ",";
+											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" + tbDto.getStartTime() + "/" + tbDto.getEndTime() + ",";
 										else
-											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" +tbDto.getStartTime()+ "/"+ tbDto.getEndTime();
+											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" + tbDto.getStartTime() + "/" + tbDto.getEndTime();
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!1!" + timetableList);
 									System.out.println("상영시간표 리스트 전송 성공");
@@ -295,6 +298,43 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_CUSTOM_INFO:
+							{
+								try
+								{
+									System.out.println("클라이언트가 다중 정보 요청을 보냈습니다.");
+									String timetable_id = packetArr[2];
+									TimeTableDAO ttDao = new TimeTableDAO();
+									TimeTableDTO ttDto = ttDao.getTimeTable(timetable_id);
+									TheaterDTO theater;
+									ScreenDTO screen;
+									MovieDTO movie;
+									String infoList = "";
+									
+									MovieDAO movDao = new MovieDAO();
+									movie = movDao.getMovie(ttDto.getMovieId());
+									
+									infoList += movie.getId() + "/" + movie.getTitle() + "/" + movie.getReleaseDate().toString() + "/" + movie.getIsCurrent() + "/" + movie.getPlot() + "/" + movie.getPosterPath() + "/" + movie.getStillCutPath() + "/" + movie.getTrailerPath() + "/" + movie.getDirector() + "/" + movie.getActor() + "/" + Integer.toString(movie.getMin()) + ",";
+									
+									ScreenDAO sDao = new ScreenDAO();
+									screen = sDao.getScreenElem(ttDto.getScreenId());
+									infoList += screen.getId() + "/" + screen.getTheaterId() + "/" + screen.getName() + "/" + Integer.toString(screen.getTotalCapacity()) + "/" + Integer.toString(screen.getMaxRow()) + "/" + Integer.toString(screen.getMaxCol()) + ",";
+									
+									TheaterDAO tDao = new TheaterDAO();
+									theater = tDao.getTheaterElem(screen.getTheaterId());
+									infoList += theater.getId() + "/" + theater.getName() + "/" + theater.getAddress() + "/" + Integer.toString(theater.getTotalScreen()) + "/" + Integer.toString(theater.getTotalSeats());
+									
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!1!" + infoList);
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!2");
 									break;
 								}
 							}
@@ -612,6 +652,61 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_ADMINRESERVATION_ADD:
+							{
+								Connection conn = DAO.getConn();
+								conn.setAutoCommit(false);
+								Savepoint sp = conn.setSavepoint();
+								try
+								{
+									System.out.println("관리자가 예매 등록 요청을 보냈습니다.");
+									ReservationDAO rDao = new ReservationDAO();
+									String member = packetArr[2];
+									String timetable_id = packetArr[3];
+									String account = packetArr[6];
+									String bank = packetArr[7];
+									
+									ArrayList<Integer> rowArr = new ArrayList<Integer>();
+									String row_list[] = packetArr[4].split(",");
+									for (String row : row_list)
+										rowArr.add(Integer.valueOf(row));
+									
+									ArrayList<Integer> colArr = new ArrayList<Integer>();
+									String col_list[] = packetArr[5].split(",");
+									for (String col : col_list)
+										colArr.add(Integer.valueOf(col));
+									
+									int price = rDao.addPreRsv(member, timetable_id, rowArr, colArr, account, bank);
+									rDao.addConfimRsv(member, timetable_id, rowArr, colArr);
+									conn.commit();
+									
+									System.out.println("관리자 예매 정보 등록 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									if (e.getMessage().equals("DUPLICATE_RSV"))
+									{
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/2");
+										break;
+									}
+									if (e.getMessage().equals("NOT_SELECTED"))
+									{
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/3");
+										break;
+									}
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									conn.rollback(sp);
+									conn.setAutoCommit(true);
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/4");
 									break;
 								}
 							}
