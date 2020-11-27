@@ -1,17 +1,23 @@
 package com.view;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.db.model.DAO;
 import com.db.model.DAOException;
 import com.db.model.DTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.db.model.ReservationDAO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
@@ -213,6 +219,9 @@ public class MovieTable implements Initializable
 		if (cnt <= 0)
 		{
 			t_movie_title.setText("<해당하는 상영시간표가 없습니다>");
+			Node temp = vbox.getChildren().get(0);
+			vbox.getChildren().clear();
+			vbox.getChildren().add(temp);
 			return;
 		}
 		t_movie_title.setText("<" + selectedMovie.getTitle() + ">");
@@ -252,7 +261,7 @@ public class MovieTable implements Initializable
 		try
 		{
 			Stage stage = new Stage();
-			FXMLLoader loader = new FXMLLoader(TheaterManage.class.getResource("./xml/user_sub_page/seat_choice.fxml"));
+			FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/seat_choice.fxml"));
 			Parent root = loader.load();
 			SeatController controller = loader.<SeatController>getController();
 			controller.initData(selectedCustom.getScreen(), selectedCustom.getTimeTable());
@@ -264,6 +273,76 @@ public class MovieTable implements Initializable
 			
 			row_list = controller.getSelected().get(0);
 			col_list = controller.getSelected().get(1);
+			
+			Connection conn = DAO.getConn();
+			conn.setAutoCommit(false);
+			Savepoint sp = conn.setSavepoint();
+			ReservationDAO rDao = new ReservationDAO();
+			int price = 0;
+			
+			try
+			{
+				price = rDao.addPreRsv(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
+				conn.commit();
+			}
+			catch (Exception e)
+			{
+				conn.rollback(sp);
+				e.printStackTrace();
+			}
+			finally
+			{
+				conn.setAutoCommit(true);
+			}
+			
+			Timer m_timer = new Timer();
+			TimerTask m_task = new TimerTask()
+			{
+				@Override
+				public void run()
+				{
+					try
+					{
+						System.out.println("스레드 시작");
+						rDao.clearRsv(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
+						conn.commit();
+						return;
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			m_timer.schedule(m_task, 60000);
+			
+			startPayment(price);
+		}
+		catch (Exception e)
+		{
+			
+			e.printStackTrace();
+		}
+	}
+	
+	private void startPayment(int price)
+	{
+		try
+		{
+			Stage stage = new Stage();
+			FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/payment.fxml"));
+			Parent root = loader.load();
+			Payment controller = loader.<Payment>getController();
+			ArrayList<ArrayList<Integer>> seat_list = new ArrayList<ArrayList<Integer>>();
+			seat_list.add(row_list);
+			seat_list.add(col_list);
+			controller.initData(selectedThea, selectedCustom.getScreen(), selectedMovie, selectedCustom.getTimeTable(), seat_list, price);
+			stage.setScene(new Scene(root));
+			stage.setTitle("좌석 선택");
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(bp_parent.getScene().getWindow());
+			stage.showAndWait();
 		}
 		catch (Exception e)
 		{

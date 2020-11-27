@@ -262,19 +262,19 @@ public class MovieServer extends Thread
 								}
 							}
 							
-							case Protocol.CS_REQ_ACCOUNT_VIEW :
+							case Protocol.CS_REQ_ACCOUNT_VIEW:
 							{
 								try
 								{
 									System.out.println("클라이언트가 계좌 정보 요청을 보냈습니다.");
 									AccountDAO aDao = new AccountDAO();
-						            AccountDTO aDto = aDao.getAdminAccount("admin");
-						            
-						            String account = aDto.getAccount();
-						            String bank = aDto.getBank();
-						            
-						            System.out.println("클라이언트에게 계좌 정보를 보냅니다.");
-						            writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ACCOUNT_VIEW + "!1!" + account + "!" + bank);
+									AccountDTO aDto = aDao.getAdminAccount("admin");
+									
+									String account = aDto.getAccount();
+									String bank = aDto.getBank();
+									
+									System.out.println("클라이언트에게 계좌 정보를 보냅니다.");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ACCOUNT_VIEW + "!1!" + account + "!" + bank);
 									break;
 								}
 								catch (Exception e)
@@ -284,7 +284,7 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
-
+							
 							case Protocol.CS_REQ_ADMINTIMETABLE_VIEW:
 							{
 								try
@@ -409,40 +409,39 @@ public class MovieServer extends Thread
 								{
 									System.out.println("클라이언트가 영화관 메뉴를 요청하였습니다.");
 									TheaterDAO tDao = new TheaterDAO();
-									ArrayList<TheaterDTO>theater_list = tDao.getTheaterList();
-						            Iterator<TheaterDTO> tIter = theater_list.iterator();
-						            String theaterMenuList = "";
-						            
-						            if(tIter.hasNext() == false) 
-						            {
-						            	writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW+ "!2");
-						            }
-						            
-						            while(tIter.hasNext())
-						            {
-						            	TheaterDTO temp = tIter.next();
-						            	String id = temp.getId();
-						            	String name = temp.getName();
-						            	String address = temp.getAddress();
-						            	String total_screen = Integer.toString(temp.getTotalScreen());
-						            	String total_seats = Integer.toString(temp.getTotalSeats());
-						            	if(tIter.hasNext())
-						            		theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats + ",";
-						            	else
-						            		theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats;
-						            }
-						            
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW+ "!1!" + theaterMenuList);
+									ArrayList<TheaterDTO> theater_list = tDao.getTheaterList();
+									Iterator<TheaterDTO> tIter = theater_list.iterator();
+									String theaterMenuList = "";
+									
+									if (tIter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
+									}
+									
+									while (tIter.hasNext())
+									{
+										TheaterDTO temp = tIter.next();
+										String id = temp.getId();
+										String name = temp.getName();
+										String address = temp.getAddress();
+										String total_screen = Integer.toString(temp.getTotalScreen());
+										String total_seats = Integer.toString(temp.getTotalSeats());
+										if (tIter.hasNext())
+											theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats + ",";
+										else
+											theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats;
+									}
+									
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!1!" + theaterMenuList);
 									System.out.println("영화관 메뉴 전송 성공");
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW+ "!2");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
 									break;
 								}
 							}
-							
 							
 						}
 					}
@@ -699,13 +698,13 @@ public class MovieServer extends Thread
 									System.out.println("클라이언트가 수입계좌 정보 수정 요청을 보냈습니다.");
 									String bank = packetArr[2];
 									String account = packetArr[3];
-						            AccountDAO aDao = new AccountDAO();
-						            aDao.changeAccountInfo("admin", bank, account);
-						            System.out.println("수입계좌 정보 수정 성공");
-						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/1");
+									AccountDAO aDao = new AccountDAO();
+									aDao.changeAccountInfo("admin", bank, account);
+									System.out.println("수입계좌 정보 수정 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/1");
 									break;
 								}
-								catch(Exception e)
+								catch (Exception e)
 								{
 									e.printStackTrace();
 									System.out.println("수입계좌 수정 실패");
@@ -770,8 +769,8 @@ public class MovieServer extends Thread
 									for (String col : col_list)
 										colArr.add(Integer.valueOf(col));
 									
-									int price = rDao.addPreRsv(member, timetable_id, rowArr, colArr, account, bank);
-									rDao.addConfimRsv(member, timetable_id, rowArr, colArr);
+									int price = rDao.addPreRsv(member, timetable_id, rowArr, colArr);
+									rDao.addConfimRsv(member, timetable_id, rowArr, colArr, account, bank);
 									conn.commit();
 									
 									System.out.println("관리자 예매 정보 등록 성공");
@@ -798,6 +797,10 @@ public class MovieServer extends Thread
 									conn.setAutoCommit(true);
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/4");
 									break;
+								}
+								finally
+								{
+									conn.setAutoCommit(true);
 								}
 							}
 							
