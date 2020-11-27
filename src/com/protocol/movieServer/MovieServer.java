@@ -31,6 +31,7 @@ import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
+import com.main.mainGUI;
 import com.protocol.Protocol;
 
 public class MovieServer extends Thread
@@ -353,6 +354,7 @@ public class MovieServer extends Thread
 									theater = tDao.getTheaterElem(screen.getTheaterId());
 									infoList += theater.getId() + "/" + theater.getName() + "/" + theater.getAddress() + "/" + Integer.toString(theater.getTotalScreen()) + "/" + Integer.toString(theater.getTotalSeats());
 									
+									System.out.println("다중 정보 전송 성공");
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!1!" + infoList);
 									break;
 								}
@@ -801,6 +803,97 @@ public class MovieServer extends Thread
 								finally
 								{
 									conn.setAutoCommit(true);
+								}
+							}
+							
+							case Protocol.CS_REQ_TIMETABLE_ADD:
+							{
+								try
+								{
+									System.out.println("클라이언트가 상영시간표 등록을 요청했습니다.");
+									String mv_id = packetArr[2];
+									String sc_id = packetArr[3];
+									String start_time = packetArr[4];
+									String end_time = packetArr[5];
+									
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ttDao.addTimeTable(new TimeTableDTO(DTO.EMPTY_ID, mv_id, sc_id, start_time, end_time, "0", 0));
+									
+									System.out.println("상영시간표 등록 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									if (e.getMessage().equals("DUPLICATE_TIMETABLE"))
+									{
+										e.printStackTrace();
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/2");
+										break;
+									}
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_TIMETABLE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 상영시간표 수정을 요청했습니다.");
+									String tt_id = packetArr[2];
+									String sc_id = packetArr[3];
+									String mv_id = packetArr[4];
+									String start_time = packetArr[5];
+									String end_time = packetArr[6];
+									
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ttDao.changeTimeTable(new TimeTableDTO(tt_id, mv_id, sc_id, start_time, end_time, "0", 0));
+									
+									System.out.println("상영시간표 수정 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									if (e.getMessage().equals("DUPLICATE_TIMETABLE"))
+									{
+										e.printStackTrace();
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/2");
+										break;
+									}
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_TIMETABLE_DELETE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 상영시간표 삭제를 요청했습니다.");
+									String timetable_id = packetArr[2];
+									
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ttDao.removeTimeTable(timetable_id);
+									
+									System.out.println("상영시간표 삭제 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETALBE_DELETE + "/1");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETALBE_DELETE + "/2");
+									break;
 								}
 							}
 							
