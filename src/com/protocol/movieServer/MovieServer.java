@@ -317,6 +317,8 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
+							
+							
 						}
 					}
 					
