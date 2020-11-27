@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
 import com.db.model.DAOException;
-import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
