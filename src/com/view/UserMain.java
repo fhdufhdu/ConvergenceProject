@@ -28,7 +28,7 @@ public class UserMain implements Initializable
     private MenuButton mb_theater;
     
     @FXML
-    private BorderPane user_parent;
+    private BorderPane bp_user_sub;
     
     @FXML
     private ScrollPane sp_user_main;
@@ -55,7 +55,7 @@ public class UserMain implements Initializable
                             TheaterSearch controller = loader.<TheaterSearch>getController();
                             controller.initData(theater_list.get(Integer.valueOf(theater_name.getId())));
                             
-                            user_parent.setCenter(root);
+                            bp_user_sub.setCenter(root);
                         }
                         catch (Exception e)
                         {
@@ -76,6 +76,29 @@ public class UserMain implements Initializable
         {
             e.printStackTrace();
             mainGUI.alert("오류", "DB서버 연결 오류");
+        }
+    }
+    
+    @FXML
+    void menuTimeTable(ActionEvent event)
+    {
+        loadPage("movie_table");
+    }
+    
+    private void loadPage(String file_name)
+    {
+        try
+        {
+            Parent root = FXMLLoader.load(UserMain.class.getResource("./xml/user_sub_page/" + file_name + ".fxml"));
+            bp_user_sub.setCenter(root);
+            
+            /*
+             * GridPane a = new GridPane(); a.add(root, 1, 0);
+             */
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }

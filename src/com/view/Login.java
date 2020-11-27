@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 
 public class Login
 {
+	static public String USER_ID;
+	
 	@FXML
 	private TextField tf_id;
 	
@@ -100,11 +102,13 @@ public class Login
 							case "1":
 							{
 								startWindow("./xml/admin_main.fxml", "관리자 모드");
+								USER_ID = id;
 								return;
 							}
 							case "2":
 							{
 								startWindow("./xml/user_main.fxml", "시네마");
+								USER_ID = id;
 								return;
 							}
 							case "3":

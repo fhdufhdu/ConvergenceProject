@@ -1,53 +1,54 @@
 package com.view;
-//
-import javafx.event.*;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
-public class Payment {
-
-	@FXML
-    private TableView<?> tv_reservation;
-
-    @FXML
-    private TableColumn<?, ?> tc_theater;
-
-    @FXML
-    private TableColumn<?, ?> tc_movie;
-
-    @FXML
-    private TableColumn<?, ?> tc_screen;
-
-    @FXML
-    private TableColumn<?, ?> tc_date;
-
-    @FXML
-    private TableColumn<?, ?> tc_movie_time;
-
-    @FXML
-    private TableColumn<?, ?> tc_seat;
-
-    @FXML
-    private TableColumn<?, ?> tc_price;
-
+public class Payment
+{
+    
     @FXML
     private TextField tf_bank;
-
+    
     @FXML
-    private TextField tf_account_num;
-
+    private TextField tf_account;
+    
     @FXML
     private Button btn_payment;
-
+    
     @FXML
-    private TextField tf_secret_num;
-
+    private Text t_theater;
+    
     @FXML
-    void getPayment(ActionEvent event) {
-
+    private Text t_movie;
+    
+    @FXML
+    private Text t_screen;
+    
+    @FXML
+    private Text t_date;
+    
+    @FXML
+    private Text t_start_time;
+    
+    @FXML
+    private Text t_seat;
+    
+    @FXML
+    private PasswordField pf_passwd;
+    
+    @FXML
+    void getPayment(ActionEvent event)
+    {
+        
     }
-
+    
+    public void initData()
+    {
+        
+    }
+    
 }
