@@ -62,6 +62,7 @@ public class MovieTableManage implements Initializable
 	private MovieDTO selectedMovie;
 	private MemberDTO selectedMember;
 	private CustomDTO selectedCustom;
+	
 	@FXML
 	private ListView<TheaterDTO> lv_theater;
 	

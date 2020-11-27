@@ -134,12 +134,13 @@ public class TimeTableDAO extends DAO
         try
         {
             ArrayList<TimeTableDTO> temp_list = new ArrayList<TimeTableDTO>();
-            String insert_sql = "select * from timetables t, movies m, screens s where t.movie_id = m.id and s.id = t.screen_id and s.theater_id in (select id from theaters where id = ?) and movie_id like ? and start_time > ? and m.is_current > -1";
+            String insert_sql = "select * from timetables t, movies m, screens s where t.movie_id = m.id and s.id = t.screen_id and s.theater_id in (select id from theaters where id = ?) and movie_id like ? and start_time >= ? and end_time <= ? and m.is_current > -1";
             ps = conn.prepareStatement(insert_sql);
             
             ps.setString(1, theater_id);
             ps.setString(2, elem.getMovieId());
             ps.setTimestamp(3, elem.getStartTime());
+            ps.setTimestamp(4, elem.getEndTime());
             
             rs = ps.executeQuery();
             while (rs.next())

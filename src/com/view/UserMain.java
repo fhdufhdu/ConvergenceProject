@@ -29,7 +29,7 @@ public class UserMain implements Initializable
     private MenuButton mb_theater;
     
     @FXML
-    private BorderPane user_parent;
+    private BorderPane bp_user_sub;
     
     @FXML
     private ScrollPane sp_user_main;
@@ -79,7 +79,7 @@ public class UserMain implements Initializable
         	                            TheaterSearch controller = loader.<TheaterSearch>getController();
         	                            controller.initData(theater_list.get(Integer.valueOf(theater_name.getId())));
         	                            
-        	                            user_parent.setCenter(root);
+        	                            bp_user_sub.setCenter(root);
         	                        }
         	                        catch (Exception e)
         	                        {
@@ -134,11 +134,67 @@ public class UserMain implements Initializable
 //                double deltaY = scrollEvent.getDeltaY() * SPEED;
 //                sp_user_main.setVvalue(sp_user_main.getVvalue() - deltaY);
 //            });
+//            TheaterDAO tDao = new TheaterDAO();
+//            theater_list = tDao.getTheaterList();
+//            for (int i = 0; i < theater_list.size(); i++)
+//            {
+//                MenuItem theater_name = new MenuItem(theater_list.get(i).getName());
+//                theater_name.setId(Integer.toString(i));
+//                theater_name.setOnAction(new EventHandler<ActionEvent>()
+//                {
+//                    public void handle(ActionEvent event)
+//                    {
+//                        try
+//                        {
+//                            FXMLLoader loader = new FXMLLoader(UserMain.class.getResource("./xml/user_sub_page/theater_search.fxml"));
+//                            Parent root = (Parent) loader.load();
+//                            TheaterSearch controller = loader.<TheaterSearch>getController();
+//                            controller.initData(theater_list.get(Integer.valueOf(theater_name.getId())));
+//                            
+//                            bp_user_sub.setCenter(root);
+//                        }
+//                        catch (Exception e)
+//                        {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//                mb_theater.getItems().add(theater_name);
+//            }
+//            final double SPEED = 0.005;
+//            sp_user_main.getContent().setOnScroll(scrollEvent ->
+//            {
+//                double deltaY = scrollEvent.getDeltaY() * SPEED;
+//                sp_user_main.setVvalue(sp_user_main.getVvalue() - deltaY);
+//            });
         }
         catch (Exception e)
         {
             e.printStackTrace();
             mainGUI.alert("오류", "DB서버 연결 오류");
+        }
+    }
+    
+    @FXML
+    void menuTimeTable(ActionEvent event)
+    {
+        loadPage("movie_table");
+    }
+    
+    private void loadPage(String file_name)
+    {
+        try
+        {
+            Parent root = FXMLLoader.load(UserMain.class.getResource("./xml/user_sub_page/" + file_name + ".fxml"));
+            bp_user_sub.setCenter(root);
+            
+            /*
+             * GridPane a = new GridPane(); a.add(root, 1, 0);
+             */
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }
