@@ -60,75 +60,75 @@ public class TheaterSearch
 			t_total_seat.setText(theater.getTotalSeats() + "석");
 			t_address.setText("○ " + theater.getAddress());
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_PRICE_VIEW);
-				
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_PRICE_VIEW);
+			
 			String packet = mainGUI.readLine();
 			String packetArr[] = packet.split("!");
-        	String packetType = packetArr[0];
-        	String packetCode = packetArr[1];
-        	
-        	if(packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_PRICE_VIEW))
-        	{
-        		String result = packetArr[2];
-        		switch(result) 
-        		{
-        		case "1":
-        			String priceArr[] = packetArr[3].split(",");
-        			for(String priceInfo : priceArr) 
-        			{
-        				String priceList[] = priceInfo.split("/");
-        				String priceType = priceList[0];
-        				String price = priceList[1];
-        				switch (priceType)
-                        {
-                            case "1":
-                            {
-                                t_type_1.setText(price);
-                                break;
-                            }
-                            case "2":
-                            {
-                            	t_type_2.setText(price);
-                                break;
-                            }
-                            case "3":
-                            {
-                            	t_type_3.setText(price);
-                                break;
-                            }
-                        }
-        			}
-        			break;
-        		case "2":
-        			System.out.println("가격정보 요청에 실패하였습니다.");
-        			mainGUI.alert("경고", "가격정보 요청에 실패하였습니다.");
-        			break;
-        		}
-        	}
-//			ChargeDAO cDao = new ChargeDAO();
-//			Iterator<ChargeDTO> cIter = cDao.getChargeList().iterator();
-//			while (cIter.hasNext())
-//			{
-//				ChargeDTO temp = cIter.next();
-//				switch (temp.getType())
-//				{
-//					case "1":
-//					{
-//						t_type_1.setText(Integer.toString(temp.getPrice()));
-//						break;
-//					}
-//					case "2":
-//					{
-//						t_type_2.setText(Integer.toString(temp.getPrice()));
-//						break;
-//					}
-//					case "3":
-//					{
-//						t_type_3.setText(Integer.toString(temp.getPrice()));
-//						break;
-//					}
-//				}
-//			}
+			String packetType = packetArr[0];
+			String packetCode = packetArr[1];
+			
+			if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_PRICE_VIEW))
+			{
+				String result = packetArr[2];
+				switch (result)
+				{
+					case "1":
+						String priceArr[] = packetArr[3].split(",");
+						for (String priceInfo : priceArr)
+						{
+							String priceList[] = priceInfo.split("`");
+							String priceType = priceList[0];
+							String price = priceList[1];
+							switch (priceType)
+							{
+								case "1":
+								{
+									t_type_1.setText(price);
+									break;
+								}
+								case "2":
+								{
+									t_type_2.setText(price);
+									break;
+								}
+								case "3":
+								{
+									t_type_3.setText(price);
+									break;
+								}
+							}
+						}
+						break;
+					case "2":
+						System.out.println("가격정보 요청에 실패하였습니다.");
+						mainGUI.alert("경고", "가격정보 요청에 실패하였습니다.");
+						break;
+				}
+			}
+			// ChargeDAO cDao = new ChargeDAO();
+			// Iterator<ChargeDTO> cIter = cDao.getChargeList().iterator();
+			// while (cIter.hasNext())
+			// {
+			// ChargeDTO temp = cIter.next();
+			// switch (temp.getType())
+			// {
+			// case "1":
+			// {
+			// t_type_1.setText(Integer.toString(temp.getPrice()));
+			// break;
+			// }
+			// case "2":
+			// {
+			// t_type_2.setText(Integer.toString(temp.getPrice()));
+			// break;
+			// }
+			// case "3":
+			// {
+			// t_type_3.setText(Integer.toString(temp.getPrice()));
+			// break;
+			// }
+			// }
+			// }
 		}
 		catch (Exception e)
 		{

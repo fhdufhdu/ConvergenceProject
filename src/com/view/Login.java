@@ -80,12 +80,12 @@ public class Login
 			String id = tf_id.getText();
 			String passwd = pf_passwd.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "/" + id + "/" + passwd);
+			mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + passwd);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				
 				switch (packetType)
@@ -93,7 +93,7 @@ public class Login
 					/*
 					 * case Protocol.PT_REQ_LOGIN_INFO: // gui에서 값 가져옴 id = tf_id.getText(); passwd = pf_passwd.getText();
 					 * 
-					 * mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "/" + id + "/" + passwd); return;
+					 * mainGUI.writePacket(Protocol.PT_REQ_LOGIN + "`" + id + "`" + passwd); return;
 					 */
 					case Protocol.PT_RES_LOGIN:
 						String result = packetArr[1];

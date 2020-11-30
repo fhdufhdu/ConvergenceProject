@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< HEAD
 
+=======
+<?import javafx.geometry.Insets?>
+>>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,13 +14,19 @@
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresent">
    <children>
       <Text layoutX="50.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="현재상영작" textAlignment="CENTER">
+<<<<<<< HEAD
       
+=======
+>>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
          <font>
-            <Font size="25.0" />
+            <Font name="LG Smart UI Bold" size="25.0" />
          </font>
       </Text>
       <GridPane fx:id="gp_current_movie" layoutX="55.0" layoutY="81.0" maxWidth="800.0" minWidth="800.0" prefHeight="499.0" prefWidth="800.0">
+<<<<<<< HEAD
       
+=======
+>>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
