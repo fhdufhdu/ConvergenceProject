@@ -93,7 +93,6 @@ public class TimeTableDAO extends DAO
             ArrayList<TimeTableDTO> temp_list = new ArrayList<TimeTableDTO>();
             String insert_sql = "select * from timetables where movie_id like ? and screen_id like ? and start_time >= ? and end_time <= ?";
             ps = conn.prepareStatement(insert_sql);
-            System.out.println(elem.getMovieId() + "/" + elem.getScreenId() + "/" + elem.getStartTime() + "/" + elem.getEndTime());
             ps.setString(1, elem.getMovieId());
             ps.setString(2, elem.getScreenId());
             ps.setTimestamp(3, elem.getStartTime());
@@ -114,11 +113,6 @@ public class TimeTableDAO extends DAO
             
             rs.close();
             ps.close();
-            
-//            if (temp_list.size() == 0)
-//            {
-//                throw new DAOException("EMPTY_LIST");
-//            }
             
             return temp_list;
         }
@@ -200,6 +194,31 @@ public class TimeTableDAO extends DAO
         throw new DAOException("not found result of theaters");
     }
     
+    public double getRsvRate(String movie_id) throws DAOException, SQLException
+    {
+        try
+        {
+            String insert_sql = "call CALC_RSV_RATE(?, ?, ?)";
+            
+            CallableStatement cs = conn.prepareCall(insert_sql);
+            
+            cs.setString(1, movie_id);
+            cs.registerOutParameter(2, Types.INTEGER);
+            cs.registerOutParameter(3, Types.INTEGER);
+            cs.executeUpdate();
+            int total_capacity = cs.getInt(2);
+            int total_rsv = cs.getInt(3);
+            
+            cs.close();
+            return ((double) total_rsv / (double) total_capacity);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
     // 상영 시간표 수정
     public void changeTimeTable(TimeTableDTO elem) throws DAOException, SQLException
     {
@@ -241,11 +260,8 @@ public class TimeTableDAO extends DAO
         try
         {
             String insert_sql = "delete from timetables where id = ?";
-            
             ps = conn.prepareStatement(insert_sql);
-            
             ps.setString(1, ttid);
-            
             int r = ps.executeUpdate();
             System.out.println("변경된 row : " + r);
             
@@ -256,6 +272,10 @@ public class TimeTableDAO extends DAO
         {
             System.out.println("find error on sql");
             sqle.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }

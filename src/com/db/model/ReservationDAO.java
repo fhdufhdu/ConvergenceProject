@@ -27,11 +27,11 @@ public class ReservationDAO extends DAO
     }
     
     // 예약 추가
-    public int addPreRsv(String member_id, String ttable_id, ArrayList<Integer> row_arr, ArrayList<Integer> col_arr, String account, String bank) throws DAOException, SQLException
+    public int addPreRsv(String member_id, String ttable_id, ArrayList<Integer> row_arr, ArrayList<Integer> col_arr) throws DAOException, SQLException
     {
         try
         {
-            String insert_sql = "call PRE_RSV(?, ?, ?, ?, ?, ?, ?)";
+            String insert_sql = "call PRE_RSV(?, ?, ?, ?, ?)";
             
             CallableStatement cs = conn.prepareCall(insert_sql);
             
@@ -39,11 +39,9 @@ public class ReservationDAO extends DAO
             cs.setString(2, ttable_id);
             cs.setArray(3, new ARRAY(ArrayDescriptor.createDescriptor("N_ARRAY", conn), conn, row_arr.toArray()));
             cs.setArray(4, new ARRAY(ArrayDescriptor.createDescriptor("N_ARRAY", conn), conn, col_arr.toArray()));
-            cs.setString(5, account);
-            cs.setString(6, bank);
-            cs.registerOutParameter(7, Types.INTEGER);
+            cs.registerOutParameter(5, Types.INTEGER);
             cs.executeUpdate();
-            int result = cs.getInt(7);
+            int result = cs.getInt(5);
             
             cs.close();
             return result;
@@ -56,11 +54,11 @@ public class ReservationDAO extends DAO
         
     }
     
-    public void addConfimRsv(String member_id, String ttable_id, ArrayList<Integer> row_arr, ArrayList<Integer> col_arr) throws DAOException, SQLException
+    public void addConfimRsv(String member_id, String ttable_id, ArrayList<Integer> row_arr, ArrayList<Integer> col_arr, String account, String bank) throws DAOException, SQLException
     {
         try
         {
-            String insert_sql = "call CONFIRM_RSV(?, ?, ?, ?)";
+            String insert_sql = "call CONFIRM_RSV(?, ?, ?, ?, ?, ?)";
             
             CallableStatement cs = conn.prepareCall(insert_sql);
             
@@ -68,6 +66,8 @@ public class ReservationDAO extends DAO
             cs.setString(2, ttable_id);
             cs.setArray(3, new ARRAY(ArrayDescriptor.createDescriptor("N_ARRAY", conn), conn, row_arr.toArray()));
             cs.setArray(4, new ARRAY(ArrayDescriptor.createDescriptor("N_ARRAY", conn), conn, col_arr.toArray()));
+            cs.setString(5, account);
+            cs.setString(6, bank);
             
             cs.executeUpdate();
             
@@ -83,19 +83,28 @@ public class ReservationDAO extends DAO
     
     public void payment(String mem_accout, String bank, String passwd, int money) throws DAOException, SQLException
     {
-        String insert_sql = "call payment(?, ?, ?, ?)";
+        try
+        {
+            String insert_sql = "call payment(?, ?, ?, ?)";
+            
+            ps = conn.prepareStatement(insert_sql);
+            
+            ps.setString(1, mem_accout);
+            ps.setInt(2, money);
+            ps.setString(3, bank);
+            ps.setString(4, passwd);
+            
+            int r = ps.executeUpdate();
+            System.out.println("변경된 row : " + r);
+            
+            ps.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new DAOException("PAYMENT_ERR");
+        }
         
-        ps = conn.prepareStatement(insert_sql);
-        
-        ps.setString(1, mem_accout);
-        ps.setInt(2, money);
-        ps.setString(3, bank);
-        ps.setString(4, passwd);
-        
-        int r = ps.executeUpdate();
-        System.out.println("변경된 row : " + r);
-        
-        ps.close();
     }
     
     public void refund(String rid) throws DAOException, SQLException
@@ -110,6 +119,22 @@ public class ReservationDAO extends DAO
         System.out.println("변경된 row : " + r);
         
         ps.close();
+    }
+    
+    public void clearRsv(String member_id, String ttable_id, ArrayList<Integer> row_arr, ArrayList<Integer> col_arr) throws DAOException, SQLException
+    {
+        String insert_sql = "call CLEAR_RSV(?, ?, ?, ?)";
+        
+        CallableStatement cs = conn.prepareCall(insert_sql);
+        
+        cs.setString(1, member_id);
+        cs.setString(2, ttable_id);
+        cs.setArray(3, new ARRAY(ArrayDescriptor.createDescriptor("N_ARRAY", conn), conn, row_arr.toArray()));
+        cs.setArray(4, new ARRAY(ArrayDescriptor.createDescriptor("N_ARRAY", conn), conn, col_arr.toArray()));
+        
+        cs.executeUpdate();
+        
+        cs.close();
     }
     
     private int checkReservation(ReservationDTO rsv) throws DAOException, SQLException

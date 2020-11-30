@@ -21,7 +21,10 @@ import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
+import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
+import com.main.mainGUI;
+
 
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -137,7 +140,7 @@ public class ReservationCancel implements Initializable
             
 
            
-  @FXML  //예매정보 취소
+    @FXML  //예매정보 취소
   void cancelReservation(ActionEvent event) 
   {
       try
@@ -163,9 +166,11 @@ public class ReservationCancel implements Initializable
           tv_reservation.getItems().clear();
           initList();
           tv_reservation.setItems(reservation_list);
-
       }
-   
+      catch (Exception e)
+      {
+          e.printStackTrace();
+      }
   }
     
     private void initList()
@@ -205,8 +210,12 @@ public class ReservationCancel implements Initializable
             
             TheaterDAO tDao = new TheaterDAO();
             theater = tDao.getTheaterElem(screen.getTheaterId());
+            
+            
         }
         
+        
+            
     public StringProperty getMovie()
     {
         return new SimpleStringProperty(movie.getTitle());
@@ -227,6 +236,12 @@ public class ReservationCancel implements Initializable
         return new SimpleStringProperty(timetable.getStartTime().toString());
     }
     
+    public StringProperty getSeat()
+    {
+        return new SimpleStringProperty(Character.toString((char) (rDto.getScreenRow() + 65)) + Integer.toString(rDto.getScreenCol() + 1));
+    }
+    
+    }
+        
     }
 }
-

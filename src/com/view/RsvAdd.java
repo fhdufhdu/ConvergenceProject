@@ -777,7 +777,7 @@ public class RsvAdd implements Initializable
 			String date = dp_start_date.getValue() == null ? "1976-01-01 " : dateFormat.format(dp_start_date.getValue()) + " ";
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : mb_hours_start.getText().replace("시", "") + ":00:00.0";
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : mb_hours_end.getText().replace("시", "") + ":00:00.0";
-			
+
 			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "/" + mov_id + "/" + screen_id + "/" + date + "/" + start_time + "/" + end_time);
 			
 			while (true)
@@ -815,25 +815,18 @@ public class RsvAdd implements Initializable
 						}
 						case "2":
 						{
-							mainGUI.alert("오류", "상영관 시간표가 없습니다.");
+							mainGUI.alert("오류", "상영시간표가 없습니다.");
 							break;
 						}
 						case "3":
 						{
-							mainGUI.alert("오류", "상영관 시간표 요청 실패했습니다.");
+							mainGUI.alert("오류", "상영시간표 요청 실패했습니다.");
 							break;
 						}
 					}
 					if (result != null)
 						return;
 				}
-			}
-		}
-		catch (DAOException e)
-		{
-			if (e.getMessage().equals("EMPTY_LIST"))
-			{
-				mainGUI.alert("에러", "상영시간표 리스트가 없습니다");
 			}
 		}
 		catch (Exception e)

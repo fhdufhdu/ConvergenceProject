@@ -53,8 +53,11 @@ public class SeatController implements Initializable
     private int row;
     private int col;
     
+    private boolean is_clicked_close;
+    
     public void initData(ScreenDTO screen, TimeTableDTO timetable)
     {
+        is_clicked_close = false;
         row = screen.getMaxRow();
         col = screen.getMaxCol();
         
@@ -170,6 +173,7 @@ public class SeatController implements Initializable
     @FXML
     void close(ActionEvent event)
     {
+        is_clicked_close = true;
         Stage stage = (Stage) btn_select.getScene().getWindow();
         stage.close();
     }
@@ -207,5 +211,10 @@ public class SeatController implements Initializable
             }
         }
         return seat_list;
+    }
+    
+    public boolean getIsClickedClose()
+    {
+        return is_clicked_close;
     }
 }

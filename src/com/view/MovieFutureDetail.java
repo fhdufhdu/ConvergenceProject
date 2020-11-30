@@ -4,34 +4,34 @@ package com.view;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaView;
+import javafx.scene.text.Text;
+
 
 public class MovieFutureDetail
 {
 	@FXML
-    private TabPane tabpane_detail;
+    private Button btn_reservation;
 
     @FXML
-    private Tab tab_plot;
+    private ImageView image_movie;
 
     @FXML
-    private AnchorPane tab_plot1;
+    private Text text_title;
 
     @FXML
-    private TextArea ta_plot;
+    private Text text_open_date;
 
     @FXML
-    private Tab tap_review;
+    private Text text_director;
 
     @FXML
-    private AnchorPane tap_review1;
+    private Text text_actor;
 
     @FXML
     private TableView<?> tv_review;
@@ -49,54 +49,28 @@ public class MovieFutureDetail
     private TableColumn<?, ?> tc_review;
 
     @FXML
-    private Button btn_image;
+    private MenuButton mb_review;
 
     @FXML
-    private Hyperlink link_trailer;
+    private TextField tf_review;
 
     @FXML
-    private Button btn_image2;
+    private Button btn_review;
 
     @FXML
-    private Button btn_image3;
+    private Text text_plot;
 
     @FXML
-    private Button btn_image4;
+    private MediaView media_movie;
 
     @FXML
-    private TextField tf_movie;
+    private ImageView image_stillcut;
 
     @FXML
-    private TextField tf_start_date;
+    private ImageView image_stillcut2;
 
     @FXML
-    private TextField tf_director;
-
-    @FXML
-    private TextField tf_actor;
-
-    @FXML
-    private Button btn_reservation;
-
-    @FXML
-    void getPosterPath(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath2(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath3(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath4(ActionEvent event) {
-
-    }
+    private ImageView image_stillcut3;
 
     @FXML
     void getReservation(ActionEvent event) {
@@ -104,7 +78,8 @@ public class MovieFutureDetail
     }
 
     @FXML
-    void getTrailerPath(ActionEvent event) {
+    void getReview(ActionEvent event) {
 
     }
+
 }
