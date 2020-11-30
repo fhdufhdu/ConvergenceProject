@@ -210,7 +210,7 @@ public class ReservationDAO extends DAO
     public ArrayList<ReservationDTO> getRsvListFromMem(String mem_id) throws DAOException, SQLException
     {
         ArrayList<ReservationDTO> temp_list = new ArrayList<ReservationDTO>();
-        String insert_sql = "select * from reservations where member_id = ? and cancel = 0";
+        String insert_sql = "select * from reservations where member_id = ? and not(type = 2)";
         ps = conn.prepareStatement(insert_sql);
         
         ps.setString(1, mem_id);
