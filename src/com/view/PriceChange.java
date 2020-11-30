@@ -73,6 +73,7 @@ public class PriceChange implements Initializable
         			break;
         		case "2":
         			System.out.println("가격정보 요청에 실패하였습니다.");
+        			mainGUI.alert("경고", "가격정보 요청에 실패하였습니다.");
         			break;
         		}
         	}

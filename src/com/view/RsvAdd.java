@@ -399,6 +399,8 @@ public class RsvAdd implements Initializable
 				@Override
 				public void changed(ObservableValue<? extends CustomDTO> observable, CustomDTO oldValue, CustomDTO newValue)
 				{
+					if (tv_timetable.getSelectionModel().getSelectedItem() == null)
+						return;
 					selectedCustom = tv_timetable.getSelectionModel().getSelectedItem();
 					System.out.println(selectedCustom.getTimeTable().getId());
 				}
@@ -438,37 +440,79 @@ public class RsvAdd implements Initializable
 	@FXML
 	void addRsv(ActionEvent event) throws Exception
 	{
-		Connection conn = DAO.getConn();
-		conn.setAutoCommit(false);
-		Savepoint sp = conn.setSavepoint();
 		try
 		{
-			ReservationDAO rDao = new ReservationDAO();
-			int price = rDao.addPreRsv(tf_member.getText(), selectedCustom.getTimeTable().getId(), row_list, col_list, tf_account.getText(), tf_bank.getText());
-			rDao.addConfimRsv(tf_member.getText(), selectedCustom.getTimeTable().getId(), row_list, col_list);
+			String member = tf_member.getText();
+			String timetable_id = selectedCustom.getTimeTable().getId();
+			String account = tf_account.getText();
+			String bank = tf_bank.getText();
+			String rowList = "";
+			String colList = "";
 			
-			// rDao.payment("2222", "농협", "1234", price);
+			Iterator<Integer> riter = row_list.iterator();
+			Iterator<Integer> citer = col_list.iterator();
 			
-			conn.commit();
-			
-			mainGUI.alert("예매 성공", "예매에 성공했습니다");
-		}
-		catch (DAOException e)
-		{
-			if (e.getMessage().equals("DUPLICATE_RSV"))
+			while (riter.hasNext())
 			{
-				mainGUI.alert("에러", "중복되는 예매 발견");
+				if (riter.hasNext())
+					rowList = Integer.toString(riter.next()) + ",";
+				else
+					rowList = Integer.toString(riter.next());
 			}
-			if (e.getMessage().equals("NOT_SELECTED"))
+			
+			while (citer.hasNext())
 			{
-				mainGUI.alert("에러", "가예매의 존재가 없음");
+				if (citer.hasNext())
+					colList = Integer.toString(citer.next()) + ",";
+				else
+					colList = Integer.toString(citer.next());
+			}
+			
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_ADMINRESERVATION_ADD + "/" + member + "/" + timetable_id + "/" + rowList + "/" + colList + "/" + account + "/" + bank);
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("/"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_ADMINRESERVATION_ADD))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							mainGUI.alert("예매 성공", "예매에 성공했습니다");
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("에러", "중복되는 예매 발견");
+							break;
+						}
+						case "3":
+						{
+							mainGUI.alert("에러", "가예매의 존재가 없음");
+							break;
+						}
+						case "4":
+						{
+							mainGUI.alert("예매 실패", "예매에 실패했습니다");
+							break;
+						}
+					}
+					if (result != null)
+						break;
+				}
 			}
 		}
 		catch (Exception e)
 		{
+			mainGUI.alert("예매 실패", "예매에 실패했습니다");
 			e.printStackTrace();
-			conn.rollback(sp);
-			conn.setAutoCommit(true);
 		}
 	}
 	
@@ -534,7 +578,7 @@ public class RsvAdd implements Initializable
 						case "1":
 						{
 							String screenList = packetArr[3];
-							String listArr[] = screenList.split(","); // 각 영화별로 리스트 분할
+							String listArr[] = screenList.split(","); // 각 상영관 별로 리스트 분할
 							
 							for (String listInfo : listArr)
 							{
@@ -596,9 +640,7 @@ public class RsvAdd implements Initializable
 				}
 			}
 		}
-		catch (
-		
-		Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -735,7 +777,7 @@ public class RsvAdd implements Initializable
 			String date = dp_start_date.getValue() == null ? "1976-01-01 " : dateFormat.format(dp_start_date.getValue()) + " ";
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : mb_hours_start.getText().replace("시", "") + ":00:00.0";
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : mb_hours_end.getText().replace("시", "") + ":00:00.0";
-			
+
 			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "/" + mov_id + "/" + screen_id + "/" + date + "/" + start_time + "/" + end_time);
 			
 			while (true)
@@ -773,25 +815,18 @@ public class RsvAdd implements Initializable
 						}
 						case "2":
 						{
-							mainGUI.alert("오류", "상영관 시간표가 없습니다.");
+							mainGUI.alert("오류", "상영시간표가 없습니다.");
 							break;
 						}
 						case "3":
 						{
-							mainGUI.alert("오류", "상영관 시간표 요청 실패했습니다.");
+							mainGUI.alert("오류", "상영시간표 요청 실패했습니다.");
 							break;
 						}
 					}
 					if (result != null)
 						return;
 				}
-			}
-		}
-		catch (DAOException e)
-		{
-			if (e.getMessage().equals("EMPTY_LIST"))
-			{
-				mainGUI.alert("에러", "상영시간표 리스트가 없습니다");
 			}
 		}
 		catch (Exception e)
@@ -807,18 +842,54 @@ public class RsvAdd implements Initializable
 		MovieDTO movie;
 		TimeTableDTO timetable;
 		
-		public CustomDTO(TimeTableDTO timetable) throws DAOException, SQLException
+		public CustomDTO(TimeTableDTO timetable) throws Exception
 		{
-			this.timetable = timetable;
-			
-			MovieDAO movDao = new MovieDAO();
-			movie = movDao.getMovie(timetable.getMovieId());
-			
-			ScreenDAO sDao = new ScreenDAO();
-			screen = sDao.getScreenElem(timetable.getScreenId());
-			
-			TheaterDAO tDao = new TheaterDAO();
-			theater = tDao.getTheaterElem(screen.getTheaterId());
+			try
+			{
+				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_CUSTOM_INFO + "/" + timetable.getId());
+				
+				while (true)
+				{
+					String packet = mainGUI.readLine();
+					String packetArr[] = packet.split("!"); // 패킷 분할
+					String packetType = packetArr[0];
+					String packetCode = packetArr[1];
+					
+					if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_CUSTOM_INFO))
+					{
+						String result = packetArr[2];
+						
+						switch (result)
+						{
+							case "1":
+							{
+								this.timetable = timetable;
+								String infoList = packetArr[3];
+								String listArr[] = infoList.split(","); // 각 리스트 분할
+								String mv_info[] = listArr[0].split("/"); // 영화 정보 분할
+								String sc_info[] = listArr[1].split("/"); // 상영관 정보 분할
+								String th_info[] = listArr[2].split("/"); // 영화관 정보 분할
+								
+								movie = new MovieDTO(mv_info[0], mv_info[1], mv_info[2], mv_info[3], mv_info[4], mv_info[5], mv_info[6], mv_info[7], mv_info[8], mv_info[9], Integer.valueOf(mv_info[10]));
+								screen = new ScreenDTO(sc_info[0], sc_info[1], sc_info[2], Integer.valueOf(sc_info[3]), Integer.valueOf(sc_info[4]), Integer.valueOf(sc_info[5]));
+								theater = new TheaterDTO(th_info[0], th_info[1], th_info[2], Integer.valueOf(th_info[3]), Integer.valueOf(th_info[4]));
+								break;
+							}
+							case "2":
+							{
+								mainGUI.alert("경고", "정보 요청 실패했습니다.");
+								break;
+							}
+						}
+						if (result != null)
+							break;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		
 		public StringProperty getMovie()

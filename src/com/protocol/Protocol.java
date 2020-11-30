@@ -17,9 +17,11 @@ public class Protocol
 	public static final String SC_RES_SIGNUP = "7-0"; // 회원가입 요청 응답
 	
 	// 관리자
-	//회원 관리
-	public static final String CS_REQ_MEMBER_VIEW = "4-20"; // 회원 정보 요청
-	public static final String SC_RES_MEMBER_VIEW = "5-40"; // 회원 정보 요청 응답
+	// 회원 관리
+	public static final String CS_REQ_MEMBER_VIEW = "4-13"; // 회원 정보 요청
+	public static final String SC_RES_MEMBER_VIEW = "5-26"; // 회원 정보 요청 응답
+	public static final String CS_REQ_CUSTOM_INFO = "4-14"; // 다중 정보 요청
+	public static final String SC_RES_CUSTOM_INFO = "5-28"; // 다중 정보 요청 응답
 	
 	// 영화관 관리
 	public static final String CS_REQ_THEATER_VIEW = "4-8"; // 영화관 정보 요청
@@ -84,7 +86,11 @@ public class Protocol
 	public static final String SC_RES_PRICE_CHANGE = "7-26"; // 시간대별 가격 정보 요청 응답
 	
 	// 사용자
-	// 영화관 조회는 관리자 프로토콜과 동일
+	// 영화관
+	public static final String CS_REQ_THEATERMENU_VIEW = "4-12"; // 사용자 영화관 메뉴 요청
+	public static final String SC_RES_THEATERMENU_VIEW = "5-24"; // 사용자 영화관 메뉴 요청 응답
+	public static final String CS_REQ_THEATERDETAIL_VIEW = "4-13"; // 사용자 영화관 상세정보 요청
+	public static final String SC_RES_THEATERDETAIL_VIEW = "5-26"; // 사용자 영화관 상세정보 요청 응답
 	
 	// 영화
 	// 영화 검색은 관리자 프로토콜과 동일

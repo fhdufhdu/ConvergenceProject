@@ -13,11 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresentDetail">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="910.0" minWidth="910.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.MoviePresentDetail">
    <children>
-      <Text layoutX="405.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
+      <Text layoutX="50.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="상세정보">
          <font>
-            <Font size="25.0" />
+            <Font name="LG Smart UI Bold" size="25.0" />
          </font>
       </Text>
       <Text layoutX="341.0" layoutY="546.0" strokeType="OUTSIDE" strokeWidth="0.0" text="스틸컷">

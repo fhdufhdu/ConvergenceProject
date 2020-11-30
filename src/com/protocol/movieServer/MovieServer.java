@@ -6,11 +6,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.db.model.AccountDAO;
+import com.db.model.AccountDTO;
 import com.db.model.ChargeDAO;
 import com.db.model.ChargeDTO;
 import com.db.model.DAO;
@@ -20,12 +24,14 @@ import com.db.model.MemberDAO;
 import com.db.model.MemberDTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
+import com.db.model.ReservationDAO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
+import com.main.mainGUI;
 import com.protocol.Protocol;
 
 public class MovieServer extends Thread
@@ -241,9 +247,9 @@ public class MovieServer extends Thread
 									{
 										MovieDTO mDto = tIter.next();
 										if (tIter.hasNext())
-											movieList += mDto.getId() + "/" + mDto.getTitle() + "/" + mDto.getReleaseDate() + "/" + mDto.getIsCurrent() + "/" + mDto.getPlot() + "/" + mDto.getPosterPath() + "/" + mDto.getStillCutPath() + "/" + mDto.getTrailerPath() + "/" + mDto.getDirector() + "/" + mDto.getActor() + "/" + Integer.toString(mDto.getMin()) + ",";
+											movieList += mDto.getId() + "`" + mDto.getTitle() + "`" + mDto.getReleaseDate() + "`" + mDto.getIsCurrent() + "`" + mDto.getPlot() + "`" + mDto.getPosterPath() + "`" + mDto.getStillCutPath() + "`" + mDto.getTrailerPath() + "`" + mDto.getDirector() + "`" + mDto.getActor() + "`" + Integer.toString(mDto.getMin()) + ",";
 										else
-											movieList += mDto.getId() + "/" + mDto.getTitle() + "/" + mDto.getReleaseDate() + "/" + mDto.getIsCurrent() + "/" + mDto.getPlot() + "/" + mDto.getPosterPath() + "/" + mDto.getStillCutPath() + "/" + mDto.getTrailerPath() + "/" + mDto.getDirector() + "/" + mDto.getActor() + "/" + Integer.toString(mDto.getMin());
+											movieList += mDto.getId() + "`" + mDto.getTitle() + "`" + mDto.getReleaseDate() + "`" + mDto.getIsCurrent() + "`" + mDto.getPlot() + "`" + mDto.getPosterPath() + "`" + mDto.getStillCutPath() + "`" + mDto.getTrailerPath() + "`" + mDto.getDirector() + "`" + mDto.getActor() + "`" + Integer.toString(mDto.getMin());
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!1!" + movieList);
 									System.out.println("영화 리스트 전송 성공");
@@ -253,6 +259,29 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_ACCOUNT_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 계좌 정보 요청을 보냈습니다.");
+									AccountDAO aDao = new AccountDAO();
+									AccountDTO aDto = aDao.getAdminAccount("admin");
+									
+									String account = aDto.getAccount();
+									String bank = aDto.getBank();
+									
+									System.out.println("클라이언트에게 계좌 정보를 보냅니다.");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ACCOUNT_VIEW + "!1!" + account + "!" + bank);
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ACCOUNT_VIEW + "!2");
 									break;
 								}
 							}
@@ -283,9 +312,9 @@ public class MovieServer extends Thread
 									{
 										TimeTableDTO tbDto = t_iter.next();
 										if (t_iter.hasNext())
-											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" +tbDto.getStartTime()+ "/"+ tbDto.getEndTime() + ",";
+											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" + tbDto.getStartTime() + "/" + tbDto.getEndTime() + ",";
 										else
-											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" +tbDto.getStartTime()+ "/"+ tbDto.getEndTime();
+											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" + tbDto.getStartTime() + "/" + tbDto.getEndTime();
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!1!" + timetableList);
 									System.out.println("상영시간표 리스트 전송 성공");
@@ -299,10 +328,49 @@ public class MovieServer extends Thread
 								}
 							}
 							
+							case Protocol.CS_REQ_CUSTOM_INFO:
+							{
+								try
+								{
+									System.out.println("클라이언트가 다중 정보 요청을 보냈습니다.");
+									String timetable_id = packetArr[2];
+									TimeTableDAO ttDao = new TimeTableDAO();
+									TimeTableDTO ttDto = ttDao.getTimeTable(timetable_id);
+									TheaterDTO theater;
+									ScreenDTO screen;
+									MovieDTO movie;
+									String infoList = "";
+									
+									MovieDAO movDao = new MovieDAO();
+									movie = movDao.getMovie(ttDto.getMovieId());
+									
+									infoList += movie.getId() + "/" + movie.getTitle() + "/" + movie.getReleaseDate().toString() + "/" + movie.getIsCurrent() + "/" + movie.getPlot() + "/" + movie.getPosterPath() + "/" + movie.getStillCutPath() + "/" + movie.getTrailerPath() + "/" + movie.getDirector() + "/" + movie.getActor() + "/" + Integer.toString(movie.getMin()) + ",";
+									
+									ScreenDAO sDao = new ScreenDAO();
+									screen = sDao.getScreenElem(ttDto.getScreenId());
+									infoList += screen.getId() + "/" + screen.getTheaterId() + "/" + screen.getName() + "/" + Integer.toString(screen.getTotalCapacity()) + "/" + Integer.toString(screen.getMaxRow()) + "/" + Integer.toString(screen.getMaxCol()) + ",";
+									
+									TheaterDAO tDao = new TheaterDAO();
+									theater = tDao.getTheaterElem(screen.getTheaterId());
+									infoList += theater.getId() + "/" + theater.getName() + "/" + theater.getAddress() + "/" + Integer.toString(theater.getTotalScreen()) + "/" + Integer.toString(theater.getTotalSeats());
+									
+									System.out.println("다중 정보 전송 성공");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!1!" + infoList);
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!2");
+									break;
+								}
+							}
+							
 							case Protocol.CS_REQ_PRICE_VIEW:
 							{
 								try
 								{
+									System.out.println("클라이언트가 가격 정보 조회 요청을 보냈습니다.");
 									ChargeDAO cDao = new ChargeDAO();
 									ArrayList<ChargeDTO> cList = cDao.getChargeList();
 									Iterator<ChargeDTO> cIter = cList.iterator();
@@ -336,6 +404,47 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
+							
+							case Protocol.CS_REQ_THEATERMENU_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화관 메뉴를 요청하였습니다.");
+									TheaterDAO tDao = new TheaterDAO();
+									ArrayList<TheaterDTO> theater_list = tDao.getTheaterList();
+									Iterator<TheaterDTO> tIter = theater_list.iterator();
+									String theaterMenuList = "";
+									
+									if (tIter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
+									}
+									
+									while (tIter.hasNext())
+									{
+										TheaterDTO temp = tIter.next();
+										String id = temp.getId();
+										String name = temp.getName();
+										String address = temp.getAddress();
+										String total_screen = Integer.toString(temp.getTotalScreen());
+										String total_seats = Integer.toString(temp.getTotalSeats());
+										if (tIter.hasNext())
+											theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats + ",";
+										else
+											theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats;
+									}
+									
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!1!" + theaterMenuList);
+									System.out.println("영화관 메뉴 전송 성공");
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
+									break;
+								}
+							}
+							
 						}
 					}
 					
@@ -584,6 +693,28 @@ public class MovieServer extends Thread
 								}
 							}
 							
+							case Protocol.CS_REQ_ACCOUNT_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 수입계좌 정보 수정 요청을 보냈습니다.");
+									String bank = packetArr[2];
+									String account = packetArr[3];
+									AccountDAO aDao = new AccountDAO();
+									aDao.changeAccountInfo("admin", bank, account);
+									System.out.println("수입계좌 정보 수정 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/1");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									System.out.println("수입계좌 수정 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/2");
+									break;
+								}
+							}
+							
 							case Protocol.CS_REQ_MOVIE_CHANGE:
 							{
 								try
@@ -612,6 +743,156 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_ADMINRESERVATION_ADD:
+							{
+								Connection conn = DAO.getConn();
+								conn.setAutoCommit(false);
+								Savepoint sp = conn.setSavepoint();
+								try
+								{
+									System.out.println("관리자가 예매 등록 요청을 보냈습니다.");
+									ReservationDAO rDao = new ReservationDAO();
+									String member = packetArr[2];
+									String timetable_id = packetArr[3];
+									String account = packetArr[6];
+									String bank = packetArr[7];
+									
+									ArrayList<Integer> rowArr = new ArrayList<Integer>();
+									String row_list[] = packetArr[4].split(",");
+									for (String row : row_list)
+										rowArr.add(Integer.valueOf(row));
+									
+									ArrayList<Integer> colArr = new ArrayList<Integer>();
+									String col_list[] = packetArr[5].split(",");
+									for (String col : col_list)
+										colArr.add(Integer.valueOf(col));
+									
+									int price = rDao.addPreRsv(member, timetable_id, rowArr, colArr);
+									rDao.addConfimRsv(member, timetable_id, rowArr, colArr, account, bank);
+									conn.commit();
+									
+									System.out.println("관리자 예매 정보 등록 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									if (e.getMessage().equals("DUPLICATE_RSV"))
+									{
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/2");
+										break;
+									}
+									if (e.getMessage().equals("NOT_SELECTED"))
+									{
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/3");
+										break;
+									}
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									conn.rollback(sp);
+									conn.setAutoCommit(true);
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/4");
+									break;
+								}
+								finally
+								{
+									conn.setAutoCommit(true);
+								}
+							}
+							
+							case Protocol.CS_REQ_TIMETABLE_ADD:
+							{
+								try
+								{
+									System.out.println("클라이언트가 상영시간표 등록을 요청했습니다.");
+									String mv_id = packetArr[2];
+									String sc_id = packetArr[3];
+									String start_time = packetArr[4];
+									String end_time = packetArr[5];
+									
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ttDao.addTimeTable(new TimeTableDTO(DTO.EMPTY_ID, mv_id, sc_id, start_time, end_time, "0", 0));
+									
+									System.out.println("상영시간표 등록 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									if (e.getMessage().equals("DUPLICATE_TIMETABLE"))
+									{
+										e.printStackTrace();
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/2");
+										break;
+									}
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_TIMETABLE_CHANGE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 상영시간표 수정을 요청했습니다.");
+									String tt_id = packetArr[2];
+									String sc_id = packetArr[3];
+									String mv_id = packetArr[4];
+									String start_time = packetArr[5];
+									String end_time = packetArr[6];
+									
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ttDao.changeTimeTable(new TimeTableDTO(tt_id, mv_id, sc_id, start_time, end_time, "0", 0));
+									
+									System.out.println("상영시간표 수정 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									if (e.getMessage().equals("DUPLICATE_TIMETABLE"))
+									{
+										e.printStackTrace();
+										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/2");
+										break;
+									}
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/3");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_TIMETABLE_DELETE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 상영시간표 삭제를 요청했습니다.");
+									String timetable_id = packetArr[2];
+									
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ttDao.removeTimeTable(timetable_id);
+									
+									System.out.println("상영시간표 삭제 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETALBE_DELETE + "/1");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETALBE_DELETE + "/2");
 									break;
 								}
 							}
