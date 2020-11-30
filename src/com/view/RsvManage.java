@@ -118,129 +118,135 @@ public class RsvManage implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        // 3개의 스레드로 리스트 받아오기 동시진행
-        Thread t_mem = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                try
-                {
-                    member_id_list = FXCollections.observableArrayList();
-                    MemberDAO mDao = new MemberDAO();
-                    Iterator<MemberDTO> m_iter = mDao.getAllMember().iterator();
-                    while (m_iter.hasNext())
-                    {
-                        member_id_list.add(m_iter.next());
-                    }
-                    lv_member.setItems(FXCollections.observableArrayList());
-                    lv_member.getItems().addAll(member_id_list);
-                    lv_member.setOnMouseClicked((MouseEvent) ->
-                    {
-                        selectedMem = lv_member.getSelectionModel().getSelectedItem();
-                        lv_member.setMaxHeight(0);
-                        lv_member.getItems().clear();
-                        tf_member_id.setText(selectedMem.getId());
-                    });
-                    lv_member.setCellFactory(lv -> new ListCell<MemberDTO>()
-                    {
-                        @Override
-                        protected void updateItem(MemberDTO item, boolean empty)
-                        {
-                            super.updateItem(item, empty);
-                            setText(item == null ? null : item.getId());
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-        });
-        Thread t_mov = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                try
-                {
-                    movie_title_list = FXCollections.observableArrayList();
-                    MovieDAO mDao = new MovieDAO();
-                    Iterator<MovieDTO> m_iter = mDao.getAllMovieList().iterator();
-                    while (m_iter.hasNext())
-                    {
-                        movie_title_list.add(m_iter.next());
-                    }
-                    lv_movie.setItems(FXCollections.observableArrayList());
-                    lv_movie.getItems().addAll(movie_title_list);
-                    lv_movie.setOnMouseClicked((MouseEvent) ->
-                    {
-                        selectedMov = lv_movie.getSelectionModel().getSelectedItem();
-                        lv_movie.setMaxHeight(0);
-                        tf_movie_name.setText(selectedMov.getTitle());
-                        lv_movie.getItems().clear();
-                    });
-                    lv_movie.setCellFactory(lv -> new ListCell<MovieDTO>()
-                    {
-                        @Override
-                        protected void updateItem(MovieDTO item, boolean empty)
-                        {
-                            super.updateItem(item, empty);
-                            setText(item == null ? null : item.getTitle());
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-        });
-        Thread t_thea = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                try
-                {
-                    theater_list = FXCollections.observableArrayList();
-                    TheaterDAO tDao = new TheaterDAO();
-                    Iterator<TheaterDTO> t_iter = tDao.getTheaterList().iterator();
-                    while (t_iter.hasNext())
-                    {
-                        theater_list.add(t_iter.next());
-                    }
-                    lv_theater.setItems(FXCollections.observableArrayList());
-                    lv_theater.getItems().addAll(theater_list);
-                    lv_theater.setOnMouseClicked((MouseEvent) ->
-                    {
-                        selectedThea = lv_theater.getSelectionModel().getSelectedItem();
-                        lv_theater.setMaxHeight(0);
-                        tf_theater_name.setText(selectedThea.getName());
-                        lv_theater.getItems().clear();
-                    });
-                    lv_theater.setCellFactory(lv -> new ListCell<TheaterDTO>()
-                    {
-                        @Override
-                        protected void updateItem(TheaterDTO item, boolean empty)
-                        {
-                            super.updateItem(item, empty);
-                            setText(item == null ? null : item.getName());
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-        });
-        t_mem.start();
-        t_mov.start();
-        t_thea.start();
+//        // 3개의 스레드로 리스트 받아오기 동시진행
+//        Thread t_mem = new Thread(() ->
+//        {
+//            Platform.runLater(() ->
+//            {
+//                try
+//                {
+//                    
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            });
+//        });
+//        Thread t_mov = new Thread(() ->
+//        {
+//            Platform.runLater(() ->
+//            {
+//                try
+//                {
+//                   
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            });
+//        });
+//        Thread t_thea = new Thread(() ->
+//        {
+//            Platform.runLater(() ->
+//            {
+//                try
+//                {
+//                    
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            });
+//        });
+//        t_mem.start();
+//        t_mov.start();
+//        t_thea.start();
         try
         {
-            t_mem.join();
-            t_mov.join();
-            t_thea.join();
+        	member_id_list = FXCollections.observableArrayList();
+            MemberDAO memDao = new MemberDAO();
+            Iterator<MemberDTO> mem_iter = memDao.getAllMember().iterator();
+            while (mem_iter.hasNext())
+            {
+                member_id_list.add(mem_iter.next());
+            }
+            lv_member.setItems(FXCollections.observableArrayList());
+            lv_member.getItems().addAll(member_id_list);
+            lv_member.setOnMouseClicked((MouseEvent) ->
+            {
+                selectedMem = lv_member.getSelectionModel().getSelectedItem();
+                lv_member.setMaxHeight(0);
+                lv_member.getItems().clear();
+                tf_member_id.setText(selectedMem.getId());
+            });
+            
+            movie_title_list = FXCollections.observableArrayList();
+            MovieDAO movDao = new MovieDAO();
+            Iterator<MovieDTO> mov_iter = movDao.getAllMovieList().iterator();
+            while (mov_iter.hasNext())
+            {
+                movie_title_list.add(mov_iter.next());
+            }
+            lv_movie.setItems(FXCollections.observableArrayList());
+            lv_movie.getItems().addAll(movie_title_list);
+            lv_movie.setOnMouseClicked((MouseEvent) ->
+            {
+                selectedMov = lv_movie.getSelectionModel().getSelectedItem();
+                lv_movie.setMaxHeight(0);
+                tf_movie_name.setText(selectedMov.getTitle());
+                lv_movie.getItems().clear();
+            });
+            lv_movie.setCellFactory(lv -> new ListCell<MovieDTO>()
+            {
+                @Override
+                protected void updateItem(MovieDTO item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    setText(item == null ? null : item.getTitle());
+                }
+            });
+            
+            theater_list = FXCollections.observableArrayList();
+            TheaterDAO tDao = new TheaterDAO();
+            Iterator<TheaterDTO> t_iter = tDao.getTheaterList().iterator();
+            while (t_iter.hasNext())
+            {
+                theater_list.add(t_iter.next());
+            }
+            lv_theater.setItems(FXCollections.observableArrayList());
+            lv_theater.getItems().addAll(theater_list);
+            lv_theater.setOnMouseClicked((MouseEvent) ->
+            {
+                selectedThea = lv_theater.getSelectionModel().getSelectedItem();
+                lv_theater.setMaxHeight(0);
+                tf_theater_name.setText(selectedThea.getName());
+                lv_theater.getItems().clear();
+            });
+            lv_theater.setCellFactory(lv -> new ListCell<TheaterDTO>()
+            {
+                @Override
+                protected void updateItem(TheaterDTO item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    setText(item == null ? null : item.getName());
+                }
+            });
+            
+            lv_member.setCellFactory(lv -> new ListCell<MemberDTO>()
+            {
+                @Override
+                protected void updateItem(MemberDTO item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+                    setText(item == null ? null : item.getId());
+                }
+            });
+//            t_mem.join();
+//            t_mov.join();
+//            t_thea.join();
             
             custom_list = FXCollections.observableArrayList();
             
