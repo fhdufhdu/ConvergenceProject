@@ -69,10 +69,11 @@
       </Text>
       <TableView fx:id="tv_review" layoutX="340.0" layoutY="347.0" prefHeight="169.0" prefWidth="548.0">
         <columns>
-          <TableColumn fx:id="tc_reviewer" prefWidth="100.0" text="작성자" />
-          <TableColumn fx:id="tc_review_score" prefWidth="59.0" text="별점" />
-            <TableColumn fx:id="tc_review_date" prefWidth="85.0" text="작성일" />
-            <TableColumn fx:id="tc_review" prefWidth="300.0" text="리뷰내용" />
+          <TableColumn fx:id="tc_reviewer" prefWidth="63.0" text="작성자" />
+          <TableColumn fx:id="tc_review_score" minWidth="6.0" prefWidth="40.0" text="별점" />
+            <TableColumn fx:id="tc_review_date" prefWidth="115.0" text="작성일" />
+            <TableColumn fx:id="tc_review" prefWidth="254.0" text="리뷰내용" />
+            <TableColumn fx:id="tc_other" prefWidth="69.0" text="기타" />
         </columns>
       </TableView>
       <MenuButton fx:id="mb_review" layoutX="341.0" layoutY="292.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="70.0" text="평점" />
@@ -92,25 +93,29 @@
             <Font name="LG Smart UI SemiBold" size="18.0" />
          </font>
       </Text>
-      <ImageView fx:id="image_stillcut" fitHeight="150.0" fitWidth="148.0" layoutX="345.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image_stillcut" fitHeight="180.0" fitWidth="170.0" layoutX="335.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
          
       </ImageView>
-      <ImageView fx:id="image_stillcut2" fitHeight="150.0" fitWidth="148.0" layoutX="491.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image_stillcut2" fitHeight="180.0" fitWidth="170.0" layoutX="523.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
          
       </ImageView>
-      <ImageView fx:id="image_stillcut3" fitHeight="150.0" fitWidth="148.0" layoutX="632.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image_stillcut3" fitHeight="180.0" fitWidth="170.0" layoutX="715.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
          
       </ImageView>
-      <ScrollPane layoutX="33.0" layoutY="289.0" prefHeight="230.0" prefWidth="230.0">
+      <ScrollPane layoutX="33.0" layoutY="289.0" prefHeight="230.0" prefWidth="230.0" style="-fx-background-color: #ffffff; -fx-border-color: #ffffff;">
          <content>
-            <Text fx:id="text_plot" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="225.0">
-               <font>
-                  <Font name="LG Smart UI Regular" size="12.0" />
-               </font>
-            </Text>
+            <AnchorPane minHeight="225.0" minWidth="225.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text fx:id="text_plot" layoutY="11.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="225.0">
+                     <font>
+                        <Font name="LG Smart UI Regular" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
          </content>
       </ScrollPane>
-      <WebView fx:id="web_trailer" layoutX="30.0" layoutY="558.0" prefHeight="200.0" prefWidth="291.0" />
+      <WebView fx:id="web_trailer" layoutX="30.0" layoutY="558.0" prefHeight="184.0" prefWidth="230.0" />
    </children>
    <padding>
       <Insets bottom="20.0" />

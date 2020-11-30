@@ -4,6 +4,7 @@ import com.db.model.MovieDTO;
 import com.db.model.ReviewDAO;
 import com.db.model.TimeTableDAO;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,8 +51,21 @@ public class MovieSub
         try
         {
             this.movie = movie;
-            Image image = new Image(movie.getPosterPath());
-            iv_movie_poster.setImage(image);
+            Thread image_load = new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    Platform.runLater(() ->
+                    {
+                        Image image = new Image(movie.getPosterPath());
+                        iv_movie_poster.setImage(image);
+                    });
+                    return;
+                }
+            };
+            image_load.start();
+            
             t_movie_title.setText(movie.getTitle());
             
             TimeTableDAO tDao = new TimeTableDAO();

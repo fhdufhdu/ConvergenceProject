@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import com.db.model.DAO;
 import com.db.model.DAOException;
@@ -48,6 +47,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -172,7 +172,6 @@ public class MovieTable implements Initializable
 		
 		// 테이블 뷰와 리스트를 연결
 		tv_movie.setItems(movie_list);
-		
 		// 테이블 뷰 row 선택 시 발생하는 이벤트 지정
 		tv_movie.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MovieDTO>()
 		{
@@ -372,6 +371,28 @@ public class MovieTable implements Initializable
 		public TimeTableDTO getTimeTable()
 		{
 			return timetable;
+		}
+	}
+	
+	public void initData(MovieDTO movie)
+	{
+		try
+		{
+			initTheaterList();
+			initMovieList();
+			
+			tv_theater.getSelectionModel().select(0);
+			for (int i = 0; i < movie_list.size(); i++)
+			{
+				if (movie_list.get(i).getId().equals(movie.getId()))
+				{
+					tv_movie.getSelectionModel().select(i);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

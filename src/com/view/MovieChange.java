@@ -58,7 +58,7 @@ public class MovieChange
 	private TextField tf_poster;
 	
 	@FXML
-	private TextField tf_stillcut;
+	private TextArea ta_stillcut;
 	
 	@FXML
 	private TextField tf_trailer;
@@ -105,7 +105,7 @@ public class MovieChange
 		tf_min.setPromptText(Integer.toString(mov.getMin()));
 		tf_trailer.setPromptText(mov.getTrailerPath());
 		ta_plot.setPromptText(mov.getPlot());
-		tf_stillcut.setPromptText(mov.getStillCutPath());
+		ta_stillcut.setPromptText(mov.getStillCutPath());
 		tf_poster.setPromptText(mov.getPosterPath());
 	}
 	
@@ -114,17 +114,25 @@ public class MovieChange
 	{
 		try
 		{
+			String stillCut = "";
+			if (ta_stillcut.getText().equals(""))
+				stillCut = currentMov.getStillCutPath();
+			else
+				for (String temp : ta_stillcut.getText().split("\n"))
+					stillCut += temp + " ";
+				
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String id = currentMov.getId();
 			String title = tf_title.getText().equals("") ? currentMov.getTitle() : tf_title.getText();
 			String release_date = dp_release_date.getValue() == null ? currentMov.getReleaseDate().toString() : dateFormat.format(dp_release_date.getValue());
 			String plot = ta_plot.getText().equals("") ? currentMov.getPlot() : ta_plot.getText();
 			String poster = tf_poster.getText().equals("") ? currentMov.getPosterPath() : tf_poster.getText();
-			String stillCut = tf_stillcut.getText().equals("") ? currentMov.getStillCutPath() : tf_stillcut.getText();
 			String trailer = tf_trailer.getText().equals("") ? currentMov.getTrailerPath() : tf_trailer.getText();
 			String director = tf_director.getText().equals("") ? currentMov.getDirector() : tf_director.getText();
 			String actor = ta_actor.getText().equals("") ? currentMov.getActor() : tf_trailer.getText();
 			String min = tf_min.getText().equals("") ? Integer.toString(currentMov.getMin()) : tf_min.getText();
+			
+			System.out.println(ta_stillcut.getText().split("\n").length);
 			
 			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_MOVIE_CHANGE + "`" + id + "`" + title + "`" + release_date + "`" + is_current + "`" + plot + "`" + poster + "`" + stillCut + "`" + trailer + "`" + director + "`" + actor + "`" + min);
 			

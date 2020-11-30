@@ -158,6 +158,24 @@ public class ReservationDAO extends DAO
         
     }
     
+    public boolean isRsvMovie(String mem_id, String mov_id) throws DAOException, SQLException
+    {
+        String check_sql = "select * from reservations where member_id = ? and ttable_id in (select id from timetables where movie_id = ?)";
+        ps = conn.prepareStatement(check_sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        
+        ps.setString(1, mem_id);
+        ps.setString(2, mov_id);
+        
+        rs = ps.executeQuery();
+        rs.last();
+        int result_row = rs.getRow();
+        
+        rs.close();
+        ps.close();
+        
+        return result_row > 0 ? true : false;
+    }
+    
     // 상영시간표 id에 맞는 예약 DTO 리스트 반환
     public ArrayList<ReservationDTO> getRsvListFromTT(String ttid) throws DAOException, SQLException
     {

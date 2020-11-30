@@ -53,7 +53,7 @@ public class MovieAdd
 	private TextField tf_poster;
 	
 	@FXML
-	private TextField tf_stillcut;
+	private TextArea ta_stillcut;
 	
 	@FXML
 	private TextField tf_trailer;
@@ -70,18 +70,21 @@ public class MovieAdd
 		try
 		{
 			// 입력 필드 모두 채웠는지 확인
-			if (is_current == null || tf_title.getText().equals("") || dp_release_date.getValue() == null || tf_director.getText().equals("") || ta_actor.getText().equals("") || tf_min.getText().equals("") || tf_poster.getText().equals("") || tf_stillcut.getText().equals("") || tf_trailer.getText().equals("") || ta_plot.getText().equals(""))
+			if (is_current == null || tf_title.getText().equals("") || dp_release_date.getValue() == null || tf_director.getText().equals("") || ta_actor.getText().equals("") || tf_min.getText().equals("") || tf_poster.getText().equals("") || ta_stillcut.getText().equals("") || tf_trailer.getText().equals("") || ta_plot.getText().equals(""))
 			{
 				alert("입력오류", "모든 필드를 채워주세요!");
 			}
 			
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			
+			String stillCut = "";
+			for (String temp : ta_stillcut.getText().split("\n"))
+				stillCut += temp + " ";
+			
 			String title = tf_title.getText();
 			String release_date = dateFormat.format(dp_release_date.getValue());
 			String plot = ta_plot.getText();
 			String poster = tf_poster.getText();
-			String stillCut = tf_stillcut.getText();
 			String trailer = tf_trailer.getText();
 			String director = tf_director.getText();
 			String actor = ta_actor.getText();
