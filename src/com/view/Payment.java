@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class Payment
 {
@@ -98,6 +99,9 @@ public class Payment
         finally
         {
             conn.setAutoCommit(true);
+            mainGUI.alert("결제 완료", "정상적으로 예매가 처리되었습니다");
+            Stage stage = (Stage) btn_payment.getScene().getWindow();
+            stage.close();
         }
         
     }

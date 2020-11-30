@@ -128,4 +128,21 @@ public class ReviewDAO extends DAO
         
         return temp_list;
     }
+    
+    public int getAverStarGrade(String mov_id) throws DAOException, SQLException
+    {
+        String insert_sql = "select avg(star) from reviews where movie_id = ?";
+        ps = conn.prepareStatement(insert_sql);
+        
+        ps.setString(1, mov_id);
+        
+        rs = ps.executeQuery();
+        rs.next();
+        int result = rs.getInt(1);
+        
+        rs.close();
+        ps.close();
+        
+        return result;
+    }
 }

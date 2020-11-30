@@ -4,9 +4,12 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -207,13 +210,16 @@ public class MovieTable implements Initializable
 		Iterator<TimeTableDTO> tIter = tList.iterator();
 		while (tIter.hasNext())
 		{
-			custom_list.add(new CustomDTO(tIter.next()));
+			TimeTableDTO temp = tIter.next();
+			if (temp.getStartTime().after(new Timestamp(System.currentTimeMillis())))
+				custom_list.add(new CustomDTO(temp));
 		}
 	}
 	
 	private void setRsvButton() throws DAOException, SQLException
 	{
 		initCustomList();
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 		
 		int cnt = custom_list.size();
 		if (cnt <= 0)
@@ -235,7 +241,7 @@ public class MovieTable implements Initializable
 				if ((i + 1) * (j + 1) > cnt)
 					break;
 				selectedCustom = custom_list.get(((i + 1) * (j + 1) - 1));
-				Button btn = new Button(selectedCustom.getScreen().getName() + "관\n" + selectedCustom.getTimeTable().getCurrentRsv() + "/" + selectedCustom.getScreen().getTotalCapacity() + "\n");
+				Button btn = new Button(selectedCustom.getScreen().getName() + "관\n" + selectedCustom.getTimeTable().getCurrentRsv() + "/" + selectedCustom.getScreen().getTotalCapacity() + "\n" + format.format(new Date(selectedCustom.getTimeTable().getStartTime().getTime())));
 				btn.setOnAction(new EventHandler<ActionEvent>()
 				{
 					@Override
@@ -280,6 +286,11 @@ public class MovieTable implements Initializable
 			ReservationDAO rDao = new ReservationDAO();
 			int price = 0;
 			
+			if (!controller.getIsClickedClose())
+			{
+				return;
+			}
+			
 			try
 			{
 				price = rDao.addPreRsv(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
@@ -296,24 +307,7 @@ public class MovieTable implements Initializable
 			}
 			
 			Timer m_timer = new Timer();
-			TimerTask m_task = new TimerTask()
-			{
-				@Override
-				public void run()
-				{
-					try
-					{
-						System.out.println("스레드 시작");
-						rDao.clearRsv(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
-						conn.commit();
-						return;
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-			};
+			ClearTimer m_task = new ClearTimer(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
 			
 			m_timer.schedule(m_task, 60000);
 			

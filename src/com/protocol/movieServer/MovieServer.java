@@ -247,9 +247,9 @@ public class MovieServer extends Thread
 									{
 										MovieDTO mDto = tIter.next();
 										if (tIter.hasNext())
-											movieList += mDto.getId() + "/" + mDto.getTitle() + "/" + mDto.getReleaseDate() + "/" + mDto.getIsCurrent() + "/" + mDto.getPlot() + "/" + mDto.getPosterPath() + "/" + mDto.getStillCutPath() + "/" + mDto.getTrailerPath() + "/" + mDto.getDirector() + "/" + mDto.getActor() + "/" + Integer.toString(mDto.getMin()) + ",";
+											movieList += mDto.getId() + "`" + mDto.getTitle() + "`" + mDto.getReleaseDate() + "`" + mDto.getIsCurrent() + "`" + mDto.getPlot() + "`" + mDto.getPosterPath() + "`" + mDto.getStillCutPath() + "`" + mDto.getTrailerPath() + "`" + mDto.getDirector() + "`" + mDto.getActor() + "`" + Integer.toString(mDto.getMin()) + ",";
 										else
-											movieList += mDto.getId() + "/" + mDto.getTitle() + "/" + mDto.getReleaseDate() + "/" + mDto.getIsCurrent() + "/" + mDto.getPlot() + "/" + mDto.getPosterPath() + "/" + mDto.getStillCutPath() + "/" + mDto.getTrailerPath() + "/" + mDto.getDirector() + "/" + mDto.getActor() + "/" + Integer.toString(mDto.getMin());
+											movieList += mDto.getId() + "`" + mDto.getTitle() + "`" + mDto.getReleaseDate() + "`" + mDto.getIsCurrent() + "`" + mDto.getPlot() + "`" + mDto.getPosterPath() + "`" + mDto.getStillCutPath() + "`" + mDto.getTrailerPath() + "`" + mDto.getDirector() + "`" + mDto.getActor() + "`" + Integer.toString(mDto.getMin());
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIE_VIEW + "!1!" + movieList);
 									System.out.println("영화 리스트 전송 성공");

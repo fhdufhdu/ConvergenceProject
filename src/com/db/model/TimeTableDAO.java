@@ -194,6 +194,31 @@ public class TimeTableDAO extends DAO
         throw new DAOException("not found result of theaters");
     }
     
+    public double getRsvRate(String movie_id) throws DAOException, SQLException
+    {
+        try
+        {
+            String insert_sql = "call CALC_RSV_RATE(?, ?, ?)";
+            
+            CallableStatement cs = conn.prepareCall(insert_sql);
+            
+            cs.setString(1, movie_id);
+            cs.registerOutParameter(2, Types.INTEGER);
+            cs.registerOutParameter(3, Types.INTEGER);
+            cs.executeUpdate();
+            int total_capacity = cs.getInt(2);
+            int total_rsv = cs.getInt(3);
+            
+            cs.close();
+            return ((double) total_rsv / (double) total_capacity);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
     // 상영 시간표 수정
     public void changeTimeTable(TimeTableDTO elem) throws DAOException, SQLException
     {
@@ -248,9 +273,9 @@ public class TimeTableDAO extends DAO
             System.out.println("find error on sql");
             sqle.printStackTrace();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }
