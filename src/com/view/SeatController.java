@@ -61,8 +61,6 @@ public class SeatController implements Initializable
         row = screen.getMaxRow();
         col = screen.getMaxCol();
         
-        System.out.println(row + "/" + col);
-        
         ArrayList<ButtonBar> bar_list = new ArrayList<ButtonBar>();
         tb_arr = new ToggleButton[row + 1][col + 1];
         

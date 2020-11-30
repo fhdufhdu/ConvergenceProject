@@ -87,12 +87,12 @@ public class MovieAdd
 			String actor = ta_actor.getText();
 			String min = tf_min.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_MOVIE_ADD + "/" + title + "/" + release_date + "/" + is_current + "/" + plot + "/" + poster + "/" + stillCut + "/" + trailer + "/" + director + "/" + actor + "/" + min);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_MOVIE_ADD + "`" + title + "`" + release_date + "`" + is_current + "`" + plot + "`" + poster + "`" + stillCut + "`" + trailer + "`" + director + "`" + actor + "`" + min);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -147,42 +147,6 @@ public class MovieAdd
 		cb_current.setSelected(false);
 		cb_close.setSelected(false);
 		is_current = "2";
-	}
-	
-	@FXML // 파일 경로 획득
-	void getPosterPath(ActionEvent event)
-	{
-		tf_poster.setText(getFile().getPath());
-	}
-	
-	@FXML // 파일 경로 획득
-	void getStillCutPath(ActionEvent event)
-	{
-		tf_stillcut.setText(getFile().getPath());
-	}
-	
-	// 파일 획득
-	private File getFile()
-	{
-		FileChooser fc = new FileChooser();
-		File selectedFile = fc.showOpenDialog((Stage) tf_poster.getScene().getWindow());
-		
-		return selectedFile;
-	}
-	
-	// 파일의 바이트 배열 획득
-	private byte[] getFileByteArray(File selectedFile)
-	{
-		try
-		{
-			byte arr[] = Files.readAllBytes(selectedFile.toPath());
-			return arr;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	private void alert(String head, String msg)

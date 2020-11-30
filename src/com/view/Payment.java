@@ -126,7 +126,7 @@ public class Payment
         t_price.setText(t_price.getText() + price + "원");
         for (int i = 0; i < row_list.size(); i++)
         {
-            t_seat.setText(t_seat.getText() + row_list.get(i) + col_list.get(i) + "/");
+            t_seat.setText(t_seat.getText() + row_list.get(i) + col_list.get(i) + "`");
         }
     }
     

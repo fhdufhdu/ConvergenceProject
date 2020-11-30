@@ -105,13 +105,15 @@ public class MovieChange
 		tf_min.setPromptText(Integer.toString(mov.getMin()));
 		tf_trailer.setPromptText(mov.getTrailerPath());
 		ta_plot.setPromptText(mov.getPlot());
+		tf_stillcut.setPromptText(mov.getStillCutPath());
+		tf_poster.setPromptText(mov.getPosterPath());
 	}
 	
 	@FXML
 	void changeMovie(ActionEvent event)
 	{
 		try
-		{	
+		{
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			String id = currentMov.getId();
 			String title = tf_title.getText().equals("") ? currentMov.getTitle() : tf_title.getText();
@@ -124,12 +126,12 @@ public class MovieChange
 			String actor = ta_actor.getText().equals("") ? currentMov.getActor() : tf_trailer.getText();
 			String min = tf_min.getText().equals("") ? Integer.toString(currentMov.getMin()) : tf_min.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_MOVIE_CHANGE + "/" + id + "/" + title + "/" + release_date + "/" + is_current + "/" + plot + "/" + poster + "/" + stillCut + "/" + trailer + "/" + director + "/" + actor + "/" + min);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_MOVIE_CHANGE + "`" + id + "`" + title + "`" + release_date + "`" + is_current + "`" + plot + "`" + poster + "`" + stillCut + "`" + trailer + "`" + director + "`" + actor + "`" + min);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -175,18 +177,6 @@ public class MovieChange
 	}
 	
 	@FXML
-	void getPosterPath(ActionEvent event)
-	{
-		tf_poster.setText(getFile().getPath());
-	}
-	
-	@FXML
-	void getStillCutPath(ActionEvent event)
-	{
-		tf_stillcut.setText(getFile().getPath());
-	}
-	
-	@FXML
 	void selectClose(ActionEvent event)
 	{
 		cb_current.setSelected(false);
@@ -208,27 +198,5 @@ public class MovieChange
 		cb_current.setSelected(false);
 		cb_close.setSelected(false);
 		is_current = "2";
-	}
-	
-	private File getFile()
-	{
-		FileChooser fc = new FileChooser();
-		File selectedFile = fc.showOpenDialog((Stage) tf_poster.getScene().getWindow());
-		
-		return selectedFile;
-	}
-	
-	private byte[] getFileByteArray(File selectedFile)
-	{
-		try
-		{
-			byte arr[] = Files.readAllBytes(selectedFile.toPath());
-			return arr;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

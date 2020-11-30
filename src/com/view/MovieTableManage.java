@@ -133,7 +133,7 @@ public class MovieTableManage implements Initializable
 		try
 		{
 			theater_list = FXCollections.observableArrayList();
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_THEATER_VIEW);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATER_VIEW);
 			
 			while (true)
 			{
@@ -154,7 +154,7 @@ public class MovieTableManage implements Initializable
 							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 영화관 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 영화관 별 정보 분할
 								String id = infoArr[0];
 								String name = infoArr[1];
 								String address = infoArr[2];
@@ -202,7 +202,7 @@ public class MovieTableManage implements Initializable
 				}
 			}
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW + "/%/1976-01-01/2222-01-01/%/%/%");
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "/%/1976-01-01/2222-01-01/%/%/%");
 			movie_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -225,7 +225,7 @@ public class MovieTableManage implements Initializable
 							
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 영화 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 영화 별 정보 분할
 								String mv_id = infoArr[0];
 								String mv_title = infoArr[1];
 								String mv_release_date = infoArr[2];
@@ -373,12 +373,12 @@ public class MovieTableManage implements Initializable
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : (mb_minute_start.getText().equals("분") ? mb_hours_start.getText().replace("시", "") + ":00:00.0" : mb_hours_start.getText().replace("시", "") + ":" + mb_minute_start.getText().replace("분", "") + ":00.0");
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : (mb_minute_end.getText().equals("분") ? mb_hours_end.getText().replace("시", "") + ":00:00.0" : mb_hours_end.getText().replace("시", "") + ":" + mb_minute_end.getText().replace("분", "") + ":00.0");
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_TIMETABLE_ADD + "/" + selectedMovie.getId() + "/" + selectedScreen.getId() + "/" + date + start_time + "/" + date + end_time);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_TIMETABLE_ADD + "`" + selectedMovie.getId() + "`" + selectedScreen.getId() + "`" + date + start_time + "`" + date + end_time);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/"); // 패킷 분할
+				String packetArr[] = packet.split("`"); // 패킷 분할
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -437,12 +437,12 @@ public class MovieTableManage implements Initializable
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : (mb_minute_start.getText().equals("분") ? mb_hours_start.getText().replace("시", "") + ":00:00.0" : mb_hours_start.getText().replace("시", "") + ":" + mb_minute_start.getText().replace("분", "") + ":00.0");
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : (mb_minute_end.getText().equals("분") ? mb_hours_end.getText().replace("시", "") + ":00:00.0" : mb_hours_end.getText().replace("시", "") + ":" + mb_minute_end.getText().replace("분", "") + ":00.0");
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_TIMETABLE_CHANGE + "/" + selectedCustom.getTimeTable().getId() + "/" + selectedScreen.getId() + "/" + selectedMovie.getId() + "/" + date + start_time + "/" + date + end_time);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_TIMETABLE_CHANGE + "`" + selectedCustom.getTimeTable().getId() + "`" + selectedScreen.getId() + "`" + selectedMovie.getId() + "`" + date + start_time + "`" + date + end_time);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/"); // 패킷 분할
+				String packetArr[] = packet.split("`"); // 패킷 분할
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -500,12 +500,12 @@ public class MovieTableManage implements Initializable
 			
 			String timetable_id = selectedCustom.getTimeTable().getId();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_TIMETABLE_DELETE + "/" + timetable_id);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_TIMETABLE_DELETE + "`" + timetable_id);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/"); // 패킷 분할
+				String packetArr[] = packet.split("`"); // 패킷 분할
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -582,7 +582,7 @@ public class MovieTableManage implements Initializable
 				return;
 			}
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_SCREEN_VIEW + "/" + selectedThea.getId());
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_SCREEN_VIEW + "`" + selectedThea.getId());
 			screen_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -605,7 +605,7 @@ public class MovieTableManage implements Initializable
 							
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 상영관 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 상영관 별 정보 분할
 								String id = infoArr[0];
 								String theater_id = infoArr[1];
 								String name = infoArr[2];
@@ -742,7 +742,7 @@ public class MovieTableManage implements Initializable
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : (mb_minute_start.getText().equals("분") ? mb_hours_start.getText().replace("시", "") + ":00:00.0" : mb_hours_start.getText().replace("시", "") + ":" + mb_minute_start.getText().replace("분", "") + ":00.0");
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : (mb_minute_end.getText().equals("분") ? mb_hours_end.getText().replace("시", "") + ":00:00.0" : mb_hours_end.getText().replace("시", "") + ":" + mb_minute_end.getText().replace("분", "") + ":00.0");
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "/" + mov_id + "/" + screen_id + "/" + date + "/" + start_time + "/" + end_time);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time);
 			
 			while (true)
 			{
@@ -764,7 +764,7 @@ public class MovieTableManage implements Initializable
 							
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 상영시간표 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 상영시간표 별 정보 분할
 								String tb_id = infoArr[0];
 								String tb_screen_id = infoArr[1];
 								String tb_mov_id = infoArr[2];
@@ -810,7 +810,7 @@ public class MovieTableManage implements Initializable
 		{
 			try
 			{
-				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_CUSTOM_INFO + "/" + timetable.getId());
+				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_CUSTOM_INFO + "`" + timetable.getId());
 				
 				while (true)
 				{
@@ -830,9 +830,9 @@ public class MovieTableManage implements Initializable
 								this.timetable = timetable;
 								String infoList = packetArr[3];
 								String listArr[] = infoList.split(","); // 각 리스트 분할
-								String mv_info[] = listArr[0].split("/"); // 영화 정보 분할
-								String sc_info[] = listArr[1].split("/"); // 상영관 정보 분할
-								String th_info[] = listArr[2].split("/"); // 영화관 정보 분할
+								String mv_info[] = listArr[0].split("`"); // 영화 정보 분할
+								String sc_info[] = listArr[1].split("`"); // 상영관 정보 분할
+								String th_info[] = listArr[2].split("`"); // 영화관 정보 분할
 								
 								movie = new MovieDTO(mv_info[0], mv_info[1], mv_info[2], mv_info[3], mv_info[4], mv_info[5], mv_info[6], mv_info[7], mv_info[8], mv_info[9], Integer.valueOf(mv_info[10]));
 								screen = new ScreenDTO(sc_info[0], sc_info[1], sc_info[2], Integer.valueOf(sc_info[3]), Integer.valueOf(sc_info[4]), Integer.valueOf(sc_info[5]));
@@ -883,7 +883,7 @@ public class MovieTableManage implements Initializable
 		
 		public StringProperty getCurrent()
 		{
-			return new SimpleStringProperty(timetable.getCurrentRsv() + "/" + screen.getTotalCapacity());
+			return new SimpleStringProperty(timetable.getCurrentRsv() + "`" + screen.getTotalCapacity());
 		}
 		
 		public TimeTableDTO getTimeTable()

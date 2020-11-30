@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
@@ -24,6 +23,7 @@ public class UserMain implements Initializable
 {
 	private ArrayList<TheaterDTO> theater_list;
 	private TheaterDTO selectedTheater;
+	public static BorderPane user_sub_root;
 	
 	@FXML
 	private MenuButton mb_theater;
@@ -39,8 +39,9 @@ public class UserMain implements Initializable
 	{
 		try
 		{
+			user_sub_root = bp_user_sub;
 			theater_list = new ArrayList<TheaterDTO>();
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_THEATERMENU_VIEW);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATERMENU_VIEW);
 			
 			String packet = mainGUI.readLine();
 			String packetArr[] = packet.split("!");
@@ -57,7 +58,7 @@ public class UserMain implements Initializable
 						int i = 0; // 메뉴 id 번호
 						for (String theater : theaterList)
 						{
-							String theaterArr[] = theater.split("/");
+							String theaterArr[] = theater.split("`");
 							String id = theaterArr[0];
 							String name = theaterArr[1];
 							String address = theaterArr[2];

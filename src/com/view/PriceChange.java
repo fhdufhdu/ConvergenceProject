@@ -32,7 +32,7 @@ public class PriceChange implements Initializable
     {
         try
         {
-        	mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_PRICE_VIEW);
+        	mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_PRICE_VIEW);
             
         	String packet = mainGUI.readLine();
         	String packetArr[] = packet.split("!");
@@ -48,7 +48,7 @@ public class PriceChange implements Initializable
         			String priceArr[] = packetArr[3].split(",");
         			for(String priceInfo : priceArr) 
         			{
-        				String priceList[] = priceInfo.split("/");
+        				String priceList[] = priceInfo.split("`");
         				String priceType = priceList[0];
         				String price = priceList[1];
         				switch (priceType)
@@ -99,10 +99,10 @@ public class PriceChange implements Initializable
             String afternoon = tf_afternoon.getText();
             String night = tf_night.getText();
             
-            mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_PRICE_CHANGE + "/" + morning + "/" + afternoon + "/" + night);
+            mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_PRICE_CHANGE + "`" + morning + "`" + afternoon + "`" + night);
             
             String packet = mainGUI.readLine();
-            String packetArr[] = packet.split("/");
+            String packetArr[] = packet.split("`");
             String packetType = packetArr[0];
             String packetCode = packetArr[1];
             if(packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_PRICE_CHANGE))
