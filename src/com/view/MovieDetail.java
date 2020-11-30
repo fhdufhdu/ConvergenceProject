@@ -40,8 +40,6 @@ public class MovieDetail
 	
 	private ObservableList<CustomDTO> custom_list;
 	
-	private CustomDTO selectedCustom;
-	
 	@FXML
 	private Button btn_reservation;
 	
@@ -109,11 +107,22 @@ public class MovieDetail
 		try
 		{
 			this.movie = movie;
-			webview = web_trailer;
+			webview = web_trailer; // 백그라운드로 돌아가는 웹뷰 종료를 위해서 값 복사
+			
+			if (movie.getIsCurrent().equals("2"))
+			{
+				mb_review.setDisable(true);
+				tf_review.setDisable(true);
+				btn_review.setDisable(true);
+				tv_review.setDisable(true);
+			}
+			
+			// 스틸컷 url 분리
 			String stillcut[] = movie.getStillCutPath().split(" ");
 			ImageView view_arr[] = {
 					image_stillcut, image_stillcut2, image_stillcut3 };
 			
+			// 영화 예매 안해두면 입력 불가능하게 - 얘는 죽여도 될 것 같음
 			ReservationDAO rDao = new ReservationDAO();
 			if (!rDao.isRsvMovie(Login.USER_ID, movie.getId()))
 			{
@@ -147,14 +156,14 @@ public class MovieDetail
 			custom_list = FXCollections.observableArrayList();
 			
 			initList();
-			// 테이블 뷰 초기화
+			
 			tv_review.getItems().clear();
 			
-			// 각 테이블뷰 컬럼에 어떠한 값이 들어갈 것인지 세팅
 			tc_reviewer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMember().getId()));
 			tc_review_score.setCellValueFactory(cellData -> new SimpleStringProperty(Integer.toString(cellData.getValue().getReview().getStar())));
 			tc_review_date.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getReview().getWriteTime().toString()));
 			tc_review.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getReview().getText()));
+			// 테이블 뷰에 버튼을 넣기위한 필사의 노력
 			tc_other.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CustomDTO, String>, ObservableValue<String>>()
 			{
 				@Override
@@ -165,21 +174,9 @@ public class MovieDetail
 			});
 			tc_other.setCellFactory(cellData -> new ButtonCell());
 			
-			// 테이블 뷰와 리스트를 연결
 			tv_review.setItems(custom_list);
 			
-			// 테이블 뷰 row 선택 시 발생하는 이벤트 지정
-			tv_review.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CustomDTO>()
-			{
-				@Override
-				public void changed(ObservableValue<? extends CustomDTO> observable, CustomDTO oldValue, CustomDTO newValue)
-				{
-					if (tv_review.getSelectionModel().getSelectedItem() == null)
-						return;
-					selectedCustom = tv_review.getSelectionModel().getSelectedItem();
-				}
-			});
-			
+			// 별점 세팅
 			for (int i = 1; i <= 10; i++)
 			{
 				MenuItem score = new MenuItem(Integer.toString(i));
@@ -201,7 +198,7 @@ public class MovieDetail
 	}
 	
 	@FXML
-	void addReview(ActionEvent event)
+	void addReview(ActionEvent event) // 리뷰 추가
 	{
 		try
 		{
@@ -224,7 +221,7 @@ public class MovieDetail
 	}
 	
 	@FXML
-	void getReservation(ActionEvent event)
+	void getReservation(ActionEvent event) // 예매화면으로 이동 - 해당 영화 자동 선택됨
 	{
 		try
 		{

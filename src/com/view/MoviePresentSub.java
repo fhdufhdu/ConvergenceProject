@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class MovieSub
+public class MoviePresentSub
 {
     private MovieDTO movie;
     
@@ -27,12 +27,11 @@ public class MovieSub
     private Text t_rsv_rate;
     
     @FXML
-    void clickedTheater(ActionEvent event)
+    void clickedTheater(ActionEvent event) // 각 sub페이지 클릭시 영화 상세 페이지(MovieDetail.java)로 이동
     {
         try
         {
-            System.out.println("테스트클릭");
-            FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/movie_present_detail.fxml"));
+            FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/movie_detail.fxml"));
             Parent root = loader.load();
             MovieDetail controller = loader.<MovieDetail>getController();
             controller.initData(movie);
@@ -46,6 +45,7 @@ public class MovieSub
         
     }
     
+    // MoviePresent에서 값을 받아와서 이미지와 글자등 설정
     public void initData(MovieDTO movie)
     {
         try
@@ -70,6 +70,10 @@ public class MovieSub
             
             TimeTableDAO tDao = new TimeTableDAO();
             double rsv_rate = tDao.getRsvRate(movie.getId());
+            if (Double.isNaN(rsv_rate))
+            {
+                rsv_rate = 0;
+            }
             t_rsv_rate.setText("예매율 : " + String.format("%.2f", rsv_rate * 100));
             
             ReviewDAO rDao = new ReviewDAO();

@@ -765,7 +765,8 @@ public class MovieServer extends Thread
 									conn.setAutoCommit(true);
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`4");
 									break;
-								} finally
+								}
+								finally
 								{
 									conn.setAutoCommit(true);
 								}
@@ -807,7 +808,8 @@ public class MovieServer extends Thread
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`2");
 									break;
-								} finally
+								}
+								finally
 								{
 									conn.setAutoCommit(true);
 								}

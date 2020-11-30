@@ -347,7 +347,10 @@ public class MovieTable implements Initializable
 						}
 						case "2":
 						{
-							mainGUI.alert("오류", "상영시간표가 없습니다.");
+							t_movie_title.setText("<해당하는 상영시간표가 없습니다>");
+							Node temp = vbox.getChildren().get(0);
+							vbox.getChildren().clear();
+							vbox.getChildren().add(temp);
 							return;
 						}
 						case "3":

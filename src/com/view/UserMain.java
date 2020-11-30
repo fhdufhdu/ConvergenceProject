@@ -122,6 +122,18 @@ public class UserMain implements Initializable
 		loadPage("movie_present");
 	}
 	
+	@FXML
+	void soonMovie(ActionEvent event)
+	{
+		loadPage("movie_soon");
+	}
+	
+	@FXML
+	void searchMovie(ActionEvent event)
+	{
+		loadPage("movie_search");
+	}
+	
 	static public void loadPage(String file_name)
 	{
 		try

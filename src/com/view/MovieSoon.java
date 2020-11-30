@@ -13,10 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 
-
 public class MovieSoon implements Initializable
 {
-
+	
 	@FXML
 	private GridPane gp_soon_movie;
 	
@@ -29,9 +28,9 @@ public class MovieSoon implements Initializable
 			ArrayList<MovieDTO> m_list = mDao.getSoonMovieList();
 			for (int i = 0; i < m_list.size(); i++)
 			{
-				FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/movie_grid_sub.fxml"));
+				FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/movie_soon_sub.fxml"));
 				Parent root = loader.load();
-				MovieSub2 controller = loader.<MovieSub2>getController();
+				MovieSoonSub controller = loader.<MovieSoonSub>getController();
 				controller.initData(m_list.get(i));
 				gp_soon_movie.add(root, i % 4, i / 4);
 			}
@@ -46,5 +45,5 @@ public class MovieSoon implements Initializable
 		}
 		
 	}
-
+	
 }

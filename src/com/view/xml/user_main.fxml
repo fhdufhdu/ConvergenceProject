@@ -37,8 +37,8 @@
                         <MenuButton mnemonicParsing="false" style="-fx-background-color: transparent;" text="영화">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#currentMovie" text="현재 상영작" />
-                              <MenuItem mnemonicParsing="false" text="상영 예정작" />
-                              <MenuItem mnemonicParsing="false" text="영화 찾아보기" />
+                              <MenuItem mnemonicParsing="false" onAction="#soonMovie" text="상영 예정작" />
+                              <MenuItem mnemonicParsing="false" onAction="#searchMovie" text="영화 찾아보기" />
                           </items>
                         </MenuButton>
                      </graphic>
