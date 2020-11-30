@@ -13,7 +13,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 
 
-public class MovieFutureDetail
+public class MovieSoonDetail
 {
 	@FXML
     private Button btn_reservation;
