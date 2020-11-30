@@ -1,124 +1,84 @@
 package com.view;
-//
+
 import javafx.event.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaView;
+import javafx.scene.text.Text;
 
 public class MoviePresentDetail {
 
-	@FXML
-    private TabPane tabpane_detail;
+	 @FXML
+	    private Button btn_reservation;
 
-    @FXML
-    private Tab tab_plot;
+	    @FXML
+	    private ImageView image_movie;
 
-    @FXML
-    private AnchorPane tab_plot1;
+	    @FXML
+	    private Text text_title;
 
-    @FXML
-    private TextArea ta_plot;
+	    @FXML
+	    private Text text_open_date;
 
-    @FXML
-    private Tab tab_review;
+	    @FXML
+	    private Text text_director;
 
-    @FXML
-    private AnchorPane tab_review1;
+	    @FXML
+	    private Text text_actor;
 
-    @FXML
-    private TextField tf_review_score;
+	    @FXML
+	    private TableView<?> tv_review;
 
-    @FXML
-    private TextArea ta_review;
+	    @FXML
+	    private TableColumn<?, ?> tc_reviewer;
 
-    @FXML
-    private Button btn_add;
+	    @FXML
+	    private TableColumn<?, ?> tc_review_score;
 
-    @FXML
-    private TableView<?> tv_review;
+	    @FXML
+	    private TableColumn<?, ?> tc_review_date;
 
-    @FXML
-    private TableColumn<?, ?> tc_client;
+	    @FXML
+	    private TableColumn<?, ?> tc_review;
 
-    @FXML
-    private TableColumn<?, ?> tc_review_score;
+	    @FXML
+	    private MenuButton mb_review;
 
-    @FXML
-    private TableColumn<?, ?> tc_review_date;
+	    @FXML
+	    private TextField tf_review;
 
-    @FXML
-    private TableColumn<?, ?> tc_review;
+	    @FXML
+	    private Button btn_review;
 
-    @FXML
-    private Button btn_image;
+	    @FXML
+	    private Text text_plot;
 
-    @FXML
-    private TableView<?> tv_movie;
+	    @FXML
+	    private MediaView media_movie;
 
-    @FXML
-    private TableColumn<?, ?> tc_title;
+	    @FXML
+	    private ImageView image_stillcut;
 
-    @FXML
-    private TableColumn<?, ?> tc_actor;
+	    @FXML
+	    private ImageView image_stillcut2;
 
-    @FXML
-    private TableColumn<?, ?> tc_director;
+	    @FXML
+	    private ImageView image_stillcut3;
 
-    @FXML
-    private TableColumn<?, ?> tc_start_date;
+	    @FXML
+	    void getReservation(ActionEvent event) {
 
-    @FXML
-    private TableColumn<?, ?> tc_plot;
+	    }
 
-    @FXML
-    private Hyperlink link_trailer;
+	    @FXML
+	    void getReview(ActionEvent event) {
 
-    @FXML
-    private Button btn_image2;
-
-    @FXML
-    private Button btn_image3;
-
-    @FXML
-    private Button btn_image4;
-
-    @FXML
-    void addReview(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath2(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath3(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getPosterPath4(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getTrailerPath(ActionEvent event) {
-
-    }
+	    }
     
 }
