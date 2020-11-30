@@ -87,8 +87,6 @@ public class Protocol
 	
 	// 사용자
 	// 영화관
-	public static final String CS_REQ_THEATERMENU_VIEW = "4-12"; // 사용자 영화관 메뉴 요청
-	public static final String SC_RES_THEATERMENU_VIEW = "5-24"; // 사용자 영화관 메뉴 요청 응답
 	public static final String CS_REQ_THEATERDETAIL_VIEW = "4-13"; // 사용자 영화관 상세정보 요청
 	public static final String SC_RES_THEATERDETAIL_VIEW = "5-26"; // 사용자 영화관 상세정보 요청 응답
 	
