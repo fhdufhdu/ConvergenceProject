@@ -42,6 +42,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -346,7 +347,10 @@ public class MovieTable implements Initializable
 						}
 						case "2":
 						{
-							mainGUI.alert("오류", "상영시간표가 없습니다.");
+							t_movie_title.setText("<해당하는 상영시간표가 없습니다>");
+							Node temp = vbox.getChildren().get(0);
+							vbox.getChildren().clear();
+							vbox.getChildren().add(temp);
 							return;
 						}
 						case "3":
@@ -552,6 +556,28 @@ public class MovieTable implements Initializable
 		public TimeTableDTO getTimeTable()
 		{
 			return timetable;
+		}
+	}
+	
+	public void initData(MovieDTO movie)
+	{
+		try
+		{
+			initTheaterList();
+			initMovieList();
+			
+			tv_theater.getSelectionModel().select(0);
+			for (int i = 0; i < movie_list.size(); i++)
+			{
+				if (movie_list.get(i).getId().equals(movie.getId()))
+				{
+					tv_movie.getSelectionModel().select(i);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

@@ -122,12 +122,25 @@ public class UserMain implements Initializable
 		loadPage("movie_present");
 	}
 	
-	private void loadPage(String file_name)
+	@FXML
+	void soonMovie(ActionEvent event)
+	{
+		loadPage("movie_soon");
+	}
+	
+	@FXML
+	void searchMovie(ActionEvent event)
+	{
+		loadPage("movie_search");
+	}
+	
+	static public void loadPage(String file_name)
 	{
 		try
 		{
+			MovieDetail.stopWebview();
 			Parent root = FXMLLoader.load(UserMain.class.getResource("./xml/user_sub_page/" + file_name + ".fxml"));
-			bp_user_sub.setCenter(root);
+			user_sub_root.setCenter(root);
 			
 			/*
 			 * GridPane a = new GridPane(); a.add(root, 1, 0);

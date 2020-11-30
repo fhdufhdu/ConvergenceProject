@@ -777,7 +777,7 @@ public class RsvAdd implements Initializable
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : mb_hours_start.getText().replace("시", "") + ":00:00.0";
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : mb_hours_end.getText().replace("시", "") + ":00:00.0";
 			String theater_id = "null";
-
+			
 			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
 			
 			while (true)
@@ -919,7 +919,7 @@ public class RsvAdd implements Initializable
 		
 		public StringProperty getCurrent()
 		{
-			return new SimpleStringProperty(timetable.getCurrentRsv() + "/" + screen.getTotalCapacity());
+			return new SimpleStringProperty(timetable.getCurrentRsv() + "`" + screen.getTotalCapacity());
 		}
 		
 		public TimeTableDTO getTimeTable()

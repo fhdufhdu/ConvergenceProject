@@ -148,4 +148,19 @@ public class ReviewDAO extends DAO
         
         return result;
     }
+    
+    public void removeReview(String rid) throws DAOException, SQLException
+    {
+        String insert_sql = "delete from reviews where id = ?";
+        
+        ps = conn.prepareStatement(insert_sql);
+        
+        ps.setString(1, rid);
+        
+        int r = ps.executeUpdate();
+        System.out.println("변경된 row : " + r);
+        
+        ps.close();
+    }
+    
 }
