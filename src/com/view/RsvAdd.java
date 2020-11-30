@@ -337,28 +337,27 @@ public class RsvAdd implements Initializable
 								int mv_min = Integer.parseInt(infoArr[10]);
 								
 								movie_list.add(new MovieDTO(mv_id, mv_title, mv_release_date, mv_is_current, mv_plot, mv_poster_path, mv_stillCut_path, mv_trailer_path, mv_director, mv_actor, mv_min));
-								
-								lv_movie.setItems(FXCollections.observableArrayList());
-								lv_movie.getItems().addAll(movie_list);
-								lv_movie.setOnMouseClicked((MouseEvent) ->
-								{
-									if (lv_movie.getSelectionModel().getSelectedItem() == null)
-										return;
-									selectedMovie = lv_movie.getSelectionModel().getSelectedItem();
-									lv_movie.setMaxHeight(0);
-									lv_movie.getItems().clear();
-									tf_movie.setText(selectedMovie.getTitle());
-								});
-								lv_movie.setCellFactory(lv -> new ListCell<MovieDTO>()
-								{
-									@Override
-									protected void updateItem(MovieDTO item, boolean empty)
-									{
-										super.updateItem(item, empty);
-										setText(item == null ? null : item.getTitle());
-									}
-								});
 							}
+							lv_movie.setItems(FXCollections.observableArrayList());
+							lv_movie.getItems().addAll(movie_list);
+							lv_movie.setOnMouseClicked((MouseEvent) ->
+							{
+								if (lv_movie.getSelectionModel().getSelectedItem() == null)
+									return;
+								selectedMovie = lv_movie.getSelectionModel().getSelectedItem();
+								lv_movie.setMaxHeight(0);
+								lv_movie.getItems().clear();
+								tf_movie.setText(selectedMovie.getTitle());
+							});
+							lv_movie.setCellFactory(lv -> new ListCell<MovieDTO>()
+							{
+								@Override
+								protected void updateItem(MovieDTO item, boolean empty)
+								{
+									super.updateItem(item, empty);
+									setText(item == null ? null : item.getTitle());
+								}
+							});
 							break;
 						}
 						case "2":
@@ -777,8 +776,9 @@ public class RsvAdd implements Initializable
 			String date = dp_start_date.getValue() == null ? "1976-01-01 " : dateFormat.format(dp_start_date.getValue()) + " ";
 			String start_time = mb_hours_start.getText().equals("시간") ? "00:00:00.0" : mb_hours_start.getText().replace("시", "") + ":00:00.0";
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : mb_hours_end.getText().replace("시", "") + ":00:00.0";
+			String theater_id = "null";
 
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
 			
 			while (true)
 			{

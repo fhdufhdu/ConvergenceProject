@@ -22,7 +22,6 @@ import javafx.scene.layout.BorderPane;
 public class UserMain implements Initializable
 {
 	private ArrayList<TheaterDTO> theater_list;
-	private TheaterDTO selectedTheater;
 	public static BorderPane user_sub_root;
 	
 	@FXML
@@ -41,14 +40,14 @@ public class UserMain implements Initializable
 		{
 			user_sub_root = bp_user_sub;
 			theater_list = new ArrayList<TheaterDTO>();
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATERMENU_VIEW);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATER_VIEW);
 			
 			String packet = mainGUI.readLine();
 			String packetArr[] = packet.split("!");
 			String packetType = packetArr[0];
 			String packetCode = packetArr[1];
 			
-			if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_THEATERMENU_VIEW))
+			if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
 			{
 				String result = packetArr[2];
 				switch (result)
@@ -103,70 +102,6 @@ public class UserMain implements Initializable
 						break;
 				}
 			}
-			// for (int i = 0; i < theater_list.size(); i++)
-			// {
-			// MenuItem theater_name = new MenuItem(theater_list.get(i).getName());
-			// theater_name.setId(Integer.toString(i));
-			// theater_name.setOnAction(new EventHandler<ActionEvent>()
-			// {
-			// public void handle(ActionEvent event)
-			// {
-			// try
-			// {
-			// FXMLLoader loader = new FXMLLoader(UserMain.class.getResource("./xml/user_sub_page/theater_search.fxml"));
-			// Parent root = (Parent) loader.load();
-			// TheaterSearch controller = loader.<TheaterSearch>getController();
-			// controller.initData(theater_list.get(Integer.valueOf(theater_name.getId())));
-			//
-			// user_parent.setCenter(root);
-			// }
-			// catch (Exception e)
-			// {
-			// e.printStackTrace();
-			// }
-			// }
-			// });
-			// mb_theater.getItems().add(theater_name);
-			// }
-			// final double SPEED = 0.005;
-			// sp_user_main.getContent().setOnScroll(scrollEvent ->
-			// {
-			// double deltaY = scrollEvent.getDeltaY() * SPEED;
-			// sp_user_main.setVvalue(sp_user_main.getVvalue() - deltaY);
-			// });
-			// TheaterDAO tDao = new TheaterDAO();
-			// theater_list = tDao.getTheaterList();
-			// for (int i = 0; i < theater_list.size(); i++)
-			// {
-			// MenuItem theater_name = new MenuItem(theater_list.get(i).getName());
-			// theater_name.setId(Integer.toString(i));
-			// theater_name.setOnAction(new EventHandler<ActionEvent>()
-			// {
-			// public void handle(ActionEvent event)
-			// {
-			// try
-			// {
-			// FXMLLoader loader = new FXMLLoader(UserMain.class.getResource("./xml/user_sub_page/theater_search.fxml"));
-			// Parent root = (Parent) loader.load();
-			// TheaterSearch controller = loader.<TheaterSearch>getController();
-			// controller.initData(theater_list.get(Integer.valueOf(theater_name.getId())));
-			//
-			// bp_user_sub.setCenter(root);
-			// }
-			// catch (Exception e)
-			// {
-			// e.printStackTrace();
-			// }
-			// }
-			// });
-			// mb_theater.getItems().add(theater_name);
-			// }
-			// final double SPEED = 0.005;
-			// sp_user_main.getContent().setOnScroll(scrollEvent ->
-			// {
-			// double deltaY = scrollEvent.getDeltaY() * SPEED;
-			// sp_user_main.setVvalue(sp_user_main.getVvalue() - deltaY);
-			// });
 		}
 		catch (Exception e)
 		{

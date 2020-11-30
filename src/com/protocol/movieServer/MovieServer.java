@@ -33,6 +33,7 @@ import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
+import com.view.Login;
 
 public class MovieServer extends Thread
 {
@@ -296,9 +297,15 @@ public class MovieServer extends Thread
 									String date = packetArr[4];
 									String start_time = packetArr[5];
 									String end_time = packetArr[6];
+									String theater_id = packetArr[7];
 									
-									TimeTableDAO rDao = new TimeTableDAO();
-									ArrayList<TimeTableDTO> t_list = rDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, mov_id, screen_id, date + start_time, date + end_time, "1", 0));
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ArrayList<TimeTableDTO> t_list;
+									if (theater_id.equals("null"))
+										t_list = ttDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, mov_id, screen_id, date + start_time, date + end_time, "1", 0));
+									else
+										t_list = ttDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, mov_id, screen_id, date + start_time, date + end_time, "1", 0), theater_id);
+									
 									Iterator<TimeTableDTO> t_iter = t_list.iterator();
 									String timetableList = "";
 									
@@ -404,47 +411,6 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
-							
-							case Protocol.CS_REQ_THEATERMENU_VIEW:
-							{
-								try
-								{
-									System.out.println("클라이언트가 영화관 메뉴를 요청하였습니다.");
-									TheaterDAO tDao = new TheaterDAO();
-									ArrayList<TheaterDTO> theater_list = tDao.getTheaterList();
-									Iterator<TheaterDTO> tIter = theater_list.iterator();
-									String theaterMenuList = "";
-									
-									if (tIter.hasNext() == false)
-									{
-										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
-									}
-									
-									while (tIter.hasNext())
-									{
-										TheaterDTO temp = tIter.next();
-										String id = temp.getId();
-										String name = temp.getName();
-										String address = temp.getAddress();
-										String total_screen = Integer.toString(temp.getTotalScreen());
-										String total_seats = Integer.toString(temp.getTotalSeats());
-										if (tIter.hasNext())
-											theaterMenuList += id + "`" + name + "`" + address + "`" + total_screen + "`" + total_seats + ",";
-										else
-											theaterMenuList += id + "`" + name + "`" + address + "`" + total_screen + "`" + total_seats;
-									}
-									
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!1!" + theaterMenuList);
-									System.out.println("영화관 메뉴 전송 성공");
-								}
-								catch (Exception e)
-								{
-									e.printStackTrace();
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
-									break;
-								}
-							}
-							
 						}
 					}
 					
@@ -799,8 +765,49 @@ public class MovieServer extends Thread
 									conn.setAutoCommit(true);
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`4");
 									break;
+								} finally
+								{
+									conn.setAutoCommit(true);
 								}
-								finally
+							}
+							
+							case Protocol.CS_REQ_RESERVATION_ADD:
+							{
+								Connection conn = DAO.getConn();
+								conn.setAutoCommit(false);
+								Savepoint sp = conn.setSavepoint();
+								try
+								{
+									System.out.println("관리자가 예매 등록 요청을 보냈습니다.");
+									ReservationDAO rDao = new ReservationDAO();
+									String member_id = packetArr[2];
+									String timetable_id = packetArr[3];
+									int price = 0;
+									
+									ArrayList<Integer> rowArr = new ArrayList<Integer>();
+									String row_list[] = packetArr[4].split(",");
+									for (String row : row_list)
+										rowArr.add(Integer.valueOf(row));
+									
+									ArrayList<Integer> colArr = new ArrayList<Integer>();
+									String col_list[] = packetArr[5].split(",");
+									for (String col : col_list)
+										colArr.add(Integer.valueOf(col));
+									
+									price = rDao.addPreRsv(member_id, timetable_id, rowArr, colArr);
+									conn.commit();
+									
+									System.out.println("사용자 예매 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`1" + price);
+									break;
+								}
+								catch (Exception e)
+								{
+									conn.rollback(sp);
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`2");
+									break;
+								} finally
 								{
 									conn.setAutoCommit(true);
 								}
