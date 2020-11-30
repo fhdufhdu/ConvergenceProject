@@ -294,7 +294,7 @@ public class MovieTable implements Initializable
 		
 	}
 	
-	private void initCustomList() throws Exception
+	private void initCustomList() throws Exception  // 수정 필요
 	{
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try
@@ -524,7 +524,7 @@ public class MovieTable implements Initializable
 		}
 	}
 	
-	private class CustomDTO
+	private class CustomDTO // 네트워크
 	{
 		ScreenDTO screen;
 		TimeTableDTO timetable;
