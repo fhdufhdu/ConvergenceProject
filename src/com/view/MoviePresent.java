@@ -8,21 +8,18 @@ import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
 
 import javafx.fxml.FXML;
-<<<<<<< HEAD
+
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-=======
+
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
->>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
 
 public class MoviePresent implements Initializable
 {
-<<<<<<< HEAD
-    
 	 @FXML
 	    private Button btn_detail;
 
@@ -74,7 +71,6 @@ public class MoviePresent implements Initializable
 
 	    }
     
-=======
 	@FXML
 	private GridPane gp_current_movie;
 	
@@ -104,6 +100,4 @@ public class MoviePresent implements Initializable
 		}
 		
 	}
-	
->>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
 }

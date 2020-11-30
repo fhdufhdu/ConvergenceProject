@@ -89,11 +89,11 @@ public class SignUp
 				gender = "0";
 			}
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_SIGNUP + "/2/" + id + "/" + passwd + "/" + name + "/" + phone_number + "/" + birth + "/" + gender);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_SIGNUP + "/2/" + id + "`" + passwd + "`" + name + "`" + phone_number + "`" + birth + "`" + gender);
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				

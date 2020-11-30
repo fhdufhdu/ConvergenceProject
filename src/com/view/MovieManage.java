@@ -231,12 +231,12 @@ public class MovieManage implements Initializable
 			
 			String id = table_row_data.getId();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_MOVIE_DELETE + "/" + id);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_MOVIE_DELETE + "`" + id);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -286,7 +286,7 @@ public class MovieManage implements Initializable
 	{
 		try
 		{
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW + "/" + title + "/" + start_date + "/" + end_date + "/" + is_current + "/" + director + "/" + actor);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`" + title + "`" + start_date + "`" + end_date + "`" + is_current + "`" + director + "`" + actor);
 			
 			while (true)
 			{

@@ -90,12 +90,12 @@ public class ScreenManage
 			String row = tf_row.getText();
 			String col = tf_col.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_SCREEN_ADD + "/" + theater.getId() + "/" + name + "/" + capacity + "/" + row + "/" + col);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_SCREEN_ADD + "`" + theater.getId() + "`" + name + "`" + capacity + "`" + row + "`" + col);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -158,12 +158,12 @@ public class ScreenManage
 			String row = tf_row.getText();
 			String col = tf_col.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_SCREEN_CHANGE + "/" + table_row_data.getId() + "/" + theater.getId() + "/" + name + "/" + capacity + "/" + row + "/" + col);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_SCREEN_CHANGE + "`" + table_row_data.getId() + "`" + theater.getId() + "`" + name + "`" + capacity + "`" + row + "`" + col);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -233,12 +233,12 @@ public class ScreenManage
 			
 			String id = table_row_data.getId();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_SCREEN_DELETE + "/" + id);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_SCREEN_DELETE + "`" + id);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -290,7 +290,7 @@ public class ScreenManage
 		{
 			screen_list.clear();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_SCREEN_VIEW + "/" + theater.getId());
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_SCREEN_VIEW + "`" + theater.getId());
 			
 			while (true)
 			{
@@ -312,7 +312,7 @@ public class ScreenManage
 							
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 상영관 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 상영관 별 정보 분할
 								String id = infoArr[0];
 								String theater_id = infoArr[1];
 								String name = infoArr[2];
