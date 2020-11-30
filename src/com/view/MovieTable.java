@@ -1,8 +1,6 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,10 +11,7 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Timer;
 
-import com.db.model.DAO;
 import com.db.model.MovieDTO;
-import com.db.model.ReservationDAO;
-import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDTO;
@@ -42,7 +37,6 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -202,7 +196,7 @@ public class MovieTable implements Initializable
 		try
 		{
 			movie_list = FXCollections.observableArrayList();
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%");
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%`1");
 			
 			while (true)
 			{
@@ -295,7 +289,7 @@ public class MovieTable implements Initializable
 		
 	}
 	
-	private void initCustomList() throws Exception  // 수정 필요
+	private void initCustomList() throws Exception
 	{
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try
@@ -308,7 +302,7 @@ public class MovieTable implements Initializable
 			String theater_id = selectedThea.getId();
 			
 			custom_list = FXCollections.observableArrayList();
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_TIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
 			
 			while (true)
 			{
@@ -317,7 +311,7 @@ public class MovieTable implements Initializable
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ADMINTIMETABLE_VIEW))
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_TIMETABLE_VIEW))
 				{
 					String result = packetArr[2];
 					
@@ -537,10 +531,38 @@ public class MovieTable implements Initializable
 		{
 			try
 			{
-				this.timetable = timetable;
+				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_CUSTOM_INFO + "`" + timetable.getId() + "`screen");
 				
-				ScreenDAO sDao = new ScreenDAO();
-				screen = sDao.getScreenElem(timetable.getScreenId());
+				while (true)
+				{
+					String packet = mainGUI.readLine();
+					String packetArr[] = packet.split("!"); // 패킷 분할
+					String packetType = packetArr[0];
+					String packetCode = packetArr[1];
+					
+					if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_CUSTOM_INFO))
+					{
+						String result = packetArr[2];
+						
+						switch (result)
+						{
+							case "1":
+							{
+								this.timetable = timetable;
+								String infoList = packetArr[3];
+								String listArr[] = infoList.split(","); // 각 리스트 분할
+								String sc_info[] = listArr[1].split("`"); // 상영관 정보 분할
+								screen = new ScreenDTO(sc_info[0], sc_info[1], sc_info[2], Integer.valueOf(sc_info[3]), Integer.valueOf(sc_info[4]), Integer.valueOf(sc_info[5]));
+								return;
+							}
+							case "2":
+							{
+								mainGUI.alert("경고", "정보 요청 실패했습니다.");
+								return;
+							}
+						}
+					}
+				}
 			}
 			catch (Exception e)
 			{

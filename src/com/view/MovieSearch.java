@@ -1,18 +1,10 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Date;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import com.db.model.DAOException;
-import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ScreenDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
@@ -26,8 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -40,7 +30,6 @@ public class MovieSearch implements Initializable
 {
 	
 	private ObservableList<MovieDTO> movie_list;
-	private MovieDTO table_row_data;
 	private String is_current;
 	
 	@FXML
@@ -199,7 +188,7 @@ public class MovieSearch implements Initializable
 	{
 		try
 		{
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`" + title + "`" + start_date + "`" + end_date + "`" + is_current + "`" + director + "`" + actor);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`" + title + "`" + start_date + "`" + end_date + "`" + is_current + "`" + director + "`" + actor + "`0");
 			
 			while (true)
 			{
@@ -246,7 +235,7 @@ public class MovieSearch implements Initializable
 						}
 						case "3":
 						{
-							t_result.setText("영화 리스트 요청 실패했습니다.");
+							mainGUI.alert("오류", "영화 리스트 요청 실패했습니다.");
 							return;
 						}
 					}
@@ -255,7 +244,7 @@ public class MovieSearch implements Initializable
 		}
 		catch (Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 }

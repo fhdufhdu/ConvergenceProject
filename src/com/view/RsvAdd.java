@@ -1,32 +1,19 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import com.db.model.DAO;
-import com.db.model.DAOException;
-import com.db.model.DTO;
-import com.db.model.MemberDAO;
 import com.db.model.MemberDTO;
-import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ReservationDAO;
-import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
-import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
-import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -300,7 +287,7 @@ public class RsvAdd implements Initializable
 				}
 			}
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%");
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%`0");
 			movie_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -778,7 +765,7 @@ public class RsvAdd implements Initializable
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : mb_hours_end.getText().replace("시", "") + ":00:00.0";
 			String theater_id = "null";
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_TIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
 			
 			while (true)
 			{
@@ -787,7 +774,7 @@ public class RsvAdd implements Initializable
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ADMINTIMETABLE_VIEW))
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_TIMETABLE_VIEW))
 				{
 					String result = packetArr[2];
 					
@@ -873,16 +860,14 @@ public class RsvAdd implements Initializable
 								movie = new MovieDTO(mv_info[0], mv_info[1], mv_info[2], mv_info[3], mv_info[4], mv_info[5], mv_info[6], mv_info[7], mv_info[8], mv_info[9], Integer.valueOf(mv_info[10]));
 								screen = new ScreenDTO(sc_info[0], sc_info[1], sc_info[2], Integer.valueOf(sc_info[3]), Integer.valueOf(sc_info[4]), Integer.valueOf(sc_info[5]));
 								theater = new TheaterDTO(th_info[0], th_info[1], th_info[2], Integer.valueOf(th_info[3]), Integer.valueOf(th_info[4]));
-								break;
+								return;
 							}
 							case "2":
 							{
 								mainGUI.alert("경고", "정보 요청 실패했습니다.");
-								break;
+								return;
 							}
 						}
-						if (result != null)
-							break;
 					}
 				}
 			}
@@ -930,11 +915,6 @@ public class RsvAdd implements Initializable
 		public ScreenDTO getScreenElem()
 		{
 			return screen;
-		}
-		
-		public MovieDTO getMovieElem()
-		{
-			return movie;
 		}
 	}
 }

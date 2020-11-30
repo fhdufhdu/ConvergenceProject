@@ -31,9 +31,7 @@ import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
-import com.main.mainGUI;
 import com.protocol.Protocol;
-import com.view.Login;
 
 public class MovieServer extends Thread
 {
@@ -232,9 +230,17 @@ public class MovieServer extends Thread
 									info.put("is_current", packetArr[5]);
 									info.put("director", packetArr[6]);
 									info.put("actor", packetArr[7]);
+									String type = packetArr[8];
 									
 									MovieDAO tDao = new MovieDAO();
-									ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
+									ArrayList<MovieDTO> tlist;
+									if (type.equals("1"))
+										tlist = tDao.getCurrentMovieList(); // 현재 상영 리스트
+									else if (type.equals("2"))
+										tlist = tDao.getSoonMovieList(); // 상영 예정 리스트
+									else
+										tlist = tDao.getMovieList(info); // 키워드에 해당하는 리스트
+										
 									Iterator<MovieDTO> tIter = tlist.iterator();
 									String movieList = ""; // 영화 리스트 모두 담을 문자열
 									
@@ -287,7 +293,7 @@ public class MovieServer extends Thread
 								}
 							}
 							
-							case Protocol.CS_REQ_ADMINTIMETABLE_VIEW:
+							case Protocol.CS_REQ_TIMETABLE_VIEW:
 							{
 								try
 								{
@@ -311,7 +317,7 @@ public class MovieServer extends Thread
 									
 									if (t_iter.hasNext() == false)
 									{
-										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!2");
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_TIMETABLE_VIEW + "!2");
 										break;
 									}
 									
@@ -323,14 +329,14 @@ public class MovieServer extends Thread
 										else
 											timetableList += tbDto.getId() + "`" + tbDto.getScreenId() + "`" + tbDto.getMovieId() + "`" + tbDto.getType() + "`" + tbDto.getCurrentRsv() + "`" + tbDto.getStartTime() + "`" + tbDto.getEndTime();
 									}
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!1!" + timetableList);
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_TIMETABLE_VIEW + "!1!" + timetableList);
 									System.out.println("상영시간표 리스트 전송 성공");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!3");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_TIMETABLE_VIEW + "!3");
 									break;
 								}
 							}
@@ -350,7 +356,6 @@ public class MovieServer extends Thread
 									
 									MovieDAO movDao = new MovieDAO();
 									movie = movDao.getMovie(ttDto.getMovieId());
-									
 									infoList += movie.getId() + "`" + movie.getTitle() + "`" + movie.getReleaseDate().toString() + "`" + movie.getIsCurrent() + "`" + movie.getPlot() + "`" + movie.getPosterPath() + "`" + movie.getStillCutPath() + "`" + movie.getTrailerPath() + "`" + movie.getDirector() + "`" + movie.getActor() + "`" + Integer.toString(movie.getMin()) + ",";
 									
 									ScreenDAO sDao = new ScreenDAO();
@@ -629,10 +634,16 @@ public class MovieServer extends Thread
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_ADD + "`1");
 									break;
 								}
-								catch (Exception e)
+								catch (DAOException e)
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_ADD + "`2");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_ADD + "`3");
 									break;
 								}
 							}
@@ -765,8 +776,7 @@ public class MovieServer extends Thread
 									conn.setAutoCommit(true);
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`4");
 									break;
-								}
-								finally
+								} finally
 								{
 									conn.setAutoCommit(true);
 								}
@@ -808,8 +818,7 @@ public class MovieServer extends Thread
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`2");
 									break;
-								}
-								finally
+								} finally
 								{
 									conn.setAutoCommit(true);
 								}
