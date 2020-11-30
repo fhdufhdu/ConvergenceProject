@@ -134,6 +134,12 @@ public class UserMain implements Initializable
 		loadPage("movie_search");
 	}
 	
+	@FXML
+	void cancelRsv(ActionEvent event)
+	{
+		loadPage("reservation_cancel");
+	}
+	
 	static public void loadPage(String file_name)
 	{
 		try

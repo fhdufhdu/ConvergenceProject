@@ -50,7 +50,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="예매 관리" />
+                        <Button mnemonicParsing="false" onAction="#cancelRsv" style="-fx-background-color: transparent;" text="예매 관리" />
                      </graphic>
                   </Menu>
                </menus>
