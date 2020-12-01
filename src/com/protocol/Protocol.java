@@ -126,6 +126,6 @@ public class Protocol
 	// 예매 현황
 	public static final String CS_REQ_USERRESERVATION_VIEW = "4-E"; // 사용자 예매 내역 요청
 	public static final String SC_RES_USERRESERVATION_VIEW = "5-1C"; // 사용자 예매 내역 요청 응답
-	public static final String CS_REQ_USERRESERVATION_DELETE = "6-2"; // 예매 취소 요청
-	public static final String SC_RES_USERRESERVATION_DELETE = "7-4"; // 예매 취소 요청 응답
+	public static final String CS_REQ_RESERVATION_DELETE = "6-2"; // 예매 취소 요청
+	public static final String SC_RES_RESERVATION_DELETE = "7-4"; // 예매 취소 요청 응답
 }

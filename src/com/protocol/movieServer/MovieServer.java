@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import com.db.model.MemberDTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
 import com.db.model.ReservationDAO;
+import com.db.model.ReservationDTO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
@@ -362,6 +364,46 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_ADMINRESERVATION_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 예매 리스트를 요청하였습니다.");
+									String mem_id = packetArr[2];
+									String mov_id = packetArr[3];
+									String thea_id = packetArr[4];
+									String start_date = packetArr[5];
+									String end_date = packetArr[6];
+									ReservationDAO rDao = new ReservationDAO();
+									ArrayList<ReservationDTO> r_list = rDao.getRsvList(mem_id, mov_id, thea_id, start_date + " 00:00:00.0", end_date + " 23:59:00.0");
+						            Iterator<ReservationDTO> r_iter = r_list.iterator();
+						            String reservatinList = "";
+									
+									if (r_iter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINRESERVATION_VIEW + "!2");
+										break;
+									}
+									
+									while (r_iter.hasNext())
+									{
+										ReservationDTO rDto = r_iter.next();
+										if (r_iter.hasNext())
+											reservatinList += rDto.getId() + "/" + rDto.getMemberId() + "/" + rDto.getTimeTableId() + "/" + rDto.getScreenRow() + "/" + rDto.getScreenCol() + "/" + rDto.getPrice() + "/" + rDto.getType() + "/" + rDto.getRsvTime() + "/" + rDto.getAccount() + "/" + rDto.getBank() + "/" + ",";
+										else
+											reservatinList += rDto.getId() + "/" + rDto.getMemberId() + "/" + rDto.getTimeTableId() + "/" + rDto.getScreenRow() + "/" + rDto.getScreenCol() + "/" + rDto.getPrice() + "/" + rDto.getType() + "/" + rDto.getRsvTime() + "/" + rDto.getAccount() + "/" + rDto.getBank() + "/";
+									}
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINRESERVATION_VIEW + "!1!" + reservatinList);
+									System.out.println("예매 리스트 전송 성공");
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINRESERVATION_VIEW + "!2");
 									break;
 								}
 							}
@@ -921,6 +963,32 @@ public class MovieServer extends Thread
 									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/2");
 									break;
 								}
+							}
+							
+							case Protocol.CS_REQ_RESERVATION_DELETE:
+							{
+						        try
+						        {
+									System.out.println("클라이언트가 예매 취소 요청을 보냈습니다.");
+									String reservationId = packetArr[2];
+						        	Connection conn = DAO.getConn();
+							        conn.setAutoCommit(false);
+							        Savepoint sp = conn.setSavepoint();
+						            ReservationDAO rDao = new ReservationDAO();
+						            rDao.cancelRsv(reservationId);
+						            rDao.refund(reservationId);
+						            conn.commit();
+						            System.out.println("예매 취소 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/1");
+						        }
+						        catch (Exception e)
+						        {
+									e.printStackTrace();
+									System.out.println("예매 취소 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/2");
+									
+									break;
+						        }
 							}
 						}
 					}
