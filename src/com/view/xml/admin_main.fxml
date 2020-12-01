@@ -59,7 +59,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
-                        <Button mnemonicParsing="false" prefHeight="15.0" style="-fx-background-color: transparent;" text="통계정보" />
+                        <Button mnemonicParsing="false" onAction="#menuSatistics" prefHeight="15.0" style="-fx-background-color: transparent;" text="통계정보" />
                      </graphic>
                   </Menu>
                   <Menu fx:id="m_admin_account" mnemonicParsing="false" onAction="#menuAdminAccount">

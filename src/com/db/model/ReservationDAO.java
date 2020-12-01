@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import oracle.sql.ARRAY;
 import oracle.sql.ArrayDescriptor;
@@ -327,4 +329,105 @@ public class ReservationDAO extends DAO
         return result;
     }
     
+    public ArrayList<String> getBenefitSatistics(String start_date, String end_date) throws DAOException, SQLException
+    {
+        try
+        {
+            String insert_sql = "call GET_BENEBIT_LIST(?, ?, ?, ?)";
+            
+            CallableStatement cs = conn.prepareCall(insert_sql);
+            
+            cs.registerOutParameter(1, Types.ARRAY, "VAR_ARRAY");
+            cs.registerOutParameter(2, Types.ARRAY, "RATE_ARRAY");
+            cs.setTimestamp(3, Timestamp.valueOf(start_date));
+            cs.setTimestamp(4, Timestamp.valueOf(end_date));
+            cs.executeUpdate();
+            
+            ArrayList<String> result = new ArrayList<String>();
+            String[] theater_name = (String[]) cs.getArray(1).getArray();
+            Number[] rate = (Number[]) cs.getArray(2).getArray();
+            
+            for (int i = 0; i < theater_name.length; i++)
+            {
+                result.add(theater_name[i] + "/" + String.valueOf(rate[i]));
+            }
+            
+            cs.close();
+            return result;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new DAOException("DUPLICATE_RSV");
+        }
+        
+    }
+    
+    public ArrayList<String> getRsvSatistics(String start_date, String end_date) throws DAOException, SQLException
+    {
+        try
+        {
+            String insert_sql = "call GET_RSV_LIST(?, ?, ?, ?)";
+            
+            CallableStatement cs = conn.prepareCall(insert_sql);
+            
+            cs.registerOutParameter(1, Types.ARRAY, "VAR_ARRAY");
+            cs.registerOutParameter(2, Types.ARRAY, "RATE_ARRAY");
+            cs.setTimestamp(3, Timestamp.valueOf(start_date));
+            cs.setTimestamp(4, Timestamp.valueOf(end_date));
+            cs.executeUpdate();
+            
+            ArrayList<String> result = new ArrayList<String>();
+            String[] movie_title = (String[]) cs.getArray(1).getArray();
+            Number[] rate = (Number[]) cs.getArray(2).getArray();
+            
+            for (int i = 0; i < movie_title.length; i++)
+            {
+                result.add(movie_title[i] + "/" + String.valueOf(rate[i]));
+            }
+            
+            cs.close();
+            return result;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new DAOException("DUPLICATE_RSV");
+        }
+        
+    }
+    
+    public ArrayList<String> getCancelSatistics(String start_date, String end_date) throws DAOException, SQLException
+    {
+        try
+        {
+            String insert_sql = "call GET_CANCEL_LIST(?, ?, ?, ?)";
+            
+            CallableStatement cs = conn.prepareCall(insert_sql);
+            
+            cs.registerOutParameter(1, Types.ARRAY, "VAR_ARRAY");
+            cs.registerOutParameter(2, Types.ARRAY, "RATE_ARRAY");
+            cs.setTimestamp(3, Timestamp.valueOf(start_date));
+            cs.setTimestamp(4, Timestamp.valueOf(end_date));
+            cs.executeUpdate();
+            
+            ArrayList<String> result = new ArrayList<String>();
+            String[] movie_title = (String[]) cs.getArray(1).getArray();
+            Number[] rate = (Number[]) cs.getArray(2).getArray();
+            
+            for (int i = 0; i < movie_title.length; i++)
+            {
+                result.add(movie_title[i] + "/" + String.valueOf(rate[i]));
+            }
+            
+            cs.close();
+            return result;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new DAOException("DUPLICATE_RSV");
+        }
+        
+    }
 }
