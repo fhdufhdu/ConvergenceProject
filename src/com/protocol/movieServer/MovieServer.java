@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +27,8 @@ import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
 import com.db.model.ReservationDAO;
 import com.db.model.ReservationDTO;
+import com.db.model.ReviewDAO;
+import com.db.model.ReviewDTO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDAO;
@@ -33,6 +36,7 @@ import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
 import com.protocol.Protocol;
+import com.view.Login;
 
 public class MovieServer extends Thread
 {
@@ -454,6 +458,72 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_MOVIESUB_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 영화 서브 정보를 요청하였습니다.");
+									String movieId = packetArr[2];
+									
+									TimeTableDAO tDao = new TimeTableDAO();
+									ReviewDAO rDao = new ReviewDAO();
+									
+						            double rsv_rate = tDao.getRsvRate(movieId);
+						            if (Double.isNaN(rsv_rate))
+						            {
+						                rsv_rate = 0;
+						            }
+						            String aver_star = Integer.toString(rDao.getAverStarGrade(movieId));
+						            
+						            writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIESUB_VIEW + "!1!" + Double.toString(rsv_rate) + "!" + aver_star);
+						            System.out.println("영화별 영화 서브  정보 전송 성공");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIESUB_VIEW + "!2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_REVIEW_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 리뷰 리스트를 요청하였습니다.");
+									String movieId = packetArr[2];
+									
+									ReviewDAO rDao = new ReviewDAO();
+									ArrayList<ReviewDTO> r_list = rDao.getRvListFromMov(movieId);
+									Iterator<ReviewDTO> r_iter = r_list.iterator();
+						            String reviewList = "";
+									
+									if (r_iter.hasNext() == false)
+									{
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_REVIEW_VIEW + "!2");
+										break;
+									}
+									while (r_iter.hasNext())
+									{
+										ReviewDTO rDto = r_iter.next();
+										if (r_iter.hasNext())
+											reviewList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getMovieId() + "`" + rDto.getStar() + "`" + rDto.getText() + "`" + rDto.getWriteTime() + ",";
+										else
+											reviewList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getMovieId() + "`" + rDto.getStar() + "`" + rDto.getText() + "`" + rDto.getWriteTime();
+										}
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_REVIEW_VIEW + "!1!" + reviewList);
+									System.out.println("리뷰 리스트 전송 성공");
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_REVIEW_VIEW + "!2");
 									break;
 								}
 							}
@@ -1004,10 +1074,54 @@ public class MovieServer extends Thread
 						        catch (Exception e)
 						        {
 									e.printStackTrace();
-									System.out.println("예매 취소 실패");
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_DELETE + "`2");
 									break;
 						        }
+							}
+							
+							case Protocol.CS_REQ_REVIEW_ADD:
+							{
+								try
+								{
+									System.out.println("클라이언트가 리뷰 등록 요청을 보냈습니다.");
+									ReviewDAO rDao = new ReviewDAO();
+									String rv_id = packetArr[2];
+									String rv_memId = packetArr[3];
+									String rv_movId = packetArr[4];
+									int rv_star = Integer.parseInt(packetArr[5]);
+									String rv_text = packetArr[6];
+									String rv_time = packetArr[7];
+									rDao.addReview(new ReviewDTO(rv_id, rv_memId, rv_movId, rv_star, rv_text, rv_time));
+									
+									System.out.println("리뷰 등록 성공");
+						            writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_ADD + "`1");
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_ADD + "`2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_REVIEW_DELETE:
+							{
+								try
+								{
+									System.out.println("클라이언트가 리뷰 삭제 요청을 보냈습니다.");
+									ReviewDAO rDao = new ReviewDAO();
+									String rv_id = packetArr[2];
+									rDao.removeReview(rv_id);
+									
+									System.out.println("리뷰 삭제 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_DELETE + "`1");
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_DELETE + "`2");
+									break;
+								}
 							}
 						}
 					}

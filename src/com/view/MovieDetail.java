@@ -10,6 +10,7 @@ import com.db.model.ReservationDAO;
 import com.db.model.ReviewDAO;
 import com.db.model.ReviewDTO;
 import com.main.mainGUI;
+import com.protocol.Protocol;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -122,12 +123,12 @@ public class MovieDetail
 					image_stillcut, image_stillcut2, image_stillcut3 };
 			
 			// 영화 예매 안해두면 입력 불가능하게 - 얘는 죽여도 될 것 같음
-			ReservationDAO rDao = new ReservationDAO();
-			if (!rDao.isRsvMovie(Login.USER_ID, movie.getId()))
-			{
-				tf_review.setDisable(true);
-				mb_review.setDisable(true);
-			}
+//			ReservationDAO rDao = new ReservationDAO();
+//			if (!rDao.isRsvMovie(Login.USER_ID, movie.getId()))
+//			{
+//				tf_review.setDisable(true);
+//				mb_review.setDisable(true);
+//			}
 			
 			text_title.setText(movie.getTitle());
 			text_open_date.setText(movie.getReleaseDate().toString());
@@ -205,12 +206,38 @@ public class MovieDetail
 			{
 				mainGUI.alert("에러", "평점과 리뷰를 입력해주세요");
 			}
-			ReviewDAO rDao = new ReviewDAO();
-			rDao.addReview(new ReviewDTO(DTO.EMPTY_ID, Login.USER_ID, movie.getId(), Integer.valueOf(mb_review.getText()), tf_review.getText(), "2000-01-01 00:00:00.0"));
-			initList();
-			
-			tf_review.clear();
-			mb_review.setText("평점");
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_REVIEW_ADD + "`" + DTO.EMPTY_ID + "`" + Login.USER_ID + "`" + movie.getId() + "`" + Integer.valueOf(mb_review.getText()) + "`" + tf_review.getText() + "`" + "2000-01-01 00:00:00.0");
+			//ReviewDAO rDao = new ReviewDAO();
+			//rDao.addReview(new ReviewDTO(DTO.EMPTY_ID, Login.USER_ID, movie.getId(), Integer.valueOf(mb_review.getText()), tf_review.getText(), "2000-01-01 00:00:00.0"));
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("`"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_REVIEW_ADD))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							initList();
+							tf_review.clear();
+							mb_review.setText("평점");
+							mainGUI.alert("등록 성공", "리뷰 등록 성공");
+							return;
+						}
+						case "2":
+						{
+							mainGUI.alert("등록 실패", "리뷰 등록 실패");
+							return;
+						}
+					}
+				}
+			}
 		}
 		catch (Exception e)
 		{
@@ -244,11 +271,52 @@ public class MovieDetail
 		{
 			custom_list.clear();
 			
-			ReviewDAO rDao = new ReviewDAO();
-			ArrayList<ReviewDTO> r_list = rDao.getRvListFromMov(movie.getId());
-			for (ReviewDTO temp : r_list)
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_REVIEW_VIEW + "`" + movie.getId());
+			//ReviewDAO rDao = new ReviewDAO();
+			ArrayList<ReviewDTO> r_list = new ArrayList<ReviewDTO>();//rDao.getRvListFromMov(movie.getId());
+			while (true)
 			{
-				custom_list.add(new CustomDTO(temp));
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_REVIEW_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String reviewList = packetArr[3];
+							String listArr[] = reviewList.split(","); // 각 영화별로 리스트 분할
+
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 영화 별 정보 분할
+								String rv_id = infoArr[0];
+								String rv_memId = infoArr[1];
+								String rv_movId = infoArr[2];
+								int rv_star = Integer.parseInt(infoArr[3]);
+								String rv_text = infoArr[4];
+								String rv_time = infoArr[5];
+								
+								r_list.add(new ReviewDTO(rv_id, rv_memId, rv_movId, rv_star, rv_text, rv_time));
+							}
+							for (ReviewDTO temp : r_list)
+							{
+								custom_list.add(new CustomDTO(temp));
+							}
+							return;
+						}
+						case "2":
+						{
+							mainGUI.alert("리뷰 리스트", "리뷰 리스트가 없습니다.");
+							return;
+						}
+					}
+				}
 			}
 		}
 		catch (Exception e)
@@ -302,9 +370,34 @@ public class MovieDetail
 					CustomDTO currentCustom = getTableView().getItems().get(getIndex());
 					System.out.println(currentCustom.getReview().getText());
 					
-					ReviewDAO rDao = new ReviewDAO();
-					rDao.removeReview(currentCustom.getReview().getId());
-					initList();
+					mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_REVIEW_DELETE + "`" + currentCustom.getReview().getId());
+					while (true)
+					{
+						String packet = mainGUI.readLine();
+						String packetArr[] = packet.split("`"); // 패킷 분할
+						String packetType = packetArr[0];
+						String packetCode = packetArr[1];
+						
+						if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_REVIEW_DELETE))
+						{
+							String result = packetArr[2];
+							
+							switch (result)
+							{
+								case "1":
+								{
+									initList();
+									mainGUI.alert("삭제 성공", "리뷰 삭제 성공");
+									return;
+								}
+								case "2":
+								{
+									mainGUI.alert("삭제 실패", "리뷰 삭제 실패");
+									return;
+								}
+							}
+						}
+					}
 				}
 				catch (Exception e)
 				{

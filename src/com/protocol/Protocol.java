@@ -92,12 +92,14 @@ public class Protocol
 	
 	// 영화
 	// 영화 검색은 관리자 프로토콜과 동일
-	public static final String CS_REQ_MOVIEPRESENT_VIEW = "4-4"; // 현재상영작 정보 요청
-	public static final String SC_RES_MOVIEPRESENT_VIEW = "5-8"; // 현재상영작 정보 요청 응답
-	public static final String CS_REQ_MOVIEFUTURE_VIEW = "4-5"; // 상영예정작 정보 요청
-	public static final String SC_RES_MOVIEFUTURE_VIEW = "5-A"; // 상영예정작 정보 요청 응답
+	//public static final String CS_REQ_MOVIEPRESENT_VIEW = "4-4"; // 현재상영작 정보 요청
+	//public static final String SC_RES_MOVIEPRESENT_VIEW = "5-8"; // 현재상영작 정보 요청 응답
+	//public static final String CS_REQ_MOVIEFUTURE_VIEW = "4-5"; // 상영예정작 정보 요청
+	//public static final String SC_RES_MOVIEFUTURE_VIEW = "5-A"; // 상영예정작 정보 요청 응답
 	public static final String CS_REQ_MOVIEDETAIL_VIEW = "4-6"; // 영화 상세정보 요청
 	public static final String SC_RES_MOVIEDETAIL_VIEW = "5-C"; // 영화 상세정보 요청 응답
+	public static final String CS_REQ_MOVIESUB_VIEW = "4-4"; // 영화 서브 정보 요청
+	public static final String SC_RES_MOVIESUB_VIEW = "5-8"; // 영화 서브 정보 요청 응답
 	
 	// 평점 및 관람평
 	public static final String CS_REQ_REVIEW_VIEW = "4-7"; // 평점 및 관람평 요청

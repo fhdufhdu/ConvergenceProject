@@ -1,13 +1,19 @@
 package com.view;
 
+import java.sql.Timestamp;
+
 import com.db.model.MovieDTO;
 import com.db.model.ReviewDAO;
 import com.db.model.TimeTableDAO;
+import com.db.model.TimeTableDTO;
+import com.main.mainGUI;
+import com.protocol.Protocol;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,18 +74,39 @@ public class MoviePresentSub
             
             t_movie_title.setText(movie.getTitle());
             
-            TimeTableDAO tDao = new TimeTableDAO();
-            double rsv_rate = tDao.getRsvRate(movie.getId());
-            if (Double.isNaN(rsv_rate))
-            {
-                rsv_rate = 0;
-            }
-            t_rsv_rate.setText("예매율 : " + String.format("%.2f", rsv_rate * 100));
-            
-            ReviewDAO rDao = new ReviewDAO();
-            String aver_star = Integer.toString(rDao.getAverStarGrade(movie.getId()));
-            t_rsv_rate.setText(t_rsv_rate.getText() + "% | 평점 : " + aver_star);
-            
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIESUB_VIEW + "`" + movie.getId());
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				System.out.println(packet);
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_MOVIESUB_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							double rsv_rate = Double.parseDouble(packetArr[3]);
+							String aver_star = packetArr[4];
+				            t_rsv_rate.setText("예매율 : " + String.format("%.2f", rsv_rate * 100));
+				            t_rsv_rate.setText(t_rsv_rate.getText() + "% | 평점 : " + aver_star);
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("오류", "예매율 요청에 실패했습니다.");
+							break;
+						}
+					}
+					break;
+				}
+			}
         }
         catch (Exception e)
         {
