@@ -469,6 +469,7 @@ public class MovieTable implements Initializable
 							m_timer.schedule(m_task, 60000);
 							
 							startPayment(price);
+							setRsvButton();
 							mainGUI.alert("예매", "예매에 성공했습니다.");
 							return;
 						}

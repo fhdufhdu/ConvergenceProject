@@ -134,7 +134,6 @@ public class MovieSoonSub
             calDateDays = Math.abs(calDateDays);
             
             return (int) calDateDays;
-            
         }
         
         catch (ParseException e)
