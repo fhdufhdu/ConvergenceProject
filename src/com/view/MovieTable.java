@@ -522,7 +522,7 @@ public class MovieTable implements Initializable
 		{
 			try
 			{
-				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_CUSTOM_INFO + "`" + timetable.getId() + "`screen");
+				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_CUSTOM_INFO + "`0`" + timetable.getId());
 				
 				while (true)
 				{
@@ -541,8 +541,7 @@ public class MovieTable implements Initializable
 							{
 								this.timetable = timetable;
 								String infoList = packetArr[3];
-								String listArr[] = infoList.split(","); // 각 리스트 분할
-								String sc_info[] = listArr[1].split("`"); // 상영관 정보 분할
+								String sc_info[] = infoList.split("`"); // 상영관 정보 분할
 								screen = new ScreenDTO(sc_info[0], sc_info[1], sc_info[2], Integer.valueOf(sc_info[3]), Integer.valueOf(sc_info[4]), Integer.valueOf(sc_info[5]));
 								return;
 							}
