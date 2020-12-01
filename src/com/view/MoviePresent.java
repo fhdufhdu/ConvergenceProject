@@ -9,12 +9,11 @@ import com.db.model.MovieDTO;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-<<<<<<< HEAD
+
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-=======
->>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
+
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
