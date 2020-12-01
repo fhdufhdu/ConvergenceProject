@@ -150,7 +150,7 @@ public class RsvCancel implements Initializable
 						}
 						case "2":
 						{
-							mainGUI.alert("취소 에러", "예매 취소에 실패하였습니다.");
+							mainGUI.alert("취소 에러", "예매 취소가 불가합니다.");
 							return;
 						}
 					}
