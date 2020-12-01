@@ -1,22 +1,16 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import com.db.model.DAO;
 import com.db.model.DAOException;
 import com.db.model.MemberDAO;
 import com.db.model.MemberDTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ReservationDAO;
 import com.db.model.ReservationDTO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
