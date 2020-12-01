@@ -1,11 +1,7 @@
 package com.view;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
-import com.db.model.DAOException;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
@@ -18,8 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class MovieAdd
 {
@@ -105,11 +99,20 @@ public class MovieAdd
 					switch (pakcet_result)
 					{
 						case "1":
+						{
 							mainGUI.alert("등록완료", "등록완료 되었습니다!");
 							return;
+						}
 						case "2":
+						{
+							mainGUI.alert("등록 실패", "이미 존재하는 영화가 있습니다!");
+							return;
+						}
+						case "3":
+						{
 							mainGUI.alert("등록실패", "등록실패 되었습니다!");
 							return;
+						}
 					}
 				}
 			}
@@ -117,14 +120,11 @@ public class MovieAdd
 		catch (NumberFormatException e)
 		{
 			alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
+			e.printStackTrace();
 		}
-		catch (DAOException e)
+		catch(Exception e)
 		{
-			alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
-		}
-		catch (SQLException e)
-		{
-			alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
+			e.printStackTrace();
 		}
 	}
 	

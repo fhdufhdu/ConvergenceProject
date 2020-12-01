@@ -1,18 +1,10 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Date;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import com.db.model.DAOException;
-import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ScreenDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
@@ -262,21 +254,8 @@ public class MovieManage implements Initializable
 				}
 			}
 		}
-		catch (DAOException e)
+		catch (Exception e)
 		{
-			// 값의 중복 발생시
-			t_result.setText("영화관 이름 및 주소가 중복됩니다!");
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			// DB관련 문제 발생시
-			e.printStackTrace();
-		}
-		catch (NumberFormatException e)
-		{
-			// 입력값 타입이 맞지 않을때
-			t_result.setText("총 상영관, 총 좌석에는 숫자만 입력해주세요!");
 			e.printStackTrace();
 		}
 	}
@@ -286,7 +265,7 @@ public class MovieManage implements Initializable
 	{
 		try
 		{
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`" + title + "`" + start_date + "`" + end_date + "`" + is_current + "`" + director + "`" + actor);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`" + title + "`" + start_date + "`" + end_date + "`" + is_current + "`" + director + "`" + actor + "`0");
 			
 			while (true)
 			{

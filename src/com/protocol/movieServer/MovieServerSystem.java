@@ -38,6 +38,7 @@ public class MovieServerSystem
 				MovieServer serverThread = new MovieServer(socket);
 				serverThread.start();
 			}
+			
 		}
 		catch (Throwable e)
 		{

@@ -12,7 +12,6 @@ import com.db.model.ReviewDTO;
 import com.main.mainGUI;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

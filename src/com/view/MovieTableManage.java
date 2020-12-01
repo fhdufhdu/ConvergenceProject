@@ -1,27 +1,17 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import com.db.model.DAOException;
-import com.db.model.DTO;
 import com.db.model.MemberDTO;
-import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
-import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
-import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -52,16 +42,11 @@ public class MovieTableManage implements Initializable
 	private ObservableList<ScreenDTO> screen_list;
 	private ObservableList<MovieDTO> movie_list;
 	private ObservableList<MemberDTO> member_list;
-	
 	private ObservableList<CustomDTO> custom_list;
-	
-	private ArrayList<Integer> row_list;
-	private ArrayList<Integer> col_list;
-	
+
 	private TheaterDTO selectedThea;
 	private ScreenDTO selectedScreen;
 	private MovieDTO selectedMovie;
-	private MemberDTO selectedMember;
 	private CustomDTO selectedCustom;
 	
 	@FXML
@@ -202,7 +187,7 @@ public class MovieTableManage implements Initializable
 				}
 			}
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%");
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%`0");
 			movie_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -743,7 +728,7 @@ public class MovieTableManage implements Initializable
 			String end_time = mb_hours_end.getText().equals("시간") ? "23:59:00.0" : (mb_minute_end.getText().equals("분") ? mb_hours_end.getText().replace("시", "") + ":00:00.0" : mb_hours_end.getText().replace("시", "") + ":" + mb_minute_end.getText().replace("분", "") + ":00.0");
 			String theater_id = "null";
 			
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINTIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_TIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
 			
 			while (true)
 			{
@@ -752,7 +737,7 @@ public class MovieTableManage implements Initializable
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ADMINTIMETABLE_VIEW))
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_TIMETABLE_VIEW))
 				{
 					String result = packetArr[2];
 					
@@ -890,16 +875,6 @@ public class MovieTableManage implements Initializable
 		public TimeTableDTO getTimeTable()
 		{
 			return timetable;
-		}
-		
-		public ScreenDTO getScreenElem()
-		{
-			return screen;
-		}
-		
-		public MovieDTO getMovieElem()
-		{
-			return movie;
 		}
 	}
 }

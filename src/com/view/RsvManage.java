@@ -1,21 +1,16 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import com.db.model.DAO;
 import com.db.model.DAOException;
 import com.db.model.MemberDAO;
 import com.db.model.MemberDTO;
 import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ReservationDAO;
 import com.db.model.ReservationDTO;
 import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
@@ -24,8 +19,8 @@ import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
 import com.main.mainGUI;
+import com.protocol.Protocol;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -118,129 +113,226 @@ public class RsvManage implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        // 3개의 스레드로 리스트 받아오기 동시진행
-        Thread t_mem = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                try
-                {
-                    member_id_list = FXCollections.observableArrayList();
-                    MemberDAO mDao = new MemberDAO();
-                    Iterator<MemberDTO> m_iter = mDao.getAllMember().iterator();
-                    while (m_iter.hasNext())
-                    {
-                        member_id_list.add(m_iter.next());
-                    }
-                    lv_member.setItems(FXCollections.observableArrayList());
-                    lv_member.getItems().addAll(member_id_list);
-                    lv_member.setOnMouseClicked((MouseEvent) ->
-                    {
-                        selectedMem = lv_member.getSelectionModel().getSelectedItem();
-                        lv_member.setMaxHeight(0);
-                        lv_member.getItems().clear();
-                        tf_member_id.setText(selectedMem.getId());
-                    });
-                    lv_member.setCellFactory(lv -> new ListCell<MemberDTO>()
-                    {
-                        @Override
-                        protected void updateItem(MemberDTO item, boolean empty)
-                        {
-                            super.updateItem(item, empty);
-                            setText(item == null ? null : item.getId());
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-        });
-        Thread t_mov = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                try
-                {
-                    movie_title_list = FXCollections.observableArrayList();
-                    MovieDAO mDao = new MovieDAO();
-                    Iterator<MovieDTO> m_iter = mDao.getAllMovieList().iterator();
-                    while (m_iter.hasNext())
-                    {
-                        movie_title_list.add(m_iter.next());
-                    }
-                    lv_movie.setItems(FXCollections.observableArrayList());
-                    lv_movie.getItems().addAll(movie_title_list);
-                    lv_movie.setOnMouseClicked((MouseEvent) ->
-                    {
-                        selectedMov = lv_movie.getSelectionModel().getSelectedItem();
-                        lv_movie.setMaxHeight(0);
-                        tf_movie_name.setText(selectedMov.getTitle());
-                        lv_movie.getItems().clear();
-                    });
-                    lv_movie.setCellFactory(lv -> new ListCell<MovieDTO>()
-                    {
-                        @Override
-                        protected void updateItem(MovieDTO item, boolean empty)
-                        {
-                            super.updateItem(item, empty);
-                            setText(item == null ? null : item.getTitle());
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-        });
-        Thread t_thea = new Thread(() ->
-        {
-            Platform.runLater(() ->
-            {
-                try
-                {
-                    theater_list = FXCollections.observableArrayList();
-                    TheaterDAO tDao = new TheaterDAO();
-                    Iterator<TheaterDTO> t_iter = tDao.getTheaterList().iterator();
-                    while (t_iter.hasNext())
-                    {
-                        theater_list.add(t_iter.next());
-                    }
-                    lv_theater.setItems(FXCollections.observableArrayList());
-                    lv_theater.getItems().addAll(theater_list);
-                    lv_theater.setOnMouseClicked((MouseEvent) ->
-                    {
-                        selectedThea = lv_theater.getSelectionModel().getSelectedItem();
-                        lv_theater.setMaxHeight(0);
-                        tf_theater_name.setText(selectedThea.getName());
-                        lv_theater.getItems().clear();
-                    });
-                    lv_theater.setCellFactory(lv -> new ListCell<TheaterDTO>()
-                    {
-                        @Override
-                        protected void updateItem(TheaterDTO item, boolean empty)
-                        {
-                            super.updateItem(item, empty);
-                            setText(item == null ? null : item.getName());
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            });
-        });
-        t_mem.start();
-        t_mov.start();
-        t_thea.start();
         try
-        {
-            t_mem.join();
-            t_mov.join();
-            t_thea.join();
+        {         
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MEMBER_VIEW);
+        	member_id_list = FXCollections.observableArrayList();
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_MEMBER_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String memberList = packetArr[3];
+							String listArr[] = memberList.split(","); // 각 회원 별로 리스트 분할
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 회원 별 정보 분할
+								String id = infoArr[0];
+								String name = infoArr[1];
+								String password = infoArr[2];
+								String role = infoArr[3];
+								String gender = infoArr[4];
+								String phone_number = infoArr[5];
+								String birth = infoArr[6];
+								String account = infoArr[7];
+								
+								member_id_list.add(new MemberDTO(id, role, password, account, name, phone_number, birth, gender));
+							}
+							lv_member.setItems(FXCollections.observableArrayList());
+							lv_member.getItems().addAll(member_id_list);
+							lv_member.setOnMouseClicked((MouseEvent) ->
+							{
+								if (lv_member.getSelectionModel().getSelectedItem() == null)
+									return;
+								selectedMem = lv_member.getSelectionModel().getSelectedItem();
+								lv_member.setMaxHeight(0);
+								lv_member.getItems().clear();
+								tf_member_id.setText(selectedMem.getId());
+							});
+							lv_member.setCellFactory(lv -> new ListCell<MemberDTO>()
+							{
+								@Override
+								protected void updateItem(MemberDTO item, boolean empty)
+								{
+									super.updateItem(item, empty);
+									setText(item == null ? null : item.getId());
+								}
+							});
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("오류", "회원 리스트가 없습니다.");
+							break;
+						}
+						case "3":
+						{
+							mainGUI.alert("오류", "회원 리스트 요청 실패했습니다.");
+							break;
+						}
+					}
+					if (result != null)
+						break;
+				}
+			}
+            
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%`0");
+            movie_title_list = FXCollections.observableArrayList();
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_MOVIE_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String movieList = packetArr[3];
+							String listArr[] = movieList.split(","); // 각 영화별로 리스트 분할
+							
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 영화 별 정보 분할
+								String mv_id = infoArr[0];
+								String mv_title = infoArr[1];
+								String mv_release_date = infoArr[2];
+								String mv_is_current = infoArr[3];
+								String mv_plot = infoArr[4];
+								String mv_poster_path = infoArr[5];
+								String mv_stillCut_path = infoArr[6];
+								String mv_trailer_path = infoArr[7];
+								String mv_director = infoArr[8];
+								String mv_actor = infoArr[9];
+								int mv_min = Integer.parseInt(infoArr[10]);
+								
+								movie_title_list.add(new MovieDTO(mv_id, mv_title, mv_release_date, mv_is_current, mv_plot, mv_poster_path, mv_stillCut_path, mv_trailer_path, mv_director, mv_actor, mv_min));
+								
+								lv_movie.setItems(FXCollections.observableArrayList());
+								lv_movie.getItems().addAll(movie_title_list);
+								lv_movie.setOnMouseClicked((MouseEvent) ->
+								{
+									if (lv_movie.getSelectionModel().getSelectedItem() == null)
+										return;
+									selectedMov = lv_movie.getSelectionModel().getSelectedItem();
+									lv_movie.setMaxHeight(0);
+									lv_movie.getItems().clear();
+									tf_movie_name.setText(selectedMov.getTitle());
+								});
+								lv_movie.setCellFactory(lv -> new ListCell<MovieDTO>()
+								{
+									@Override
+									protected void updateItem(MovieDTO item, boolean empty)
+									{
+										super.updateItem(item, empty);
+										setText(item == null ? null : item.getTitle());
+									}
+								});
+							}
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("영화 리스트", "영화 리스트가 없습니다.");
+							break;
+						}
+						case "3":
+						{
+							mainGUI.alert("영화 리스트", "영화 리스트 요청 실패했습니다.");
+							break;
+						}
+					}
+					if (result != null)
+						break;
+				}
+			}
+            
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATER_VIEW);
+			theater_list = FXCollections.observableArrayList();
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String theaterList = packetArr[3];
+							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 영화관 별 정보 분할
+								String id = infoArr[0];
+								String name = infoArr[1];
+								String address = infoArr[2];
+								String screen = infoArr[3];
+								String seat = infoArr[4];
+								
+								theater_list.add(new TheaterDTO(id, name, address, Integer.parseInt(screen), Integer.parseInt(seat)));
+							}
+							
+							lv_theater.setItems(FXCollections.observableArrayList());
+							lv_theater.getItems().addAll(theater_list);
+							lv_theater.setOnMouseClicked((MouseEvent) ->
+							{
+								if (lv_theater.getSelectionModel().getSelectedItem() == null)
+									return;
+								selectedThea = lv_theater.getSelectionModel().getSelectedItem();
+								lv_theater.setMaxHeight(0);
+								lv_theater.getItems().clear();
+								tf_theater_name.setText(selectedThea.getName());
+							});
+							lv_theater.setCellFactory(lv -> new ListCell<TheaterDTO>()
+							{
+								@Override
+								protected void updateItem(TheaterDTO item, boolean empty)
+								{
+									super.updateItem(item, empty);
+									setText(item == null ? null : item.getName());
+								}
+							});
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("오류", "영화관 리스트가 없습니다.");
+							break;
+						}
+						case "3":
+						{
+							mainGUI.alert("오류", "영화관 리스트 요청 실패했습니다.");
+							break;
+						}
+					}
+					if (result != null)
+						break;
+				}
+			}
             
             custom_list = FXCollections.observableArrayList();
             
@@ -385,9 +477,6 @@ public class RsvManage implements Initializable
     @FXML
     void deleteRsv(ActionEvent event) throws Exception
     {
-        Connection conn = DAO.getConn();
-        conn.setAutoCommit(false);
-        Savepoint sp = conn.setSavepoint();
         try
         {
             if (selectedCustom == null)
@@ -395,22 +484,55 @@ public class RsvManage implements Initializable
                 mainGUI.alert("경고", "데이터를 선택해주세요");
                 return;
             }
-            ButtonType btnType = mainGUI.confirm("삭제확인", "정말로 삭제하시겠습니까?");
+            ButtonType btnType = mainGUI.confirm("취소확인", "정말로 취소하시겠습니까?");
             if (btnType != ButtonType.OK)
             {
                 return;
             }
-            ReservationDAO rDao = new ReservationDAO();
-            rDao.cancelRsv(selectedCustom.getRsv().getId());
-            rDao.refund(selectedCustom.getRsv().getId());
-            initList();
-            conn.commit();
+            String selectedType = selectedCustom.getRsv().getType(); // 예매타입, 1이면 예매 2이면 취소
+            if (selectedType.equals("2"))	// 취소된 예매 중복취소 막기 위한 제어문
+            {
+            	mainGUI.alert("경고", "이미 취소된 예매 내역입니다.");
+            	return;
+            }
+            
+        	mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_RESERVATION_DELETE + "`" + selectedCustom.getRsv().getId());
+            
+            while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("`"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_RESERVATION_DELETE))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							mainGUI.alert("취소 완료", "예매 취소에 성공하였습니다.");
+				            initList();
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("에러", "예매 취소에 실패하였습니다.");
+							break;
+						}
+					}
+					if (result != null)
+						break;
+				}
+			}
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            conn.rollback(sp);
-            conn.setAutoCommit(true);
+            //conn.rollback(sp);
+            //conn.setAutoCommit(true);
         }
     }
     
@@ -420,40 +542,79 @@ public class RsvManage implements Initializable
         {
             custom_list.clear();
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            ReservationDAO rDao = new ReservationDAO();
-            
             String mem_id = selectedMem == null ? "%" : selectedMem.getId();
             String mov_id = selectedMov == null ? "%" : selectedMov.getId();
             String thea_id = selectedThea == null ? "%" : selectedThea.getId();
             String start_date = dp_start_date.getValue() == null ? "1976-01-01" : dateFormat.format(dp_start_date.getValue());
             String end_date = dp_end_date.getValue() == null ? "2222-01-01" : dateFormat.format(dp_end_date.getValue());
             
-            ArrayList<ReservationDTO> r_list = rDao.getRsvList(mem_id, mov_id, thea_id, start_date + " 00:00:00.0", end_date + " 23:59:00.0");
-            Iterator<ReservationDTO> r_iter = r_list.iterator();
-            ArrayList<CustomDTO> c_list = new ArrayList<CustomDTO>();
-            while (r_iter.hasNext())
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINRESERVATION_VIEW + "`" + mem_id + "`" + mov_id + "`" + thea_id + "`" + start_date + "`" + end_date);
+            
+            while(true)
             {
-                ReservationDTO temp = r_iter.next();
-                if (temp.getType().equals("2"))
-                {
-                    continue;
-                }
-                c_list.add(new CustomDTO(temp));
+            	String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ADMINRESERVATION_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String reservationList = packetArr[3];
+							String listArr[] = reservationList.split(",");
+							ArrayList<CustomDTO> c_list = new ArrayList<CustomDTO>();
+							
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`");
+					            String id = infoArr[0];
+					            String member_id = infoArr[1];
+					            String time_table_id = infoArr[2];
+					            int screen_row = Integer.parseInt(infoArr[3]);
+					            int screen_col = Integer.parseInt(infoArr[4]);
+					            int price = Integer.parseInt(infoArr[5]);
+					            String type = infoArr[6];
+					            String rsv_time = infoArr[7];
+					            String account = infoArr[8];
+					            String bank = infoArr[9];
+					            
+					            c_list.add(new CustomDTO(new ReservationDTO(id, member_id, time_table_id, screen_row, screen_col, price, type, rsv_time, account, bank)));
+							}
+							if (c_list.size() == 0)
+							{
+								mainGUI.alert("경고", "해당 예매 리스트가 없습니다.");
+							}
+				            custom_list.addAll(c_list);
+							break;
+						}
+						case "2":
+						{
+							mainGUI.alert("오류", "예매 리스트가 없습니다.");
+							break;
+						}
+					}
+					if (result != null)
+						return;
+				}
             }
-            if (c_list.size() == 0)
-            {
-                mainGUI.alert("경고", "해당 예매 리스트가 없습니다.");
-            }
-            custom_list.addAll(c_list);
         }
-        catch (DAOException e)
+        catch (Exception e)
         {
-            e.printStackTrace();
+        	e.printStackTrace();
         }
-        catch (SQLException e)
-        {
-            mainGUI.alert("에러", "DB서버 문제발생");
-        }
+//        catch (DAOException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (SQLException e)
+//        {
+//            mainGUI.alert("에러", "DB서버 문제발생");
+//        }
     }
     
     private class CustomDTO

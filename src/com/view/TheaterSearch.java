@@ -1,9 +1,5 @@
 package com.view;
 
-import java.util.Iterator;
-
-import com.db.model.ChargeDAO;
-import com.db.model.ChargeDTO;
 import com.db.model.TheaterDTO;
 import com.main.mainGUI;
 import com.protocol.Protocol;
