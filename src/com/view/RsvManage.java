@@ -114,8 +114,8 @@ public class RsvManage implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         try
-        {
-            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MEMBER_VIEW);
+        {         
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MEMBER_VIEW);
         	member_id_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -137,7 +137,7 @@ public class RsvManage implements Initializable
 							String listArr[] = memberList.split(","); // 각 회원 별로 리스트 분할
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 회원 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 회원 별 정보 분할
 								String id = infoArr[0];
 								String name = infoArr[1];
 								String password = infoArr[2];
@@ -187,7 +187,7 @@ public class RsvManage implements Initializable
 				}
 			}
             
-            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_MOVIE_VIEW + "/%/1976-01-01/2222-01-01/%/%/%");
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%`0");
             movie_title_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -264,7 +264,7 @@ public class RsvManage implements Initializable
 				}
 			}
             
-            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_THEATER_VIEW);
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATER_VIEW);
 			theater_list = FXCollections.observableArrayList();
 			
 			while (true)
@@ -286,7 +286,7 @@ public class RsvManage implements Initializable
 							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 영화관 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 영화관 별 정보 분할
 								String id = infoArr[0];
 								String name = infoArr[1];
 								String address = infoArr[2];
@@ -489,12 +489,19 @@ public class RsvManage implements Initializable
             {
                 return;
             }
-        	mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_RESERVATION_DELETE + "/" + selectedCustom.getRsv().getId());
+            String selectedType = selectedCustom.getRsv().getType(); // 예매타입, 1이면 예매 2이면 취소
+            if (selectedType.equals("2"))	// 취소된 예매 중복취소 막기 위한 제어문
+            {
+            	mainGUI.alert("경고", "이미 취소된 예매 내역입니다.");
+            	return;
+            }
+            
+        	mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_RESERVATION_DELETE + "`" + selectedCustom.getRsv().getId());
             
             while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/"); // 패킷 분할
+				String packetArr[] = packet.split("`"); // 패킷 분할
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -541,7 +548,7 @@ public class RsvManage implements Initializable
             String start_date = dp_start_date.getValue() == null ? "1976-01-01" : dateFormat.format(dp_start_date.getValue());
             String end_date = dp_end_date.getValue() == null ? "2222-01-01" : dateFormat.format(dp_end_date.getValue());
             
-            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_ADMINRESERVATION_VIEW + "/" + mem_id + "/" + mov_id + "/" + thea_id + "/" + start_date + "/" + end_date);
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ADMINRESERVATION_VIEW + "`" + mem_id + "`" + mov_id + "`" + thea_id + "`" + start_date + "`" + end_date);
             
             while(true)
             {
@@ -564,7 +571,7 @@ public class RsvManage implements Initializable
 							
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/");
+								String infoArr[] = listInfo.split("`");
 					            String id = infoArr[0];
 					            String member_id = infoArr[1];
 					            String time_table_id = infoArr[2];

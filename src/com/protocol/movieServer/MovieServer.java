@@ -404,9 +404,9 @@ public class MovieServer extends Thread
 									{
 										ReservationDTO rDto = r_iter.next();
 										if (r_iter.hasNext())
-											reservatinList += rDto.getId() + "/" + rDto.getMemberId() + "/" + rDto.getTimeTableId() + "/" + rDto.getScreenRow() + "/" + rDto.getScreenCol() + "/" + rDto.getPrice() + "/" + rDto.getType() + "/" + rDto.getRsvTime() + "/" + rDto.getAccount() + "/" + rDto.getBank() + "/" + ",";
+											reservatinList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getTimeTableId() + "`" + rDto.getScreenRow() + "`" + rDto.getScreenCol() + "`" + rDto.getPrice() + "`" + rDto.getType() + "`" + rDto.getRsvTime() + "`" + rDto.getAccount() + "`" + rDto.getBank() + "`" + ",";
 										else
-											reservatinList += rDto.getId() + "/" + rDto.getMemberId() + "/" + rDto.getTimeTableId() + "/" + rDto.getScreenRow() + "/" + rDto.getScreenCol() + "/" + rDto.getPrice() + "/" + rDto.getType() + "/" + rDto.getRsvTime() + "/" + rDto.getAccount() + "/" + rDto.getBank() + "/";
+											reservatinList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getTimeTableId() + "`" + rDto.getScreenRow() + "`" + rDto.getScreenCol() + "`" + rDto.getPrice() + "`" + rDto.getType() + "`" + rDto.getRsvTime() + "`" + rDto.getAccount() + "`" + rDto.getBank() + "`";
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINRESERVATION_VIEW + "!1!" + reservatinList);
 									System.out.println("예매 리스트 전송 성공");
