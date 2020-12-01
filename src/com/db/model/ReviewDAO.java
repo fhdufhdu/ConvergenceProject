@@ -20,7 +20,7 @@ public class ReviewDAO extends DAO
     // 리뷰 등록
     public void addReview(ReviewDTO rv) throws DAOException, SQLException
     {
-        String insert_sql = "insert into reviews(member_id, movie_id, star, text) values(?, ?, ?, ?)";
+        String insert_sql = "insert into reviews(member_id, movie_id, star, text, write_time) values(?, ?, ?, ?, sysdate)";
         
         ps = conn.prepareStatement(insert_sql);
         
@@ -68,7 +68,8 @@ public class ReviewDAO extends DAO
             String movie_id = rs.getString("movie_id");
             int star = rs.getInt("star");
             String text = rs.getString("text");
-            temp_list.add(new ReviewDTO(id, member_id, movie_id, star, text));
+            Timestamp time = rs.getTimestamp("write_time");
+            temp_list.add(new ReviewDTO(id, member_id, movie_id, star, text, time.toString()));
         }
         
         rs.close();
@@ -94,7 +95,8 @@ public class ReviewDAO extends DAO
             String movie_id = rs.getString("movie_id");
             int star = rs.getInt("star");
             String text = rs.getString("text");
-            temp_list.add(new ReviewDTO(id, member_id, movie_id, star, text));
+            Timestamp time = rs.getTimestamp("write_time");
+            temp_list.add(new ReviewDTO(id, member_id, movie_id, star, text, time.toString()));
         }
         
         rs.close();
@@ -120,7 +122,8 @@ public class ReviewDAO extends DAO
             String movie_id = rs.getString("movie_id");
             int star = rs.getInt("star");
             String text = rs.getString("text");
-            temp_list.add(new ReviewDTO(id, member_id, movie_id, star, text));
+            Timestamp time = rs.getTimestamp("write_time");
+            temp_list.add(new ReviewDTO(id, member_id, movie_id, star, text, time.toString()));
         }
         
         rs.close();
@@ -145,4 +148,19 @@ public class ReviewDAO extends DAO
         
         return result;
     }
+    
+    public void removeReview(String rid) throws DAOException, SQLException
+    {
+        String insert_sql = "delete from reviews where id = ?";
+        
+        ps = conn.prepareStatement(insert_sql);
+        
+        ps.setString(1, rid);
+        
+        int r = ps.executeUpdate();
+        System.out.println("변경된 row : " + r);
+        
+        ps.close();
+    }
+    
 }

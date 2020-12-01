@@ -1,11 +1,7 @@
 package com.view;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
-import com.db.model.DAOException;
 import com.main.mainGUI;
 import com.protocol.Protocol;
 
@@ -18,8 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class MovieAdd
 {
@@ -53,7 +47,7 @@ public class MovieAdd
 	private TextField tf_poster;
 	
 	@FXML
-	private TextField tf_stillcut;
+	private TextArea ta_stillcut;
 	
 	@FXML
 	private TextField tf_trailer;
@@ -70,29 +64,32 @@ public class MovieAdd
 		try
 		{
 			// 입력 필드 모두 채웠는지 확인
-			if (is_current == null || tf_title.getText().equals("") || dp_release_date.getValue() == null || tf_director.getText().equals("") || ta_actor.getText().equals("") || tf_min.getText().equals("") || tf_poster.getText().equals("") || tf_stillcut.getText().equals("") || tf_trailer.getText().equals("") || ta_plot.getText().equals(""))
+			if (is_current == null || tf_title.getText().equals("") || dp_release_date.getValue() == null || tf_director.getText().equals("") || ta_actor.getText().equals("") || tf_min.getText().equals("") || tf_poster.getText().equals("") || ta_stillcut.getText().equals("") || tf_trailer.getText().equals("") || ta_plot.getText().equals(""))
 			{
 				alert("입력오류", "모든 필드를 채워주세요!");
 			}
 			
 			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			
+			String stillCut = "";
+			for (String temp : ta_stillcut.getText().split("\n"))
+				stillCut += temp + " ";
+			
 			String title = tf_title.getText();
 			String release_date = dateFormat.format(dp_release_date.getValue());
 			String plot = ta_plot.getText();
 			String poster = tf_poster.getText();
-			String stillCut = tf_stillcut.getText();
 			String trailer = tf_trailer.getText();
 			String director = tf_director.getText();
 			String actor = ta_actor.getText();
 			String min = tf_min.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_MOVIE_ADD + "/" + title + "/" + release_date + "/" + is_current + "/" + plot + "/" + poster + "/" + stillCut + "/" + trailer + "/" + director + "/" + actor + "/" + min);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_MOVIE_ADD + "`" + title + "`" + release_date + "`" + is_current + "`" + plot + "`" + poster + "`" + stillCut + "`" + trailer + "`" + director + "`" + actor + "`" + min);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -102,11 +99,20 @@ public class MovieAdd
 					switch (pakcet_result)
 					{
 						case "1":
+						{
 							mainGUI.alert("등록완료", "등록완료 되었습니다!");
 							return;
+						}
 						case "2":
+						{
+							mainGUI.alert("등록 실패", "이미 존재하는 영화가 있습니다!");
+							return;
+						}
+						case "3":
+						{
 							mainGUI.alert("등록실패", "등록실패 되었습니다!");
 							return;
+						}
 					}
 				}
 			}
@@ -114,14 +120,11 @@ public class MovieAdd
 		catch (NumberFormatException e)
 		{
 			alert("상영시간", "상영시간에는 숫자를 입력해주세요!");
+			e.printStackTrace();
 		}
-		catch (DAOException e)
+		catch(Exception e)
 		{
-			alert("영화관 중복", "이미 존재하는 영화가 있습니다!");
-		}
-		catch (SQLException e)
-		{
-			alert("DB서버 연결오류", "잠시 후 다시 시도해주세요!");
+			e.printStackTrace();
 		}
 	}
 	
@@ -147,42 +150,6 @@ public class MovieAdd
 		cb_current.setSelected(false);
 		cb_close.setSelected(false);
 		is_current = "2";
-	}
-	
-	@FXML // 파일 경로 획득
-	void getPosterPath(ActionEvent event)
-	{
-		tf_poster.setText(getFile().getPath());
-	}
-	
-	@FXML // 파일 경로 획득
-	void getStillCutPath(ActionEvent event)
-	{
-		tf_stillcut.setText(getFile().getPath());
-	}
-	
-	// 파일 획득
-	private File getFile()
-	{
-		FileChooser fc = new FileChooser();
-		File selectedFile = fc.showOpenDialog((Stage) tf_poster.getScene().getWindow());
-		
-		return selectedFile;
-	}
-	
-	// 파일의 바이트 배열 획득
-	private byte[] getFileByteArray(File selectedFile)
-	{
-		try
-		{
-			byte arr[] = Files.readAllBytes(selectedFile.toPath());
-			return arr;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	private void alert(String head, String msg)

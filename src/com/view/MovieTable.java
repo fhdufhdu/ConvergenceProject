@@ -1,9 +1,6 @@
 package com.view;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,21 +10,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Timer;
-import java.util.TimerTask;
 
-import com.db.model.DAO;
-import com.db.model.DAOException;
-import com.db.model.DTO;
-import com.db.model.MovieDAO;
 import com.db.model.MovieDTO;
-import com.db.model.ReservationDAO;
-import com.db.model.ScreenDAO;
 import com.db.model.ScreenDTO;
-import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
-import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
 import com.main.mainGUI;
+import com.protocol.Protocol;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -126,97 +115,255 @@ public class MovieTable implements Initializable
 		}
 	}
 	
-	private void initTheaterList() throws DAOException, SQLException
+	private void initTheaterList() throws Exception
 	{
-		theater_list = FXCollections.observableArrayList();
-		TheaterDAO tDao = new TheaterDAO();
-		Iterator<TheaterDTO> t_iter = tDao.getTheaterList().iterator();
-		while (t_iter.hasNext())
+		try
 		{
-			theater_list.add(t_iter.next());
-		}
-		// 테이블 뷰 초기화
-		tv_theater.getItems().clear();
-		
-		// 각 테이블뷰 컬럼에 어떠한 값이 들어갈 것인지 세팅
-		tc_theater.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-		
-		// 테이블 뷰와 리스트를 연결
-		tv_theater.setItems(theater_list);
-		
-		// 테이블 뷰 row 선택 시 발생하는 이벤트 지정
-		tv_theater.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TheaterDTO>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends TheaterDTO> observable, TheaterDTO oldValue, TheaterDTO newValue)
+			theater_list = FXCollections.observableArrayList();
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATER_VIEW);
+			
+			while (true)
 			{
-				selectedThea = tv_theater.getSelectionModel().getSelectedItem();
-			}
-		});
-	}
-	
-	private void initMovieList() throws DAOException, SQLException
-	{
-		movie_list = FXCollections.observableArrayList();
-		MovieDAO mDao = new MovieDAO();
-		Iterator<MovieDTO> m_iter = mDao.getMovieListForType("1").iterator();
-		while (m_iter.hasNext())
-		{
-			movie_list.add(m_iter.next());
-		}
-		// 테이블 뷰 초기화
-		tv_movie.getItems().clear();
-		
-		// 각 테이블뷰 컬럼에 어떠한 값이 들어갈 것인지 세팅
-		tc_movie.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
-		
-		// 테이블 뷰와 리스트를 연결
-		tv_movie.setItems(movie_list);
-		
-		// 테이블 뷰 row 선택 시 발생하는 이벤트 지정
-		tv_movie.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MovieDTO>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends MovieDTO> observable, MovieDTO oldValue, MovieDTO newValue)
-			{
-				try
-				{
-					if (selectedThea == null)
-					{
-						mainGUI.alert("경고", "영화관을 선택해주세요");
-						return;
-					}
-					selectedMovie = tv_movie.getSelectionModel().getSelectedItem();
-					
-					setRsvButton();
-				}
-				catch (Exception e)
-				{
-					
-				}
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
 				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_THEATER_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String theaterList = packetArr[3];
+							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 영화관 별 정보 분할
+								String id = infoArr[0];
+								String name = infoArr[1];
+								String address = infoArr[2];
+								String screen = infoArr[3];
+								String seat = infoArr[4];
+								
+								theater_list.add(new TheaterDTO(id, name, address, Integer.parseInt(screen), Integer.parseInt(seat)));
+							}
+							// 테이블 뷰 초기화
+							tv_theater.getItems().clear();
+							
+							// 각 테이블뷰 컬럼에 어떠한 값이 들어갈 것인지 세팅
+							tc_theater.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+							
+							// 테이블 뷰와 리스트를 연결
+							tv_theater.setItems(theater_list);
+							
+							// 테이블 뷰 row 선택 시 발생하는 이벤트 지정
+							tv_theater.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TheaterDTO>()
+							{
+								@Override
+								public void changed(ObservableValue<? extends TheaterDTO> observable, TheaterDTO oldValue, TheaterDTO newValue)
+								{
+									selectedThea = tv_theater.getSelectionModel().getSelectedItem();
+								}
+							});
+							return;
+						}
+						case "2":
+						{
+							mainGUI.alert("오류", "영화관 리스트가 없습니다");
+							return;
+						}
+						case "3":
+						{
+							mainGUI.alert("오류", "영화관 리스트 요청 실패했습니다");
+							return;
+						}
+					}
+				}
 			}
-		});
+		}
+		catch (Exception e)
+		{
+			mainGUI.alert("오류", "영화관 리스트 요청 실패했습니다");
+			e.printStackTrace();
+		}
 	}
 	
-	private void initCustomList() throws DAOException, SQLException
+	private void initMovieList() throws Exception
+	{
+		try
+		{
+			movie_list = FXCollections.observableArrayList();
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_MOVIE_VIEW + "`%`1976-01-01`2222-01-01`%`%`%`1");
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_MOVIE_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String movieList = packetArr[3];
+							String listArr[] = movieList.split(","); // 각 영화별로 리스트 분할
+							
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 영화 별 정보 분할
+								String mv_id = infoArr[0];
+								String mv_title = infoArr[1];
+								String mv_release_date = infoArr[2];
+								String mv_is_current = infoArr[3];
+								String mv_plot = infoArr[4];
+								String mv_poster_path = infoArr[5];
+								String mv_stillCut_path = infoArr[6];
+								String mv_trailer_path = infoArr[7];
+								String mv_director = infoArr[8];
+								String mv_actor = infoArr[9];
+								int mv_min = Integer.parseInt(infoArr[10]);
+								
+								movie_list.add(new MovieDTO(mv_id, mv_title, mv_release_date, mv_is_current, mv_plot, mv_poster_path, mv_stillCut_path, mv_trailer_path, mv_director, mv_actor, mv_min));
+							}
+							// 테이블 뷰 초기화
+							tv_movie.getItems().clear();
+							
+							// 각 테이블뷰 컬럼에 어떠한 값이 들어갈 것인지 세팅
+							tc_movie.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+							
+							// 테이블 뷰와 리스트를 연결
+							tv_movie.setItems(movie_list);
+							
+							// 테이블 뷰 row 선택 시 발생하는 이벤트 지정
+							tv_movie.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MovieDTO>()
+							{
+								@Override
+								public void changed(ObservableValue<? extends MovieDTO> observable, MovieDTO oldValue, MovieDTO newValue)
+								{
+									try
+									{
+										if (selectedThea == null)
+										{
+											mainGUI.alert("경고", "영화관을 선택해주세요");
+											return;
+										}
+										selectedMovie = tv_movie.getSelectionModel().getSelectedItem();
+										
+										setRsvButton();
+									}
+									catch (Exception e)
+									{
+										e.printStackTrace();
+									}
+								}
+							});
+							return;
+						}
+						case "2":
+						{
+							mainGUI.alert("영화 리스트", "영화 리스트가 없습니다.");
+							return;
+						}
+						case "3":
+						{
+							mainGUI.alert("영화 리스트", "영화 리스트 요청 실패했습니다.");
+							return;
+						}
+					}
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			mainGUI.alert("영화 리스트", "영화 리스트 요청 실패했습니다.");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void initCustomList() throws Exception
 	{
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		
-		custom_list = FXCollections.observableArrayList();
-		
-		TimeTableDAO ttDao = new TimeTableDAO();
-		ArrayList<TimeTableDTO> tList = ttDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, selectedMovie.getId(), "%", dp_date.getValue().format(format) + " 00:00:00.0", dp_date.getValue().format(format) + " 23:59:00.0", "1", 0), selectedThea.getId());
-		Iterator<TimeTableDTO> tIter = tList.iterator();
-		while (tIter.hasNext())
+		try
 		{
-			TimeTableDTO temp = tIter.next();
-			if (temp.getStartTime().after(new Timestamp(System.currentTimeMillis())))
-				custom_list.add(new CustomDTO(temp));
+			String mov_id = selectedMovie.getId();
+			String screen_id = "%";
+			String date = dp_date.getValue().format(format);
+			String start_time = " 00:00:00.0";
+			String end_time = " 23:59:00.0";
+			String theater_id = selectedThea.getId();
+			
+			custom_list = FXCollections.observableArrayList();
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_TIMETABLE_VIEW + "`" + mov_id + "`" + screen_id + "`" + date + "`" + start_time + "`" + end_time + "`" + theater_id);
+			
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_TIMETABLE_VIEW))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							String screenList = packetArr[3];
+							String listArr[] = screenList.split(","); // 각 상영시간표 리스트 분할
+							
+							for (String listInfo : listArr)
+							{
+								String infoArr[] = listInfo.split("`"); // 상영시간표 별 정보 분할
+								String tb_id = infoArr[0];
+								String tb_screen_id = infoArr[1];
+								String tb_mov_id = infoArr[2];
+								String tb_type = infoArr[3];
+								String tb_current_rsv = infoArr[4];
+								String tb_start_time = infoArr[5];
+								String tb_end_time = infoArr[6];
+								
+								TimeTableDTO temp = new TimeTableDTO(tb_id, tb_mov_id, tb_screen_id, tb_start_time, tb_end_time, tb_type, Integer.valueOf(tb_current_rsv));
+								if (temp.getStartTime().after(new Timestamp(System.currentTimeMillis())))
+									custom_list.add(new CustomDTO(temp));
+							}
+							return;
+						}
+						case "2":
+						{
+							t_movie_title.setText("<해당하는 상영시간표가 없습니다>");
+							Node temp = vbox.getChildren().get(0);
+							vbox.getChildren().clear();
+							vbox.getChildren().add(temp);
+							return;
+						}
+						case "3":
+						{
+							mainGUI.alert("오류", "상영시간표 요청 실패했습니다.");
+							return;
+						}
+					}
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			mainGUI.alert("오류", "상영시간표 요청 실패했습니다.");
+			e.printStackTrace();
 		}
 	}
 	
-	private void setRsvButton() throws DAOException, SQLException
+	private void setRsvButton() throws Exception
 	{
 		initCustomList();
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
@@ -277,45 +424,76 @@ public class MovieTable implements Initializable
 			stage.initOwner(bp_parent.getScene().getWindow());
 			stage.showAndWait();
 			
-			row_list = controller.getSelected().get(0);
-			col_list = controller.getSelected().get(1);
-			
-			Connection conn = DAO.getConn();
-			conn.setAutoCommit(false);
-			Savepoint sp = conn.setSavepoint();
-			ReservationDAO rDao = new ReservationDAO();
-			int price = 0;
-			
 			if (!controller.getIsClickedClose())
 			{
 				return;
 			}
 			
-			try
+			row_list = controller.getSelected().get(0);
+			col_list = controller.getSelected().get(1);
+			String user_id = Login.USER_ID;
+			String timetable_id = selectedCustom.getTimeTable().getId();
+			String rowList = "";
+			String colList = "";
+			
+			Iterator<Integer> riter = row_list.iterator();
+			Iterator<Integer> citer = col_list.iterator();
+			
+			while (riter.hasNext())
 			{
-				price = rDao.addPreRsv(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
-				conn.commit();
-			}
-			catch (Exception e)
-			{
-				conn.rollback(sp);
-				e.printStackTrace();
-			}
-			finally
-			{
-				conn.setAutoCommit(true);
+				if (riter.hasNext())
+					rowList = Integer.toString(riter.next()) + ",";
+				else
+					rowList = Integer.toString(riter.next());
 			}
 			
-			Timer m_timer = new Timer();
-			ClearTimer m_task = new ClearTimer(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
+			while (citer.hasNext())
+			{
+				if (citer.hasNext())
+					colList = Integer.toString(citer.next()) + ",";
+				else
+					colList = Integer.toString(citer.next());
+			}
 			
-			m_timer.schedule(m_task, 60000);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_RESERVATION_ADD + "`" + user_id + "`" + timetable_id + "`" + rowList + "`" + colList);
 			
-			startPayment(price);
+			while (true)
+			{
+				String packet = mainGUI.readLine();
+				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetType = packetArr[0];
+				String packetCode = packetArr[1];
+				
+				if (packetType.equals(Protocol.PT_REQ_RENEWAL) && packetCode.equals(Protocol.SC_RES_RESERVATION_ADD))
+				{
+					String result = packetArr[2];
+					
+					switch (result)
+					{
+						case "1":
+						{
+							int price = Integer.valueOf(packetArr[3]);
+							Timer m_timer = new Timer();
+							ClearTimer m_task = new ClearTimer(Login.USER_ID, selectedCustom.getTimeTable().getId(), row_list, col_list);
+							
+							m_timer.schedule(m_task, 60000);
+							
+							startPayment(price);
+							mainGUI.alert("예매", "예매에 성공했습니다.");
+							return;
+						}
+						case "2":
+						{
+							mainGUI.alert("예매", "예매에 실패했습니다.");
+							return;
+						}
+					}
+				}
+			}
 		}
 		catch (Exception e)
 		{
-			
+			mainGUI.alert("오류", "예매에 실패했습니다.");
 			e.printStackTrace();
 		}
 	}
@@ -344,7 +522,7 @@ public class MovieTable implements Initializable
 		}
 	}
 	
-	private class CustomDTO
+	private class CustomDTO // 네트워크
 	{
 		ScreenDTO screen;
 		TimeTableDTO timetable;
@@ -353,10 +531,38 @@ public class MovieTable implements Initializable
 		{
 			try
 			{
-				this.timetable = timetable;
+				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_CUSTOM_INFO + "`" + timetable.getId() + "`screen");
 				
-				ScreenDAO sDao = new ScreenDAO();
-				screen = sDao.getScreenElem(timetable.getScreenId());
+				while (true)
+				{
+					String packet = mainGUI.readLine();
+					String packetArr[] = packet.split("!"); // 패킷 분할
+					String packetType = packetArr[0];
+					String packetCode = packetArr[1];
+					
+					if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_CUSTOM_INFO))
+					{
+						String result = packetArr[2];
+						
+						switch (result)
+						{
+							case "1":
+							{
+								this.timetable = timetable;
+								String infoList = packetArr[3];
+								String listArr[] = infoList.split(","); // 각 리스트 분할
+								String sc_info[] = listArr[1].split("`"); // 상영관 정보 분할
+								screen = new ScreenDTO(sc_info[0], sc_info[1], sc_info[2], Integer.valueOf(sc_info[3]), Integer.valueOf(sc_info[4]), Integer.valueOf(sc_info[5]));
+								return;
+							}
+							case "2":
+							{
+								mainGUI.alert("경고", "정보 요청 실패했습니다.");
+								return;
+							}
+						}
+					}
+				}
 			}
 			catch (Exception e)
 			{
@@ -372,6 +578,28 @@ public class MovieTable implements Initializable
 		public TimeTableDTO getTimeTable()
 		{
 			return timetable;
+		}
+	}
+	
+	public void initData(MovieDTO movie)
+	{
+		try
+		{
+			initTheaterList();
+			initMovieList();
+			
+			tv_theater.getSelectionModel().select(0);
+			for (int i = 0; i < movie_list.size(); i++)
+			{
+				if (movie_list.get(i).getId().equals(movie.getId()))
+				{
+					tv_movie.getSelectionModel().select(i);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

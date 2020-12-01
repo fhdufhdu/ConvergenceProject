@@ -33,7 +33,6 @@ import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
-import com.main.mainGUI;
 import com.protocol.Protocol;
 
 public class MovieServer extends Thread
@@ -65,7 +64,7 @@ public class MovieServer extends Thread
 			while (true)
 			{
 				String packet = br.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				
 				switch (packetType)
@@ -89,15 +88,15 @@ public class MovieServer extends Thread
 							MemberDTO mDto = mDao.getMember(login_id, login_passwd);
 							
 							if (mDto.getRole().equals("1"))
-								writePacket(Protocol.PT_RES_LOGIN + "/1");
+								writePacket(Protocol.PT_RES_LOGIN + "`1");
 							else
-								writePacket(Protocol.PT_RES_LOGIN + "/2");
+								writePacket(Protocol.PT_RES_LOGIN + "`2");
 							System.out.println("로그인 성공"); // 성공시 인터페이스 홈 접속
 							
 						}
 						catch (Exception e)
 						{
-							writePacket(Protocol.PT_RES_LOGIN + "/3");
+							writePacket(Protocol.PT_RES_LOGIN + "`3");
 							System.out.println("로그인 실패"); // 실패시 메시지 창 출력 및 재입력 유도
 						}
 						System.out.println("로그인 처리 결과 전송");
@@ -130,9 +129,9 @@ public class MovieServer extends Thread
 									{
 										mDto = m_iter.next();
 										if (m_iter.hasNext())
-											memberList += mDto.getId() + "/" + mDto.getName() + "/" + mDto.getPassword() + "/" + mDto.getRole() + "/" + mDto.getGender() + "/" + mDto.getPhoneNumber() + "/" + mDto.getBirth() + "/" + mDto.getAccount() + ",";
+											memberList += mDto.getId() + "`" + mDto.getName() + "`" + mDto.getPassword() + "`" + mDto.getRole() + "`" + mDto.getGender() + "`" + mDto.getPhoneNumber() + "`" + mDto.getBirth() + "`" + mDto.getAccount() + ",";
 										else
-											memberList += mDto.getId() + "/" + mDto.getName() + "/" + mDto.getPassword() + "/" + mDto.getRole() + "/" + mDto.getGender() + "/" + mDto.getPhoneNumber() + "/" + mDto.getBirth() + "/" + mDto.getAccount();
+											memberList += mDto.getId() + "`" + mDto.getName() + "`" + mDto.getPassword() + "`" + mDto.getRole() + "`" + mDto.getGender() + "`" + mDto.getPhoneNumber() + "`" + mDto.getBirth() + "`" + mDto.getAccount();
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MEMBER_VIEW + "!1!" + memberList);
 									System.out.println("회원 리스트 전송 성공");
@@ -167,9 +166,9 @@ public class MovieServer extends Thread
 									{
 										tDto = tIter.next();
 										if (tIter.hasNext())
-											theaterList += tDto.getId() + "/" + tDto.getName() + "/" + tDto.getAddress() + "/" + tDto.getTotalScreen() + "/" + tDto.getTotalSeats() + ",";
+											theaterList += tDto.getId() + "`" + tDto.getName() + "`" + tDto.getAddress() + "`" + tDto.getTotalScreen() + "`" + tDto.getTotalSeats() + ",";
 										else
-											theaterList += tDto.getId() + "/" + tDto.getName() + "/" + tDto.getAddress() + "/" + tDto.getTotalScreen() + "/" + tDto.getTotalSeats();
+											theaterList += tDto.getId() + "`" + tDto.getName() + "`" + tDto.getAddress() + "`" + tDto.getTotalScreen() + "`" + tDto.getTotalSeats();
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATER_VIEW + "!1!" + theaterList);
 									System.out.println("영화관 리스트 전송 성공");
@@ -205,9 +204,9 @@ public class MovieServer extends Thread
 									{
 										ScreenDTO sDto = sIter.next();
 										if (sIter.hasNext())
-											screenList += sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol() + ",";
+											screenList += sDto.getId() + "`" + id + "`" + sDto.getName() + "`" + sDto.getTotalCapacity() + "`" + sDto.getMaxRow() + "`" + sDto.getMaxCol() + ",";
 										else
-											screenList += sDto.getId() + "/" + id + "/" + sDto.getName() + "/" + sDto.getTotalCapacity() + "/" + sDto.getMaxRow() + "/" + sDto.getMaxCol();
+											screenList += sDto.getId() + "`" + id + "`" + sDto.getName() + "`" + sDto.getTotalCapacity() + "`" + sDto.getMaxRow() + "`" + sDto.getMaxCol();
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_SCREEN_VIEW + "!1!" + screenList);
 									System.out.println("상영관 리스트 전송 성공");
@@ -233,9 +232,17 @@ public class MovieServer extends Thread
 									info.put("is_current", packetArr[5]);
 									info.put("director", packetArr[6]);
 									info.put("actor", packetArr[7]);
+									String type = packetArr[8];
 									
 									MovieDAO tDao = new MovieDAO();
-									ArrayList<MovieDTO> tlist = tDao.getMovieList(info);
+									ArrayList<MovieDTO> tlist;
+									if (type.equals("1"))
+										tlist = tDao.getCurrentMovieList(); // 현재 상영 리스트
+									else if (type.equals("2"))
+										tlist = tDao.getSoonMovieList(); // 상영 예정 리스트
+									else
+										tlist = tDao.getMovieList(info); // 키워드에 해당하는 리스트
+										
 									Iterator<MovieDTO> tIter = tlist.iterator();
 									String movieList = ""; // 영화 리스트 모두 담을 문자열
 									
@@ -288,7 +295,7 @@ public class MovieServer extends Thread
 								}
 							}
 							
-							case Protocol.CS_REQ_ADMINTIMETABLE_VIEW:
+							case Protocol.CS_REQ_TIMETABLE_VIEW:
 							{
 								try
 								{
@@ -298,15 +305,21 @@ public class MovieServer extends Thread
 									String date = packetArr[4];
 									String start_time = packetArr[5];
 									String end_time = packetArr[6];
+									String theater_id = packetArr[7];
 									
-									TimeTableDAO rDao = new TimeTableDAO();
-									ArrayList<TimeTableDTO> t_list = rDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, mov_id, screen_id, date + start_time, date + end_time, "1", 0));
+									TimeTableDAO ttDao = new TimeTableDAO();
+									ArrayList<TimeTableDTO> t_list;
+									if (theater_id.equals("null"))
+										t_list = ttDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, mov_id, screen_id, date + start_time, date + end_time, "1", 0));
+									else
+										t_list = ttDao.getTimeTableList(new TimeTableDTO(DTO.EMPTY_ID, mov_id, screen_id, date + start_time, date + end_time, "1", 0), theater_id);
+									
 									Iterator<TimeTableDTO> t_iter = t_list.iterator();
 									String timetableList = "";
 									
 									if (t_iter.hasNext() == false)
 									{
-										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!2");
+										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_TIMETABLE_VIEW + "!2");
 										break;
 									}
 									
@@ -314,18 +327,18 @@ public class MovieServer extends Thread
 									{
 										TimeTableDTO tbDto = t_iter.next();
 										if (t_iter.hasNext())
-											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" + tbDto.getStartTime() + "/" + tbDto.getEndTime() + ",";
+											timetableList += tbDto.getId() + "`" + tbDto.getScreenId() + "`" + tbDto.getMovieId() + "`" + tbDto.getType() + "`" + tbDto.getCurrentRsv() + "`" + tbDto.getStartTime() + "`" + tbDto.getEndTime() + ",";
 										else
-											timetableList += tbDto.getId() + "/" + tbDto.getScreenId() + "/" + tbDto.getMovieId() + "/" + tbDto.getType() + "/" + tbDto.getCurrentRsv() + "/" + tbDto.getStartTime() + "/" + tbDto.getEndTime();
+											timetableList += tbDto.getId() + "`" + tbDto.getScreenId() + "`" + tbDto.getMovieId() + "`" + tbDto.getType() + "`" + tbDto.getCurrentRsv() + "`" + tbDto.getStartTime() + "`" + tbDto.getEndTime();
 									}
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!1!" + timetableList);
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_TIMETABLE_VIEW + "!1!" + timetableList);
 									System.out.println("상영시간표 리스트 전송 성공");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINTIMETABLE_VIEW + "!3");
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_TIMETABLE_VIEW + "!3");
 									break;
 								}
 							}
@@ -345,16 +358,15 @@ public class MovieServer extends Thread
 									
 									MovieDAO movDao = new MovieDAO();
 									movie = movDao.getMovie(ttDto.getMovieId());
-									
-									infoList += movie.getId() + "/" + movie.getTitle() + "/" + movie.getReleaseDate().toString() + "/" + movie.getIsCurrent() + "/" + movie.getPlot() + "/" + movie.getPosterPath() + "/" + movie.getStillCutPath() + "/" + movie.getTrailerPath() + "/" + movie.getDirector() + "/" + movie.getActor() + "/" + Integer.toString(movie.getMin()) + ",";
+									infoList += movie.getId() + "`" + movie.getTitle() + "`" + movie.getReleaseDate().toString() + "`" + movie.getIsCurrent() + "`" + movie.getPlot() + "`" + movie.getPosterPath() + "`" + movie.getStillCutPath() + "`" + movie.getTrailerPath() + "`" + movie.getDirector() + "`" + movie.getActor() + "`" + Integer.toString(movie.getMin()) + ",";
 									
 									ScreenDAO sDao = new ScreenDAO();
 									screen = sDao.getScreenElem(ttDto.getScreenId());
-									infoList += screen.getId() + "/" + screen.getTheaterId() + "/" + screen.getName() + "/" + Integer.toString(screen.getTotalCapacity()) + "/" + Integer.toString(screen.getMaxRow()) + "/" + Integer.toString(screen.getMaxCol()) + ",";
+									infoList += screen.getId() + "`" + screen.getTheaterId() + "`" + screen.getName() + "`" + Integer.toString(screen.getTotalCapacity()) + "`" + Integer.toString(screen.getMaxRow()) + "`" + Integer.toString(screen.getMaxCol()) + ",";
 									
 									TheaterDAO tDao = new TheaterDAO();
 									theater = tDao.getTheaterElem(screen.getTheaterId());
-									infoList += theater.getId() + "/" + theater.getName() + "/" + theater.getAddress() + "/" + Integer.toString(theater.getTotalScreen()) + "/" + Integer.toString(theater.getTotalSeats());
+									infoList += theater.getId() + "`" + theater.getName() + "`" + theater.getAddress() + "`" + Integer.toString(theater.getTotalScreen()) + "`" + Integer.toString(theater.getTotalSeats());
 									
 									System.out.println("다중 정보 전송 성공");
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!1!" + infoList);
@@ -430,9 +442,9 @@ public class MovieServer extends Thread
 										String priceType = temp.getType();
 										String price = Integer.toString(temp.getPrice());
 										if (cIter.hasNext())
-											priceList += priceType + "/" + price + ",";
+											priceList += priceType + "`" + price + ",";
 										else
-											priceList += priceType + "/" + price;
+											priceList += priceType + "`" + price;
 										
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_PRICE_VIEW + "!1!" + priceList);
@@ -446,47 +458,6 @@ public class MovieServer extends Thread
 									break;
 								}
 							}
-							
-							case Protocol.CS_REQ_THEATERMENU_VIEW:
-							{
-								try
-								{
-									System.out.println("클라이언트가 영화관 메뉴를 요청하였습니다.");
-									TheaterDAO tDao = new TheaterDAO();
-									ArrayList<TheaterDTO> theater_list = tDao.getTheaterList();
-									Iterator<TheaterDTO> tIter = theater_list.iterator();
-									String theaterMenuList = "";
-									
-									if (tIter.hasNext() == false)
-									{
-										writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
-									}
-									
-									while (tIter.hasNext())
-									{
-										TheaterDTO temp = tIter.next();
-										String id = temp.getId();
-										String name = temp.getName();
-										String address = temp.getAddress();
-										String total_screen = Integer.toString(temp.getTotalScreen());
-										String total_seats = Integer.toString(temp.getTotalSeats());
-										if (tIter.hasNext())
-											theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats + ",";
-										else
-											theaterMenuList += id + "/" + name + "/" + address + "/" + total_screen + "/" + total_seats;
-									}
-									
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!1!" + theaterMenuList);
-									System.out.println("영화관 메뉴 전송 성공");
-								}
-								catch (Exception e)
-								{
-									e.printStackTrace();
-									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_THEATERMENU_VIEW + "!2");
-									break;
-								}
-							}
-							
 						}
 					}
 					
@@ -512,13 +483,13 @@ public class MovieServer extends Thread
 									MemberDAO signUpDAO = new MemberDAO();
 									signUpDAO.addMember(new MemberDTO(signUp_id, role, signUp_password, null, name, phone_number, birth, gender));
 									System.out.println("회원가입 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SIGNUP + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SIGNUP + "`1");
 									break;
 								}
 								catch (DAOException e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SIGNUP + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SIGNUP + "`2");
 									break;
 								}
 							}
@@ -539,13 +510,13 @@ public class MovieServer extends Thread
 									theaterDAO.addTheater(theaterDTO);
 									
 									System.out.println("영화관 등록 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_ADD + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_THEATER_ADD + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_ADD + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_THEATER_ADD + "`2");
 									break;
 								}
 							}
@@ -567,13 +538,13 @@ public class MovieServer extends Thread
 									theaterDAO.changeTheater(theaterDTO);
 									
 									System.out.println("영화관 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_THEATER_CHANGE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_CHANGE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_THEATER_CHANGE + "`2");
 									break;
 								}
 							}
@@ -589,13 +560,13 @@ public class MovieServer extends Thread
 									theaterDAO.removeTheater(id);
 									
 									System.out.println("영화관 삭제 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_DELETE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_THEATER_DELETE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_THEATER_DELETE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_THEATER_DELETE + "`2");
 									break;
 								}
 							}
@@ -617,13 +588,13 @@ public class MovieServer extends Thread
 									sDao.addScreen(sDto);
 									
 									System.out.println("상영관 등록 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_ADD + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SCREEN_ADD + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_ADD + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SCREEN_ADD + "`2");
 									break;
 								}
 							}
@@ -646,13 +617,13 @@ public class MovieServer extends Thread
 									sDao.changeScreen(sDto);
 									
 									System.out.println("상영관 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SCREEN_CHANGE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_CHANGE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SCREEN_CHANGE + "`2");
 									break;
 								}
 							}
@@ -668,13 +639,13 @@ public class MovieServer extends Thread
 									sDao.removeScreen(id);
 									
 									System.out.println("상영관 삭제 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_DELETE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SCREEN_DELETE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_SCREEN_DELETE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_SCREEN_DELETE + "`2");
 									break;
 								}
 							}
@@ -702,13 +673,19 @@ public class MovieServer extends Thread
 									mDao.addMovie(mDto);
 									
 									System.out.println("영화 등록 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_ADD + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_ADD + "`1");
+									break;
+								}
+								catch (DAOException e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_ADD + "`2");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_ADD + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_ADD + "`3");
 									break;
 								}
 							}
@@ -724,13 +701,13 @@ public class MovieServer extends Thread
 									mDao.removeMovie(id);
 									
 									System.out.println("영화 삭제 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_DELETE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_DELETE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_DELETE + "`2");
 									break;
 								}
 							}
@@ -745,14 +722,14 @@ public class MovieServer extends Thread
 									AccountDAO aDao = new AccountDAO();
 									aDao.changeAccountInfo("admin", bank, account);
 									System.out.println("수입계좌 정보 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ACCOUNT_CHANGE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
 									System.out.println("수입계좌 수정 실패");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ACCOUNT_CHANGE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ACCOUNT_CHANGE + "`2");
 									break;
 								}
 							}
@@ -778,13 +755,13 @@ public class MovieServer extends Thread
 									
 									mDao.changeMovie(mDto);
 									System.out.println("영화 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_CHANGE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_MOVIE_CHANGE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_MOVIE_CHANGE + "`2");
 									break;
 								}
 							}
@@ -818,19 +795,19 @@ public class MovieServer extends Thread
 									conn.commit();
 									
 									System.out.println("관리자 예매 정보 등록 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`1");
 									break;
 								}
 								catch (DAOException e)
 								{
 									if (e.getMessage().equals("DUPLICATE_RSV"))
 									{
-										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/2");
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`2");
 										break;
 									}
 									if (e.getMessage().equals("NOT_SELECTED"))
 									{
-										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/3");
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`3");
 										break;
 									}
 								}
@@ -839,10 +816,51 @@ public class MovieServer extends Thread
 									e.printStackTrace();
 									conn.rollback(sp);
 									conn.setAutoCommit(true);
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_ADMINRESERVATION_ADD + "/4");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`4");
+									break;
+								} finally
+								{
+									conn.setAutoCommit(true);
+								}
+							}
+							
+							case Protocol.CS_REQ_RESERVATION_ADD:
+							{
+								Connection conn = DAO.getConn();
+								conn.setAutoCommit(false);
+								Savepoint sp = conn.setSavepoint();
+								try
+								{
+									System.out.println("관리자가 예매 등록 요청을 보냈습니다.");
+									ReservationDAO rDao = new ReservationDAO();
+									String member_id = packetArr[2];
+									String timetable_id = packetArr[3];
+									int price = 0;
+									
+									ArrayList<Integer> rowArr = new ArrayList<Integer>();
+									String row_list[] = packetArr[4].split(",");
+									for (String row : row_list)
+										rowArr.add(Integer.valueOf(row));
+									
+									ArrayList<Integer> colArr = new ArrayList<Integer>();
+									String col_list[] = packetArr[5].split(",");
+									for (String col : col_list)
+										colArr.add(Integer.valueOf(col));
+									
+									price = rDao.addPreRsv(member_id, timetable_id, rowArr, colArr);
+									conn.commit();
+									
+									System.out.println("사용자 예매 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`1" + price);
 									break;
 								}
-								finally
+								catch (Exception e)
+								{
+									conn.rollback(sp);
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`2");
+									break;
+								} finally
 								{
 									conn.setAutoCommit(true);
 								}
@@ -862,7 +880,7 @@ public class MovieServer extends Thread
 									ttDao.addTimeTable(new TimeTableDTO(DTO.EMPTY_ID, mv_id, sc_id, start_time, end_time, "0", 0));
 									
 									System.out.println("상영시간표 등록 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETABLE_ADD + "`1");
 									break;
 								}
 								catch (DAOException e)
@@ -870,14 +888,14 @@ public class MovieServer extends Thread
 									if (e.getMessage().equals("DUPLICATE_TIMETABLE"))
 									{
 										e.printStackTrace();
-										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/2");
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETABLE_ADD + "`2");
 										break;
 									}
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_ADD + "/3");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETABLE_ADD + "`3");
 									break;
 								}
 							}
@@ -897,7 +915,7 @@ public class MovieServer extends Thread
 									ttDao.changeTimeTable(new TimeTableDTO(tt_id, mv_id, sc_id, start_time, end_time, "0", 0));
 									
 									System.out.println("상영시간표 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETABLE_CHANGE + "`1");
 									break;
 								}
 								catch (DAOException e)
@@ -905,14 +923,14 @@ public class MovieServer extends Thread
 									if (e.getMessage().equals("DUPLICATE_TIMETABLE"))
 									{
 										e.printStackTrace();
-										writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/2");
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETABLE_CHANGE + "`2");
 										break;
 									}
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETABLE_CHANGE + "/3");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETABLE_CHANGE + "`3");
 									break;
 								}
 							}
@@ -928,13 +946,13 @@ public class MovieServer extends Thread
 									ttDao.removeTimeTable(timetable_id);
 									
 									System.out.println("상영시간표 삭제 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETALBE_DELETE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETALBE_DELETE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_TIMETALBE_DELETE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETALBE_DELETE + "`2");
 									break;
 								}
 							}
@@ -953,14 +971,14 @@ public class MovieServer extends Thread
 									cDao.changeCharge(new ChargeDTO("2", Integer.valueOf(afternoon)));
 									cDao.changeCharge(new ChargeDTO("3", Integer.valueOf(night)));
 									System.out.println("가격정보 수정 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/1");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PRICE_CHANGE + "`1");
 									break;
 								}
 								catch (Exception e)
 								{
 									e.printStackTrace();
 									System.out.println("가격정보 수정 실패");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_PRICE_CHANGE + "/2");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PRICE_CHANGE + "`2");
 									break;
 								}
 							}

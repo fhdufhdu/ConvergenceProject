@@ -480,12 +480,12 @@ public class TheaterManage implements Initializable
 			String screen = tf_screen.getText();
 			String seat = tf_seat.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_THEATER_ADD + "/" + name + "/" + address + "/" + screen + "/" + seat);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_THEATER_ADD + "`" + name + "`" + address + "`" + screen + "`" + seat);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -538,12 +538,12 @@ public class TheaterManage implements Initializable
 			String screen = tf_screen.getText();
 			String seat = tf_seat.getText();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_THEATER_CHANGE + "/" + id + "/" + name + "/" + address + "/" + screen + "/" + seat);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_THEATER_CHANGE + "`" + id + "`" + name + "`" + address + "`" + screen + "`" + seat);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -603,12 +603,12 @@ public class TheaterManage implements Initializable
 			
 			String id = table_row_data.getId();
 			
-			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_THEATER_DELETE + "/" + id);
+			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_THEATER_DELETE + "`" + id);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("/");
+				String packetArr[] = packet.split("`");
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
@@ -699,7 +699,7 @@ public class TheaterManage implements Initializable
 		try
 		{
 			theater_list.clear();
-			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_THEATER_VIEW);
+			mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_THEATER_VIEW);
 			
 			while (true)
 			{
@@ -720,7 +720,7 @@ public class TheaterManage implements Initializable
 							String listArr[] = theaterList.split(","); // 각 영화관 별로 리스트 분할
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("/"); // 영화관 별 정보 분할
+								String infoArr[] = listInfo.split("`"); // 영화관 별 정보 분할
 								String id = infoArr[0];
 								String name = infoArr[1];
 								String address = infoArr[2];

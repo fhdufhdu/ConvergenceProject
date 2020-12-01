@@ -60,8 +60,8 @@ public class Protocol
 	public static final String SC_RES_ADMINRESERVATION_ADD = "7-28"; // 관리자 예매 요청 응답
 	
 	// 상영시간표 관리
-	public static final String CS_REQ_ADMINTIMETABLE_VIEW = "4-10"; // 관리자 상영시간표 요청
-	public static final String SC_RES_ADMINTIMETABLE_VIEW = "5-20"; // 관리자 상영시간표 요청 응답
+	public static final String CS_REQ_TIMETABLE_VIEW = "4-10"; // 관리자 상영시간표 요청
+	public static final String SC_RES_TIMETABLE_VIEW = "5-20"; // 관리자 상영시간표 요청 응답
 	public static final String CS_REQ_TIMETABLE_ADD = "6-7"; // 상영시간표 등록 요청
 	public static final String SC_RES_TIMETABLE_ADD = "7-E"; // 상영시간표 등록 요청 응답
 	public static final String CS_REQ_TIMETABLE_CHANGE = "6-8"; // 상영시간표 수정 요청
@@ -87,8 +87,6 @@ public class Protocol
 	
 	// 사용자
 	// 영화관
-	public static final String CS_REQ_THEATERMENU_VIEW = "4-12"; // 사용자 영화관 메뉴 요청
-	public static final String SC_RES_THEATERMENU_VIEW = "5-24"; // 사용자 영화관 메뉴 요청 응답
 	public static final String CS_REQ_THEATERDETAIL_VIEW = "4-13"; // 사용자 영화관 상세정보 요청
 	public static final String SC_RES_THEATERDETAIL_VIEW = "5-26"; // 사용자 영화관 상세정보 요청 응답
 	

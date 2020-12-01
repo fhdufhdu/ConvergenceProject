@@ -9,9 +9,12 @@ import com.db.model.MovieDTO;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+<<<<<<< HEAD
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+=======
+>>>>>>> branch 'master' of https://github.com/fhdufhdu/ConvergenceProject
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -19,7 +22,6 @@ import javafx.scene.layout.GridPane;
 
 public class MoviePresent implements Initializable 
 {
-
 	@FXML
 	private Button btn_detail;
 
@@ -73,7 +75,6 @@ public class MoviePresent implements Initializable
 	{
 
 	}
-
 	@FXML
 	private GridPane gp_current_movie;
 
@@ -82,13 +83,14 @@ public class MoviePresent implements Initializable
 	{
 		try
 		{
+			// 현재 상영작을 모두 받아와서 girdview에 뿌리기, 각 girdview에는 MovieSub.java가 컨트롤함
 			MovieDAO mDao = new MovieDAO();
 			ArrayList<MovieDTO> m_list = mDao.getCurrentMovieList();
 			for (int i = 0; i < m_list.size(); i++)
 			{
-				FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/movie_grid_sub.fxml"));
+				FXMLLoader loader = new FXMLLoader(MovieTable.class.getResource("./xml/user_sub_page/movie_present_sub.fxml"));
 				Parent root = loader.load();
-				MovieSub controller = loader.<MovieSub>getController();
+				MoviePresentSub controller = loader.<MoviePresentSub>getController();
 				controller.initData(m_list.get(i));
 				gp_current_movie.add(root, i % 4, i / 4);
 			}

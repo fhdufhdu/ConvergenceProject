@@ -4,8 +4,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.db.model.AccountDAO;
-import com.db.model.AccountDTO;
 import com.db.model.DAOException;
 import com.main.mainGUI;
 import com.protocol.Protocol;
@@ -29,32 +27,32 @@ public class AccountController implements Initializable
     {
         try
         {
-        	mainGUI.writePacket(Protocol.PT_REQ_VIEW + "/" + Protocol.CS_REQ_ACCOUNT_VIEW);
-        	
-        	String packet = mainGUI.readLine();
-        	String packetArr[] = packet.split("!");
-        	String packetType = packetArr[0];
-        	String packetCode = packetArr[1];
-        	
-        	if(packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ACCOUNT_VIEW))
-        	{
-        		String result = packetArr[2];
-        		
-        		switch(result)
-        		{
-        			case "1":
-        				String account = packetArr[3];
-        				String bank = packetArr[4];
-
-        	            tf_account.setPromptText(account);
-        	            tf_bank.setPromptText(bank);
-        				
-        				break;
-        			case "2":
-        				System.out.println("계좌 정보 출력에 실패하였습니다");
-        				break;
-        		}
-        	}
+            mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_ACCOUNT_VIEW);
+            
+            String packet = mainGUI.readLine();
+            String packetArr[] = packet.split("!");
+            String packetType = packetArr[0];
+            String packetCode = packetArr[1];
+            
+            if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_ACCOUNT_VIEW))
+            {
+                String result = packetArr[2];
+                
+                switch (result)
+                {
+                    case "1":
+                        String account = packetArr[3];
+                        String bank = packetArr[4];
+                        
+                        tf_account.setPromptText(account);
+                        tf_bank.setPromptText(bank);
+                        
+                        break;
+                    case "2":
+                        System.out.println("계좌 정보 출력에 실패하였습니다");
+                        break;
+                }
+            }
         }
         catch (Exception e)
         {
@@ -76,25 +74,25 @@ public class AccountController implements Initializable
             String bank = tf_bank.getText();
             String account = tf_account.getText();
             
-            mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "/" + Protocol.CS_REQ_ACCOUNT_CHANGE + "/" + bank + "/" + account);
+            mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_ACCOUNT_CHANGE + "`" + bank + "`" + account);
             
             String packet = mainGUI.readLine();
-            String packetArr[] = packet.split("/");
+            String packetArr[] = packet.split("`");
             String packetType = packetArr[0];
             String packetCode = packetArr[1];
             
-            if(packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_ACCOUNT_CHANGE))
+            if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_ACCOUNT_CHANGE))
             {
-            	String result = packetArr[2];
-            	switch(result)
-            	{
-            		case "1":
+                String result = packetArr[2];
+                switch (result)
+                {
+                    case "1":
                         mainGUI.alert("수정 완료", "데이터 수정 완료");
-            			break;
-            		case "2":
-						mainGUI.alert("경고", "가격정보 수정 실패!");
-            			break;
-            	}
+                        break;
+                    case "2":
+                        mainGUI.alert("경고", "가격정보 수정 실패!");
+                        break;
+                }
             }
             
             mainGUI.alert("수정 완료", "수정이 완료 되었습니다");
@@ -111,7 +109,7 @@ public class AccountController implements Initializable
         }
         catch (Exception e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
     }
     
