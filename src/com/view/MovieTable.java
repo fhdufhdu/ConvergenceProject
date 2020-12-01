@@ -440,31 +440,21 @@ public class MovieTable implements Initializable
 			Iterator<Integer> citer = col_list.iterator();
 			
 			while (riter.hasNext())
-			{
-				if (riter.hasNext())
-					rowList = Integer.toString(riter.next()) + ",";
-				else
-					rowList = Integer.toString(riter.next());
-			}
+				rowList += Integer.toString(riter.next()) + ",";
 			
 			while (citer.hasNext())
-			{
-				if (citer.hasNext())
-					colList = Integer.toString(citer.next()) + ",";
-				else
-					colList = Integer.toString(citer.next());
-			}
+				colList += Integer.toString(citer.next()) + ",";
 			
 			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_RESERVATION_ADD + "`" + user_id + "`" + timetable_id + "`" + rowList + "`" + colList);
 			
 			while (true)
 			{
 				String packet = mainGUI.readLine();
-				String packetArr[] = packet.split("!"); // 패킷 분할
+				String packetArr[] = packet.split("`"); // 패킷 분할
 				String packetType = packetArr[0];
 				String packetCode = packetArr[1];
 				
-				if (packetType.equals(Protocol.PT_REQ_RENEWAL) && packetCode.equals(Protocol.SC_RES_RESERVATION_ADD))
+				if (packetType.equals(Protocol.PT_RES_RENEWAL) && packetCode.equals(Protocol.SC_RES_RESERVATION_ADD))
 				{
 					String result = packetArr[2];
 					
