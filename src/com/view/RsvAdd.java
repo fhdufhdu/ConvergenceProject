@@ -439,20 +439,10 @@ public class RsvAdd implements Initializable
 			Iterator<Integer> citer = col_list.iterator();
 			
 			while (riter.hasNext())
-			{
-				if (riter.hasNext())
-					rowList = Integer.toString(riter.next()) + ",";
-				else
-					rowList = Integer.toString(riter.next());
-			}
+				rowList += Integer.toString(riter.next()) + ",";
 			
 			while (citer.hasNext())
-			{
-				if (citer.hasNext())
-					colList = Integer.toString(citer.next()) + ",";
-				else
-					colList = Integer.toString(citer.next());
-			}
+				colList += Integer.toString(citer.next()) + ",";
 			
 			mainGUI.writePacket(Protocol.PT_REQ_RENEWAL + "`" + Protocol.CS_REQ_ADMINRESERVATION_ADD + "`" + member + "`" + timetable_id + "`" + rowList + "`" + colList + "`" + account + "`" + bank);
 			

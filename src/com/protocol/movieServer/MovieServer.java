@@ -830,12 +830,12 @@ public class MovieServer extends Thread
 								Savepoint sp = conn.setSavepoint();
 								try
 								{
-									System.out.println("관리자가 예매 등록 요청을 보냈습니다.");
+									System.out.println("회원이 예매 등록 요청을 보냈습니다.");
 									ReservationDAO rDao = new ReservationDAO();
 									String member_id = packetArr[2];
 									String timetable_id = packetArr[3];
 									int price = 0;
-									
+
 									ArrayList<Integer> rowArr = new ArrayList<Integer>();
 									String row_list[] = packetArr[4].split(",");
 									for (String row : row_list)
@@ -846,11 +846,14 @@ public class MovieServer extends Thread
 									for (String col : col_list)
 										colArr.add(Integer.valueOf(col));
 									
+									for(int i : colArr)
+										System.out.println(i);
+									
 									price = rDao.addPreRsv(member_id, timetable_id, rowArr, colArr);
 									conn.commit();
 									
-									System.out.println("사용자 예매 성공");
-									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`1" + price);
+									System.out.println("회원 예매 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`1`" + price);
 									break;
 								}
 								catch (Exception e)
