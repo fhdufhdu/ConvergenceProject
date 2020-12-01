@@ -32,7 +32,11 @@ import com.db.model.TheaterDAO;
 import com.db.model.TheaterDTO;
 import com.db.model.TimeTableDAO;
 import com.db.model.TimeTableDTO;
+import com.main.mainGUI;
 import com.protocol.Protocol;
+import com.view.Login;
+
+import javafx.stage.Stage;
 
 public class MovieServer extends Thread
 {
@@ -846,9 +850,6 @@ public class MovieServer extends Thread
 									for (String col : col_list)
 										colArr.add(Integer.valueOf(col));
 									
-									for (int i : colArr)
-										System.out.println(i);
-									
 									price = rDao.addPreRsv(member_id, timetable_id, rowArr, colArr);
 									conn.commit();
 									
@@ -985,6 +986,57 @@ public class MovieServer extends Thread
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_TIMETALBE_DELETE + "`2");
 									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_PAYMENT_ADD:
+							{
+								Connection conn = DAO.getConn();
+								conn.setAutoCommit(false);
+								Savepoint sp = conn.setSavepoint();
+								try
+								{
+									System.out.println("클라이언트가 결제를 요청했습니다.");
+									
+									ReservationDAO rDao = new ReservationDAO();
+									String member_id = packetArr[2];
+									String timetable_id = packetArr[3];
+									String account = packetArr[6];
+									String bank = packetArr[7];
+									String passwd = packetArr[8];
+									int price = 0;
+									
+									ArrayList<Integer> rowArr = new ArrayList<Integer>();
+									String row_list[] = packetArr[4].split(",");
+									for (String row : row_list)
+										rowArr.add(Integer.valueOf(row));
+									
+									ArrayList<Integer> colArr = new ArrayList<Integer>();
+									String col_list[] = packetArr[5].split(",");
+									for (String col : col_list)
+										colArr.add(Integer.valueOf(col));
+									
+									rDao.addConfimRsv(member_id, timetable_id, rowArr, colArr, account, bank);
+									rDao.payment(account, bank, passwd, price);
+									
+									conn.commit();
+									
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PAYMENT_ADD + "`1");
+									break;
+								}
+								catch (Exception e)
+								{
+									if (e.getMessage().equals("PAYMENT_ERR"))
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PAYMENT_ADD + "`2");
+									else if (e.getMessage().equals("NOT_SELECTED"))
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PAYMENT_ADD + "`3");
+									else
+										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PAYMENT_ADD + "`4");
+									e.printStackTrace();
+									conn.rollback(sp);
+								} finally
+								{
+									conn.setAutoCommit(true);
 								}
 							}
 							
