@@ -404,9 +404,9 @@ public class MovieServer extends Thread
 									{
 										ReservationDTO rDto = r_iter.next();
 										if (r_iter.hasNext())
-											reservatinList += rDto.getId() + "/" + rDto.getMemberId() + "/" + rDto.getTimeTableId() + "/" + rDto.getScreenRow() + "/" + rDto.getScreenCol() + "/" + rDto.getPrice() + "/" + rDto.getType() + "/" + rDto.getRsvTime() + "/" + rDto.getAccount() + "/" + rDto.getBank() + "/" + ",";
+											reservatinList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getTimeTableId() + "`" + rDto.getScreenRow() + "`" + rDto.getScreenCol() + "`" + rDto.getPrice() + "`" + rDto.getType() + "`" + rDto.getRsvTime() + "`" + rDto.getAccount() + "`" + rDto.getBank() + "`" + ",";
 										else
-											reservatinList += rDto.getId() + "/" + rDto.getMemberId() + "/" + rDto.getTimeTableId() + "/" + rDto.getScreenRow() + "/" + rDto.getScreenCol() + "/" + rDto.getPrice() + "/" + rDto.getType() + "/" + rDto.getRsvTime() + "/" + rDto.getAccount() + "/" + rDto.getBank() + "/";
+											reservatinList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getTimeTableId() + "`" + rDto.getScreenRow() + "`" + rDto.getScreenCol() + "`" + rDto.getPrice() + "`" + rDto.getType() + "`" + rDto.getRsvTime() + "`" + rDto.getAccount() + "`" + rDto.getBank() + "`";
 									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_ADMINRESERVATION_VIEW + "!1!" + reservatinList);
 									System.out.println("예매 리스트 전송 성공");
@@ -996,14 +996,13 @@ public class MovieServer extends Thread
 						            rDao.refund(reservationId);
 						            conn.commit();
 						            System.out.println("예매 취소 성공");
-						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/1");
+						            writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_DELETE + "`1");
 						        }
 						        catch (Exception e)
 						        {
 									e.printStackTrace();
 									System.out.println("예매 취소 실패");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/2");
-									
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_DELETE + "`2");
 									break;
 						        }
 							}
