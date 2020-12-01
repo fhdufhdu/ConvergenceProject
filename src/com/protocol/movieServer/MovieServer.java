@@ -1196,6 +1196,7 @@ public class MovieServer extends Thread
 									
 									System.out.println("리뷰 등록 성공");
 						            writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_ADD + "`1");
+						            break;
 								}
 								catch (Exception e)
 								{

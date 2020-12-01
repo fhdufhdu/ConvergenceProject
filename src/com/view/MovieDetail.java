@@ -290,11 +290,11 @@ public class MovieDetail
 						case "1":
 						{
 							String reviewList = packetArr[3];
-							String listArr[] = reviewList.split(","); // 각 영화별로 리스트 분할
+							String listArr[] = reviewList.split(","); 
 
 							for (String listInfo : listArr)
 							{
-								String infoArr[] = listInfo.split("`"); // 영화 별 정보 분할
+								String infoArr[] = listInfo.split("`");
 								String rv_id = infoArr[0];
 								String rv_memId = infoArr[1];
 								String rv_movId = infoArr[2];
@@ -334,10 +334,37 @@ public class MovieDetail
 		{
 			try
 			{
-				this.review = review;
+				mainGUI.writePacket(Protocol.PT_REQ_VIEW + "`" + Protocol.CS_REQ_CUSTOM_INFO + "`3`" + review.getMemberId());
 				
-				MemberDAO mDao = new MemberDAO();
-				member = mDao.getMemberInfo(review.getMemberId());
+				while(true)
+				{
+					String packet = mainGUI.readLine();
+					String packetArr[] = packet.split("!"); // 패킷 분할
+					String packetType = packetArr[0];
+					String packetCode = packetArr[1];
+					
+					if (packetType.equals(Protocol.PT_RES_VIEW) && packetCode.equals(Protocol.SC_RES_CUSTOM_INFO))
+					{
+						String result = packetArr[2];
+						
+						switch (result)
+						{
+							case "1":
+							{
+								this.review = review;
+								String infoList = packetArr[3];
+								String mem_info[] = infoList.split("`"); // 회원 정보 분할
+								member = new MemberDTO(mem_info[0], mem_info[1], mem_info[2], mem_info[3], mem_info[4], mem_info[5], mem_info[6], mem_info[7]);
+								return;
+							}
+							case "2":
+							{
+								mainGUI.alert("경고", "정보 요청 실패했습니다.");
+								return;
+							}
+						}
+					}
+				}
 			}
 			catch (Exception e)
 			{
