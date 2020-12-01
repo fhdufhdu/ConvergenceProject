@@ -307,12 +307,12 @@ public class MovieManage implements Initializable
 						}
 						case "2":
 						{
-							t_result.setText("영화 리스트가 없습니다.");
+							mainGUI.alert("오류", "영화 리스트가 없습니다.");
 							return;
 						}
 						case "3":
 						{
-							t_result.setText("영화 리스트 요청 실패했습니다.");
+							mainGUI.alert("오류", "영화 리스트 요청 실패했습니다.");
 							return;
 						}
 					}
@@ -321,7 +321,7 @@ public class MovieManage implements Initializable
 		}
 		catch (Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 }

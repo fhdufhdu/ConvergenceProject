@@ -1,8 +1,5 @@
 package com.view;
 
-import java.sql.SQLException;
-
-import com.db.model.DAOException;
 import com.db.model.ScreenDTO;
 import com.db.model.TheaterDTO;
 import com.main.mainGUI;
@@ -28,7 +25,7 @@ public class ScreenManage
 	private ScreenDTO table_row_data;
 	private TheaterDTO theater;
 	
-	private String err_dao, err_type;
+	private String err_type;
 	
 	@FXML
 	private BorderPane bp_parent;
@@ -120,21 +117,14 @@ public class ScreenManage
 				}
 			}
 		}
-		catch (DAOException e)
-		{
-			// 값의 중복 발생시
-			mainGUI.alert("수정오류", err_dao);
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			// DB관련 문제 발생시
-			e.printStackTrace();
-		}
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
 			mainGUI.alert("수정오류", err_type);
+			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -173,7 +163,6 @@ public class ScreenManage
 						case "1":
 						{
 							initList();
-							
 							clearText();
 							return;
 						}
@@ -186,21 +175,14 @@ public class ScreenManage
 				}
 			}
 		}
-		catch (DAOException e)
-		{
-			// 값의 중복 발생시
-			mainGUI.alert("수정오류", err_dao);
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			// DB관련 문제 발생시
-			e.printStackTrace();
-		}
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
 			mainGUI.alert("수정오류", err_type);
+			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -262,21 +244,14 @@ public class ScreenManage
 				}
 			}
 		}
-		catch (DAOException e)
-		{
-			// 값의 중복 발생시
-			mainGUI.alert("수정오류", err_dao);
-			e.printStackTrace();
-		}
-		catch (SQLException e)
-		{
-			// DB관련 문제 발생시
-			e.printStackTrace();
-		}
 		catch (NumberFormatException e)
 		{
 			// 입력값 타입이 맞지 않을때
 			mainGUI.alert("수정오류", err_type);
+			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -348,7 +323,6 @@ public class ScreenManage
 	{
 		try
 		{
-			err_dao = "상영관 이름이 중복됩니다!";
 			err_type = "총 좌석, 최대 행, 최대 열에는 숫자만 입력해주세요!";
 			
 			theater = t;

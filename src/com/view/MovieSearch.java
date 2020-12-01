@@ -230,7 +230,7 @@ public class MovieSearch implements Initializable
 						}
 						case "2":
 						{
-							t_result.setText("영화 리스트가 없습니다.");
+							mainGUI.alert("오류", "영화 리스트가 없습니다.");
 							return;
 						}
 						case "3":

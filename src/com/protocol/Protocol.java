@@ -54,8 +54,8 @@ public class Protocol
 	public static final String SC_RES_MOVIE_DELETE = "7-1E"; // 영화 삭제 요청 응답
 	
 	// 예매정보 관리
-	public static final String CS_REQ_ADMINRESERVATION_VIEW = "4-F"; // 관리자 예매 내역 요청
-	public static final String SC_RES_ADMINRESERVATION_VIEW = "5-1E"; // 관리자 예매 내역 요청 응답
+	public static final String CS_REQ_RESERVATION_VIEW = "4-F"; // 관리자 예매 내역 요청
+	public static final String SC_RES_RESERVATION_VIEW = "5-1E"; // 관리자 예매 내역 요청 응답
 	public static final String CS_REQ_ADMINRESERVATION_ADD = "6-14"; // 관리자 예매 요청
 	public static final String SC_RES_ADMINRESERVATION_ADD = "7-28"; // 관리자 예매 요청 응답
 	
