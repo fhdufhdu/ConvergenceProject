@@ -391,8 +391,8 @@ public class MovieServer extends Thread
 									String end_date = packetArr[6];
 									ReservationDAO rDao = new ReservationDAO();
 									ArrayList<ReservationDTO> r_list = rDao.getRsvList(mem_id, mov_id, thea_id, start_date + " 00:00:00.0", end_date + " 23:59:00.0");
-						            Iterator<ReservationDTO> r_iter = r_list.iterator();
-						            String reservatinList = "";
+									Iterator<ReservationDTO> r_iter = r_list.iterator();
+									String reservatinList = "";
 									
 									if (r_iter.hasNext() == false)
 									{
@@ -835,7 +835,7 @@ public class MovieServer extends Thread
 									String member_id = packetArr[2];
 									String timetable_id = packetArr[3];
 									int price = 0;
-
+									
 									ArrayList<Integer> rowArr = new ArrayList<Integer>();
 									String row_list[] = packetArr[4].split(",");
 									for (String row : row_list)
@@ -846,7 +846,7 @@ public class MovieServer extends Thread
 									for (String col : col_list)
 										colArr.add(Integer.valueOf(col));
 									
-									for(int i : colArr)
+									for (int i : colArr)
 										System.out.println(i);
 									
 									price = rDao.addPreRsv(member_id, timetable_id, rowArr, colArr);
@@ -861,6 +861,35 @@ public class MovieServer extends Thread
 									conn.rollback(sp);
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`2");
+									break;
+								} finally
+								{
+									conn.setAutoCommit(true);
+								}
+							}
+							
+							case Protocol.CS_REQ_RESERVATION_DELETE:
+							{
+								Connection conn = DAO.getConn();
+								conn.setAutoCommit(false);
+								Savepoint sp = conn.setSavepoint();
+								try
+								{
+									System.out.println("클라이언트가 예매 취소 요청을 보냈습니다.");
+									String reservationId = packetArr[2];
+									ReservationDAO rDao = new ReservationDAO();
+									rDao.cancelRsv(reservationId);
+									rDao.refund(reservationId);
+									conn.commit();
+									System.out.println("예매 취소 성공");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/1");
+								}
+								catch (Exception e)
+								{
+									conn.rollback(sp);
+									e.printStackTrace();
+									System.out.println("예매 취소 실패");
+									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/2");
 									break;
 								} finally
 								{
@@ -983,32 +1012,6 @@ public class MovieServer extends Thread
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PRICE_CHANGE + "`2");
 									break;
 								}
-							}
-							
-							case Protocol.CS_REQ_RESERVATION_DELETE:
-							{
-						        try
-						        {
-									System.out.println("클라이언트가 예매 취소 요청을 보냈습니다.");
-									String reservationId = packetArr[2];
-						        	Connection conn = DAO.getConn();
-							        conn.setAutoCommit(false);
-							        Savepoint sp = conn.setSavepoint();
-						            ReservationDAO rDao = new ReservationDAO();
-						            rDao.cancelRsv(reservationId);
-						            rDao.refund(reservationId);
-						            conn.commit();
-						            System.out.println("예매 취소 성공");
-						            writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/1");
-						        }
-						        catch (Exception e)
-						        {
-									e.printStackTrace();
-									System.out.println("예매 취소 실패");
-									writePacket(Protocol.PT_RES_RENEWAL + "/" + Protocol.SC_RES_RESERVATION_DELETE + "/2");
-									
-									break;
-						        }
 							}
 						}
 					}
