@@ -112,6 +112,12 @@ public class AdminMain implements Initializable
         loadPage("movie_table_manage");
     }
     
+    @FXML
+    void menuSatistics(ActionEvent event)
+    {
+        loadPage("statistics_information");
+    }
+    
     // 각 파일이름에 해당하는 뷰 불러오기
     private void loadPage(String file_name)
     {

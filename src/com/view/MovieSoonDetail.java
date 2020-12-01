@@ -1,6 +1,5 @@
 package com.view;
 
-import com.db.model.CustomDTO;
 import com.db.model.MovieDTO;
 
 import javafx.collections.ObservableList;
@@ -17,8 +16,6 @@ import javafx.scene.web.WebView;
 public class MovieSoonDetail
 {
     private MovieDTO movie;
-    
-    private ObservableList<CustomDTO> custom_list;
     
     @FXML
     private Button btn_reservation;

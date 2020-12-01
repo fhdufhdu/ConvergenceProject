@@ -77,8 +77,7 @@ public class MovieSoonSub
             }
             t_rsv_rate.setText("예매율 : " + String.format("%.2f", rsv_rate * 100));
             
-            String remain_date = Integer.toString(getRemainDate());
-            t_rsv_rate.setText(t_rsv_rate.getText() + "% | D - " + remain_date);
+            t_rsv_rate.setText(t_rsv_rate.getText() + "% | D - " + getRemainDate());
             
         }
         catch (Exception e)
@@ -109,7 +108,6 @@ public class MovieSoonSub
             calDateDays = Math.abs(calDateDays);
             
             return (int) calDateDays;
-            
         }
         
         catch (ParseException e)
