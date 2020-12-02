@@ -43,7 +43,7 @@ public class MovieServer extends Thread
 {
 	Socket socket;
 	private static int currUser = 0;
-	public static int cnt = 1;
+	public static int cnt = 10;
 	BufferedReader br = null;
 	BufferedWriter bw = null;
 	
@@ -970,7 +970,8 @@ public class MovieServer extends Thread
 									conn.setAutoCommit(true);
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_ADMINRESERVATION_ADD + "`4");
 									break;
-								} finally
+								}
+								finally
 								{
 									conn.setAutoCommit(true);
 								}
@@ -1012,7 +1013,8 @@ public class MovieServer extends Thread
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_ADD + "`2");
 									break;
-								} finally
+								}
+								finally
 								{
 									conn.setAutoCommit(true);
 								}
@@ -1042,7 +1044,8 @@ public class MovieServer extends Thread
 									System.out.println("예매 취소 실패");
 									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_RESERVATION_DELETE + "`2");
 									break;
-								} finally
+								}
+								finally
 								{
 									conn.setAutoCommit(true);
 								}
@@ -1184,7 +1187,8 @@ public class MovieServer extends Thread
 										writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_PAYMENT_ADD + "`4");
 									e.printStackTrace();
 									conn.rollback(sp);
-								} finally
+								}
+								finally
 								{
 									conn.setAutoCommit(true);
 								}
