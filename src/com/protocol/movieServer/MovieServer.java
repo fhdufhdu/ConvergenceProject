@@ -362,7 +362,7 @@ public class MovieServer extends Thread
 									TimeTableDAO ttDao = new TimeTableDAO();
 									MemberDAO memDao = new MemberDAO();
 									
-									switch(type)
+									switch (type)
 									{
 										case "0": // screen
 										{
@@ -374,7 +374,7 @@ public class MovieServer extends Thread
 										case "1": // movie, screen, theater
 										{
 											TimeTableDTO ttDto = ttDao.getTimeTable(id_data);
-											ScreenDTO screen = sDao.getScreenElem(ttDto.getScreenId());	
+											ScreenDTO screen = sDao.getScreenElem(ttDto.getScreenId());
 											MovieDTO movie = movDao.getMovie(ttDto.getMovieId());
 											TheaterDTO theater = tDao.getTheaterElem(screen.getTheaterId());
 											
@@ -406,7 +406,7 @@ public class MovieServer extends Thread
 											break;
 										}
 									}
-	
+									
 									System.out.println("다중 정보 전송 성공");
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_CUSTOM_INFO + "!1!" + infoList);
 									break;
@@ -429,7 +429,7 @@ public class MovieServer extends Thread
 									ReservationDAO rDao = new ReservationDAO();
 									ArrayList<ReservationDTO> r_list;
 									
-									if(packetArr[3].equals("null"))
+									if (packetArr[3].equals("null"))
 									{
 										r_list = rDao.getRsvListFromMem(mem_id);
 									}
@@ -519,15 +519,15 @@ public class MovieServer extends Thread
 									TimeTableDAO tDao = new TimeTableDAO();
 									ReviewDAO rDao = new ReviewDAO();
 									
-						            double rsv_rate = tDao.getRsvRate(movieId);
-						            if (Double.isNaN(rsv_rate))
-						            {
-						                rsv_rate = 0;
-						            }
-						            String aver_star = Integer.toString(rDao.getAverStarGrade(movieId));
-						            
-						            writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIESUB_VIEW + "!1!" + Double.toString(rsv_rate) + "!" + aver_star);
-						            System.out.println("영화별 영화 서브  정보 전송 성공");
+									double rsv_rate = tDao.getRsvRate(movieId);
+									if (Double.isNaN(rsv_rate))
+									{
+										rsv_rate = 0;
+									}
+									String aver_star = Integer.toString(rDao.getAverStarGrade(movieId));
+									
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_MOVIESUB_VIEW + "!1!" + Double.toString(rsv_rate) + "!" + aver_star);
+									System.out.println("영화별 영화 서브  정보 전송 성공");
 									break;
 								}
 								catch (Exception e)
@@ -548,7 +548,7 @@ public class MovieServer extends Thread
 									ReviewDAO rDao = new ReviewDAO();
 									ArrayList<ReviewDTO> r_list = rDao.getRvListFromMov(movieId);
 									Iterator<ReviewDTO> r_iter = r_list.iterator();
-						            String reviewList = "";
+									String reviewList = "";
 									
 									if (r_iter.hasNext() == false)
 									{
@@ -562,7 +562,7 @@ public class MovieServer extends Thread
 											reviewList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getMovieId() + "`" + rDto.getStar() + "`" + rDto.getText() + "`" + rDto.getWriteTime() + ",";
 										else
 											reviewList += rDto.getId() + "`" + rDto.getMemberId() + "`" + rDto.getMovieId() + "`" + rDto.getStar() + "`" + rDto.getText() + "`" + rDto.getWriteTime();
-										}
+									}
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_REVIEW_VIEW + "!1!" + reviewList);
 									System.out.println("리뷰 리스트 전송 성공");
 									break;
@@ -571,6 +571,42 @@ public class MovieServer extends Thread
 								{
 									e.printStackTrace();
 									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_REVIEW_VIEW + "!2");
+									break;
+								}
+							}
+							
+							case Protocol.CS_REQ_STATISTICS_VIEW:
+							{
+								try
+								{
+									System.out.println("클라이언트가 통계 정보를 요청하였습니다.");
+									String start_date = packetArr[2];
+									String end_date = packetArr[3];
+									String stt_list = "";
+									
+									ReservationDAO rDao = new ReservationDAO();
+									ArrayList<String> benefit_list = rDao.getBenefitSatistics(start_date, end_date);
+									ArrayList<String> rsv_list = rDao.getRsvSatistics(start_date, end_date);
+									ArrayList<String> cancle_list = rDao.getCancelSatistics(start_date, end_date);
+									
+									for (String benefit_info : benefit_list)
+										stt_list += benefit_info + "`";
+									stt_list += ",";
+									
+									for (String rsv_info : rsv_list)
+										stt_list += rsv_info + "`";
+									stt_list += ",";
+									
+									for (String cancle_info : cancle_list)
+										stt_list += cancle_info + "`";
+									
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_STATISTICS_VIEW + "!1!" + stt_list);
+									break;
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+									writePacket(Protocol.PT_RES_VIEW + "!" + Protocol.SC_RES_STATISTICS_VIEW + "!2");
 									break;
 								}
 							}
@@ -1195,8 +1231,8 @@ public class MovieServer extends Thread
 									rDao.addReview(new ReviewDTO(rv_id, rv_memId, rv_movId, rv_star, rv_text, rv_time));
 									
 									System.out.println("리뷰 등록 성공");
-						            writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_ADD + "`1");
-						            break;
+									writePacket(Protocol.PT_RES_RENEWAL + "`" + Protocol.SC_RES_REVIEW_ADD + "`1");
+									break;
 								}
 								catch (Exception e)
 								{
